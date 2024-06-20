@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 //using System.Web.Script.Serialization;
 
 
@@ -357,19 +358,24 @@ namespace DodoTheGame
       Recorder.currentWriter.Flush();
       //Recorder.currentWriter.Close();
       Recorder.currentWriter.Dispose();
-        //RnD
-        Recorder.csfCacheClone = (string)Recorder.currentSavingFile;//.Clone();
+      
+      //RnD
+      Recorder.csfCacheClone = (string)Recorder.currentSavingFile;//.Clone();
       Task.Run((Action) (() =>
       {
         //RnD
         string str = (string)Recorder.csfCacheClone;//.Clone();
-        Thread.Sleep(1000);
-        using (ZipArchive destination = ZipFile.Open(Recorder.exportFolder + str + ".drc2zip", ZipArchiveMode.Create))
+        //Thread.Sleep(1000);
+        using (ZipArchive destination = ZipFile.Open(Recorder.exportFolder + str + ".drc2zip", 
+            ZipArchiveMode.Create))
           destination.CreateEntryFromFile(Recorder.exportFolder + str + ".drc2", str + ".drc2");
         File.Delete(Recorder.exportFolder + str + ".drc2");
       }));
-      Recorder.currentSavingFile = Recorder.sessionStartcode + "-" + Math.Round(Recorder.currentDrawTime).ToString((IFormatProvider) CultureInfo.InvariantCulture);
-      Recorder.currentWriter = File.AppendText(Recorder.exportFolder + Recorder.currentSavingFile + ".drc2");
+      Recorder.currentSavingFile = Recorder.sessionStartcode + "-" 
+                + Math.Round(Recorder.currentDrawTime).ToString((IFormatProvider)
+                CultureInfo.InvariantCulture);
+      Recorder.currentWriter = File.AppendText(Recorder.exportFolder 
+          + Recorder.currentSavingFile + ".drc2");
     }
 
     public static void StartReRender(string folder, Game1 game)
@@ -406,7 +412,7 @@ namespace DodoTheGame
           if (Recorder.currentFileIndex == Recorder.fileList.Length)
           {
             Console.WriteLine("Rerender ended.");
-            //Environment.Exit(0);
+            CoreApplication.Exit();
           }
           Recorder.LoadRerenderFile(Recorder.fileList[Recorder.currentFileIndex]);
           Recorder.currentFrameIndexInCurrentFile = 1;

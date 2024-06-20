@@ -231,19 +231,25 @@ namespace DodoTheGame
 
     public static void UpdateBGE(int BGEId, float factor)
     {
+      //TODO
+      /*
       if ((double) factor == 0.0 && Sound.backgroundEffectList[BGEId].State == SoundState.Playing)
         Sound.backgroundEffectList[BGEId].Stop();
       else if ((double) factor > 0.0 && Sound.backgroundEffectList[BGEId].State == SoundState.Stopped)
         Sound.backgroundEffectList[BGEId].Play();
       Sound.backgroundEffectList[BGEId].Volume = Sound.sfxVolume * factor;
+      */
     }
 
     public static void StartMusic(IBGM bgm)
     {
+        //TODO
+        /*
       if (Sound.currentBGM != null && Sound.currentBGM.Status != BGMStatus.Stopped)
         return;
       Sound.currentBGM = bgm;
       Sound.currentBGM.Start();
+      */
     }
 
     public static void UpdateFMOD()
@@ -298,6 +304,9 @@ namespace DodoTheGame
       Sound.currentBGM?.Update(gametime);
     }
 
-    public static void StopMusic() => Sound.currentBGM.RequestStop(true);
+    public static void StopMusic()
+    {
+        Sound.currentBGM.RequestStop(true);
+    }
   }
 }

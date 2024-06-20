@@ -105,21 +105,33 @@ namespace DodoTheGame.Saving
     {
       Preset preset = new Preset();
       preset.name = (string) dictionary["Name"];
+
       preset.displayName = (string) dictionary["DisplayName"];
-            preset.sprite = default;//(Sprite) serializer.ConvertToType(dictionary["Sprite"], typeof (Sprite));
-            preset.growSprites = default;//(List<Sprite>) serializer.ConvertToType(dictionary["growSprites"], typeof (List<Sprite>));
-            preset.hitbox = default;//(List<Rectangle>) serializer.ConvertToType(dictionary["hitbox"], typeof (List<Rectangle>));
-            preset.epicenterOffset = default;//(Vector2) serializer.ConvertToType(dictionary["epicenterOffset"], typeof (Vector2));
+
+      preset.sprite = (Sprite) serializer.ConvertToType(
+        dictionary["Sprite"], typeof (Sprite));
+      preset.growSprites = (List<Sprite>) serializer.ConvertToType(
+        dictionary["growSprites"], typeof (List<Sprite>));
+      preset.hitbox = (List<Rectangle>) serializer.ConvertToType(
+        dictionary["hitbox"], typeof (List<Rectangle>));
+      preset.epicenterOffset = (Vector2) serializer.ConvertToType(
+        dictionary["epicenterOffset"], typeof (Vector2));
       preset.type = (Preset.WOType) dictionary[nameof (type)];
-            preset.interactions = default;//(IDodoInteraction[]) serializer.ConvertToType(dictionary["interactions"], typeof (IDodoInteraction[]));
-            preset.tags = default;//(string[]) serializer.ConvertToType(dictionary["tags"], typeof (string[]));
-            preset.incompatibleTags = default;//(string[]) serializer.ConvertToType(dictionary["incompatibleTags"], typeof (string[]));
-            preset.otherBuildsSpecialIncompatibleTags = default;//(string[]) serializer.ConvertToType(dictionary["otherBuildsSpecialIncompatibleTags"], typeof (string[]));
-            if (dictionary["extraReach"] != null)
-                preset.extraReach = default;//(Vector2?) serializer.ConvertToType(dictionary["extraReach"], typeof (Vector2));
+      preset.interactions = (IDodoInteraction[]) serializer.ConvertToType(
+            dictionary["interactions"], typeof (IDodoInteraction[]));
+      preset.tags = (string[]) serializer.ConvertToType(
+            dictionary["tags"], typeof (string[]));
+      preset.incompatibleTags = (string[]) serializer.ConvertToType(
+            dictionary["incompatibleTags"], typeof (string[]));
+      preset.otherBuildsSpecialIncompatibleTags = (string[]) serializer.ConvertToType(
+            dictionary["otherBuildsSpecialIncompatibleTags"], typeof (string[]));
+        if (dictionary["extraReach"] != null)
+            preset.extraReach = (Vector2?) serializer.ConvertToType(
+                dictionary["extraReach"], typeof (Vector2));
       preset.growtime = (int) dictionary["growtime"];
       preset.growstate = (int) dictionary["growstate"];
-            preset.buildOrUpgradeItems = default;//(List<ItemStack>) serializer.ConvertToType(dictionary["buildOrUpgradeItems"], typeof (List<ItemStack>));
+            preset.buildOrUpgradeItems = (List<ItemStack>) serializer.ConvertToType(
+                dictionary["buildOrUpgradeItems"], typeof (List<ItemStack>));
       return (object) preset;
     }
   }

@@ -22,6 +22,7 @@ namespace DodoTheGame.Saving
     {
       get
       {
+         //TODO
          return default;//((IEnumerable<Assembly>) AppDomain.CurrentDomain.GetAssemblies()).SelectMany<Assembly, Type>((Func<Assembly, IEnumerable<Type>>) (s => (IEnumerable<Type>) s.GetTypes())).Where<Type>((Func<Type, bool>) (p => typeof (IDodoInteraction).IsAssignableFrom(p)));
       }
     }

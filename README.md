@@ -28,7 +28,7 @@ https://gamedevelopment.tutsplus.com/tutorials/make-a-neon-vector-shooter-in-xna
 
 ## ToDo
 - Explore Assets folder
-- See Content: maybe, double resources (soundes, images and fx effects!)
+- See Content: maybe, double resources (sounds, images and fx effects!)
 
 ## .
 As is. Learn purposes only. DIY.

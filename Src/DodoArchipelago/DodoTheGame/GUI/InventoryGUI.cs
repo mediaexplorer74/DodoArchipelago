@@ -53,27 +53,53 @@ namespace DodoTheGame.GUI
       Vector2[] vector2Array = new Vector2[30];
       for (int index = 0; index < 24; ++index)
         vector2Array[index] = new Vector2((float) (140 + 126 * (index % 8)), (float) (135 + 123 * ((index - index % 8) / 8)));
+      
       for (int index = 0; index < 24; ++index)
       {
         float num = 1f;
         Texture2D tile = this.tile;
         Recorder.RDraw(spriteBatch, tile, vector2Array[index], Color.White * num);
-        if (Game1.player.inventory.inventory[index] != null)
+
+        if (Game1.player.inventory != null)
         {
-          Recorder.RDraw(spriteBatch, this.itemTextures[Game1.player.inventory.inventory[index].itemId], vector2Array[index], Color.White);
-          int x = (int) this.font.MeasureString(Game1.player.inventory.inventory[index].count.ToString()).X;
-          Recorder.RDrawString(spriteBatch, this.font, Game1.player.inventory.inventory[index].count.ToString(), new Vector2(vector2Array[index].X + 98f - (float) x, vector2Array[index].Y + 76f), Color.White);
+            if (Game1.player.inventory.inventory[index] != null)
+            {
+                Recorder.RDraw(spriteBatch, this.itemTextures[Game1.player.inventory.inventory[index].itemId], vector2Array[index], Color.White);
+                int x = (int)this.font.MeasureString(Game1.player.inventory.inventory[index].count.ToString()).X;
+                Recorder.RDrawString(spriteBatch, this.font, Game1.player.inventory.inventory[index].count.ToString(), new Vector2(vector2Array[index].X + 98f - (float)x, vector2Array[index].Y + 76f), Color.White);
+            }
         }
       }
-      for (int index = 0; index < 13; ++index)
-      {
-        if (Game1.player.inventory.flowerinventory[index] != null)
-          Recorder.RDraw(spriteBatch, this.miniFlowersTextures[index], new Vector2((float) (280 + 60 * index), 520f), Color.White);
-        else
-          Recorder.RDraw(spriteBatch, this.empty_flower, new Vector2((float) (280 + 60 * index), 520f), Color.White);
+
+            for (int index = 0; index < 13; ++index)
+            {
+                if (Game1.player.inventory != null)
+                {
+
+                    if (Game1.player.inventory.flowerinventory[index] != null)
+                    {
+                        Recorder.RDraw(spriteBatch, this.miniFlowersTextures[index],
+                            new Vector2((float)(280 + 60 * index), 520f), Color.White);
+                    }
+                    else
+                    {
+                        Recorder.RDraw(spriteBatch, this.empty_flower, 
+                            new Vector2((float)(280 + 60 * index), 520f),
+                        Color.White);
+                    }
+                }
+                else
+                {
+                    //RnD
+                    Recorder.RDraw(spriteBatch, this.empty_flower, 
+                        new Vector2((float)(280 + 60 * index), 520f),
+                        Color.White);
+                }
       }
+
       if (!Game1.player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle])
         return;
+      
       game.timebar.CurrentFrame = (int) Math.Round(21.0 * (double) Game1.player.TimeBar / 100.0, 0);
       game.timebar.Draw(spriteBatch, new Vector2(345f, 610f), gameTime, colorn: new Color?(Color.White));
     }

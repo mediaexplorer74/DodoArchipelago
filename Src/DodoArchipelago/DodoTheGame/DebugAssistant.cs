@@ -21,7 +21,6 @@ using System.IO;
 using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 //using System.Web.Script.Serialization;
-//using System.Windows.Forms;
 
 
 namespace DodoTheGame
@@ -35,8 +34,12 @@ namespace DodoTheGame
     private static KeyboardState previousks;
     internal static bool debugPanel;
     internal static List<IWorldObject> woModifiedInGameEditor;
-    private static Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu = new Microsoft.Xna.Framework.Input.Keys?();
-    private static readonly List<Microsoft.Xna.Framework.Input.Keys> DebugMenuKeys = new List<Microsoft.Xna.Framework.Input.Keys>()
+
+    private static Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu 
+            = new Microsoft.Xna.Framework.Input.Keys?();
+
+    private static readonly List<Microsoft.Xna.Framework.Input.Keys> DebugMenuKeys 
+            = new List<Microsoft.Xna.Framework.Input.Keys>()
     {
       Microsoft.Xna.Framework.Input.Keys.A,
       Microsoft.Xna.Framework.Input.Keys.Z,
@@ -60,7 +63,8 @@ namespace DodoTheGame
         (JavaScriptConverter) new IDodoInteractionConverter()
       });
       int totalSeconds = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-      File.WriteAllText("gameedit-ser-" + totalSeconds.ToString() + ".txt", scriptSerializer.Serialize((object) DebugAssistant.woModifiedInGameEditor));
+      File.WriteAllText("gameedit-ser-" + totalSeconds.ToString() + ".txt", 
+          scriptSerializer.Serialize((object) DebugAssistant.woModifiedInGameEditor));
       List<string> stringList = new List<string>();
       foreach (Preset preset in game.presetList)
         stringList.Add(preset.name);
@@ -74,23 +78,30 @@ namespace DodoTheGame
             worldObjectList.Add(worldObject);
         }
         string str3 = "// " + str2 + Environment.NewLine
-                    + "world.objects.AddRange(presetList.First(p => p.name == \"" + str2 + "\").MakeWOs(new List<Tuple<Vector2, string>>(){" + Environment.NewLine;
+                    + "world.objects.AddRange(presetList.First(p => p.name == \""
+                    + str2 + "\").MakeWOs(new List<Tuple<Vector2, string>>(){"
+                    + Environment.NewLine;
         bool flag = true;
         int num = 0;
         foreach (IWorldObject worldObject in worldObjectList)
         {
           if (!flag)
             str3 += Environment.NewLine;
-          str3 = str3 + "new Tuple<Vector2, string>(new Vector2(" + worldObject.Location.X.ToString() + ", " + worldObject.Location.Y.ToString() + "), \"" + str2 + "-" + num.ToString() + "\"),";
+          str3 = str3 + "new Tuple<Vector2, string>(new Vector2(" 
+                        + worldObject.Location.X.ToString() + ", "
+                        + worldObject.Location.Y.ToString() + "), \""
+                        + str2 + "-" + num.ToString() + "\"),";
           flag = false;
           ++num;
         }
-        string str4 = str3.Remove(str3.Length - 1) + Environment.NewLine + "}));" + Environment.NewLine + Environment.NewLine;
+        string str4 = str3.Remove(str3.Length - 1) + Environment.NewLine + "}));" 
+                    + Environment.NewLine + Environment.NewLine;
         str1 += str4;
       }
       string str5 = str1 + Environment.NewLine + "Game1.Log(\"Generating buildpoints...\", BreadcrumbLevel.Debug, \"worldgen\");" + Environment.NewLine;
       int num1 = 1;
-      foreach (IWorldObject worldObject in Game1.world.objects.Where<IWorldObject>((Func<IWorldObject, bool>) (p => p is BuildPoint)))
+      foreach (IWorldObject worldObject in Game1.world.objects.Where<IWorldObject>(
+          (Func<IWorldObject, bool>) (p => p is BuildPoint)))
       {
         string str6 = "";
         Build interaction = (Build) worldObject.Interactions[3];
@@ -98,7 +109,8 @@ namespace DodoTheGame
         {
           if (str6 != "")
             str6 += ", ";
-          str6 = str6 + "new ItemStack(" + itemStack.itemId.ToString() + ", " + itemStack.count.ToString() + ")";
+          str6 = str6 + "new ItemStack(" + itemStack.itemId.ToString() + ", "
+                        + itemStack.count.ToString() + ")";
         }
         string str7 = "";
         foreach (string tag in worldObject.Tags)
@@ -164,52 +176,69 @@ namespace DodoTheGame
         --DebugAssistant.debugKeyCooldown;
       if (DebugAssistant.debugKeyCooldown < 0)
         DebugAssistant.debugKeyCooldown = 0;
-      if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt))
+      if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt)
+                || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt))
       {
         if (DebugAssistant.debugPanelActiveMenu.HasValue)
         {
-          Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu1 = DebugAssistant.debugPanelActiveMenu;
-          Microsoft.Xna.Framework.Input.Keys keys1 = Microsoft.Xna.Framework.Input.Keys.A;
-          if (debugPanelActiveMenu1.GetValueOrDefault() == keys1 & debugPanelActiveMenu1.HasValue)
+          Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu1
+                        = DebugAssistant.debugPanelActiveMenu;
+          Microsoft.Xna.Framework.Input.Keys keys1 =
+                        Microsoft.Xna.Framework.Input.Keys.A;
+          if (debugPanelActiveMenu1.GetValueOrDefault() == 
+                        keys1 & debugPanelActiveMenu1.HasValue)
           {
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
               DayCycle.dayTime += 4.5;
             else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
               DayCycle.dayTime += 7.0;
-            else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+            else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
+                            && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
               Wind.MainAngle = Wind.windDirections[Wind.windDirections.IndexOf(Wind.MainAngle) - 1 < 0 ? Wind.windDirections.Count - 1 : Wind.windDirections.IndexOf(Wind.MainAngle) - 1];
-            else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
+            else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z)
+                            && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
               Wind.MainAngle = Wind.windDirections[Wind.windDirections.IndexOf(Wind.MainAngle) + 1 >= Wind.windDirections.Count ? 0 : Wind.windDirections.IndexOf(Wind.MainAngle) + 1];
           }
           else
           {
-            Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu2 = DebugAssistant.debugPanelActiveMenu;
+            Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu2 
+                            = DebugAssistant.debugPanelActiveMenu;
             Microsoft.Xna.Framework.Input.Keys keys2 = Microsoft.Xna.Framework.Input.Keys.Z;
-            if (debugPanelActiveMenu2.GetValueOrDefault() == keys2 & debugPanelActiveMenu2.HasValue)
+            if (debugPanelActiveMenu2.GetValueOrDefault() == keys2
+                            & debugPanelActiveMenu2.HasValue)
             {
-              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
                 SaveHandler.SaveGame(Game1.world, Game1.player, game.lastFrame);
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
                 SaveHandler.LoadGame(SaveHandler.slot, Game1.commonSprites, game);
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
                 SaveHandler.LoadDefault(Game1.commonSprites, game);
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
                 SaveHandler.LoadGame(1, Game1.commonSprites, game);
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S)
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
                 SaveHandler.LoadGame(2, Game1.commonSprites, game);
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D))
                 SaveHandler.LoadGame(3, Game1.commonSprites, game);
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W))
               {
                 SaveHandler.slot = 1;
                 SaveHandler.SaveGame(Game1.world, Game1.player, game.lastFrame);
               }
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.X))
               {
                 SaveHandler.slot = 2;
                 SaveHandler.SaveGame(Game1.world, Game1.player, game.lastFrame);
               }
-              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.C) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.C))
+              else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.C) 
+                                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.C))
               {
                 SaveHandler.slot = 3;
                 SaveHandler.SaveGame(Game1.world, Game1.player, game.lastFrame);
@@ -217,11 +246,15 @@ namespace DodoTheGame
             }
             else
             {
-              Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu3 = DebugAssistant.debugPanelActiveMenu;
+              Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu3 
+                                = DebugAssistant.debugPanelActiveMenu;
+
               Microsoft.Xna.Framework.Input.Keys keys3 = Microsoft.Xna.Framework.Input.Keys.E;
+
               if (debugPanelActiveMenu3.GetValueOrDefault() == keys3 & debugPanelActiveMenu3.HasValue)
               {
-                if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+                if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
+                                    && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
                   Game1.player.unlockedPlayerTools = new Dictionary<PlayerUnlockables.PlayerUnlockable, bool>()
                   {
                     {

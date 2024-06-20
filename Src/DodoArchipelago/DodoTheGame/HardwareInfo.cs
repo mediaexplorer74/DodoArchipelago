@@ -76,7 +76,9 @@ namespace DodoTheGame
 
     public static string GenerateUID()
     {
-      byte[] bytes = Encoding.UTF8.GetBytes(HardwareInfo.GetProcessorId() + HardwareInfo.GetMotherboardID() + HardwareInfo.GetDiskVolumeSerialNumber() + "dfVWmInaMyUOrimYj9GLCcPL5N7XG81dnIHamtJabMkYmyTFuf");
+      byte[] bytes = Encoding.UTF8.GetBytes(HardwareInfo.GetProcessorId() 
+          + HardwareInfo.GetMotherboardID() + HardwareInfo.GetDiskVolumeSerialNumber() 
+          + "dfVWmInaMyUOrimYj9GLCcPL5N7XG81dnIHamtJabMkYmyTFuf");
       return HardwareInfo.ByteArrayToString(SHA256.Create().ComputeHash(bytes));
     }
 

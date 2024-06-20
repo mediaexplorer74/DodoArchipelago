@@ -16,21 +16,15 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
 namespace DodoTheGame
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
+   
     sealed partial class App : Application
 {
     static string deviceFamily;
 
-    /// <summary>
-    /// Initializes the singleton application object.  This is the first line of authored code
-    /// executed, and as such is the logical equivalent of main() or WinMain().
-    /// </summary>
+  
     public App()
     {
         this.InitializeComponent();
@@ -39,7 +33,7 @@ namespace DodoTheGame
         //API check to ensure the "RequiresPointerMode" property exists, ensuring project is running on build 14393 or later
         if (Windows.Foundation.Metadata.ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Application", "RequiresPointerMode"))
         {
-            //If running on the Xbox, disable the default on screen pointer
+            //If running on the Xbox, disable screen pointer
             if (IsXbox())
             {
                 Application.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
@@ -59,14 +53,9 @@ namespace DodoTheGame
         return deviceFamily == "Windows.Xbox";
     }
 
-    /// <summary>
-    /// Invoked when the application is launched normally by the end user.  Other entry points
-    /// will be used such as when the application is launched to open a specific file.
-    /// </summary>
-    /// <param name="e">Details about the launch request and process.</param>
+   
     protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
-        // By default we want to fill the entire core window.
         ApplicationView.GetForCurrentView().SetDesiredBoundsMode(
             ApplicationViewBoundsMode.UseCoreWindow);
 

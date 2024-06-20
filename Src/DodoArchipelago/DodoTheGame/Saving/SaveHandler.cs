@@ -25,14 +25,18 @@ namespace DodoTheGame.Saving
 
     public static bool IsSlotRegistered(int slot)
     {
-      return File.Exists(Save.saveFolder + nameof (slot) + slot.ToString((IFormatProvider) CultureInfo.InvariantCulture) + ".dodomemory");
+            //TODO
+            return true;//File.Exists(Save.saveFolder + nameof (slot) 
+          //+ slot.ToString((IFormatProvider) CultureInfo.InvariantCulture) + ".dodomemory");
     }
 
     public static int LastSavedSlot
     {
       get
       {
-        return !File.Exists(Save.saveFolder + "meta.dodointernal") ? 9 : Convert.ToInt32(File.ReadAllText(Save.saveFolder + "meta.dodointernal"));
+        return !File.Exists(Save.saveFolder + "meta.dodointernal") 
+        ? 9 
+        : Convert.ToInt32(File.ReadAllText(Save.saveFolder + "meta.dodointernal"));
       }
     }
 
@@ -52,15 +56,26 @@ namespace DodoTheGame.Saving
         (object) gs.sfxVolume,
         (object) gs.languageCode
       };
-      File.WriteAllText(Save.saveFolder + "settings.dodointernal", Save.serializer.Serialize((object) objArray));
+
+      File.WriteAllText(Save.saveFolder + "settings.dodointernal", 
+          Save.serializer.Serialize((object) objArray));
     }
 
     public static GameSettings LoadSettings()
     {
       if (!File.Exists(Save.saveFolder + "settings.dodointernal"))
         return GameSettings.Default;
-      object[] objArray = Save.serializer.Deserialize<object[]>(File.ReadAllText(Save.saveFolder + "settings.dodointernal"));
-      return 1 == (int) objArray[2] ? new GameSettings((bool) objArray[5], new Vector2(Convert.ToSingle(objArray[6]), Convert.ToSingle(objArray[7])), Convert.ToSingle(objArray[8]), Convert.ToSingle(objArray[9]), (string) objArray[10]) : throw new Exception("This setting save is not supported by this version.");
+
+      object[] objArray = Save.serializer.Deserialize<object[]>(
+          File.ReadAllText(Save.saveFolder + "settings.dodointernal"));
+
+      return 1 == (int) objArray[2] 
+         ? new GameSettings((bool) objArray[5], 
+          new Vector2(Convert.ToSingle(objArray[6]), 
+          Convert.ToSingle(objArray[7])), 
+          Convert.ToSingle(objArray[8]), 
+          Convert.ToSingle(objArray[9]), (string) objArray[10])
+         : throw new Exception("This setting save is not supported by this version.");
     }
 
     public static Save LoadDefault(List<Sprite> commonSprites, Game1 game)
@@ -81,8 +96,11 @@ namespace DodoTheGame.Saving
 
     public static void SaveGame(World world, Player player, Texture2D lastFrame)
     {
-      if (player.currentMovementType == Player.DodoMovement.Build || player.currentMovementType == Player.DodoMovement.Harvest || player.currentMovementType == Player.DodoMovement.Drown)
+      if (player.currentMovementType == Player.DodoMovement.Build 
+                || player.currentMovementType == Player.DodoMovement.Harvest 
+                || player.currentMovementType == Player.DodoMovement.Drown)
         return;
+
       SaveHandler.CurrentlySaving = true;
       File.WriteAllText(Save.saveFolder + "meta.dodointernal", SaveHandler.slot.ToString());
       Save sav = new Save()
@@ -93,12 +111,13 @@ namespace DodoTheGame.Saving
         lastFrame = lastFrame
       };
       MemoryStream memoryStream = new MemoryStream();
-      lastFrame.SaveAsPng((Stream) memoryStream, Convert.ToInt32(Game1.renderSize.X), Convert.ToInt32(Game1.renderSize.Y));
-      new Thread((ParameterizedThreadStart) (pngScreenData =>
-      {
-        sav.SaveToFile(lastFramePngBytes: (byte[]) pngScreenData);
+      lastFrame.SaveAsPng((Stream) memoryStream, Convert.ToInt32(Game1.renderSize.X), 
+          Convert.ToInt32(Game1.renderSize.Y));
+      //new Thread((ParameterizedThreadStart) (pngScreenData =>
+      //{
+        sav.SaveToFile(lastFramePngBytes: (byte[]) /*pngScreenData*/memoryStream.ToArray());
         SaveHandler.CurrentlySaving = false;
-      })).Start((object) memoryStream.ToArray());
+      //})).Start((object) memoryStream.ToArray());
     }
 
     public static Save LoadGame(int slot, List<Sprite> commonSprites, Game1 game)
@@ -121,13 +140,16 @@ namespace DodoTheGame.Saving
     {
       if (!SaveHandler.IsSlotRegistered(slot))
         return false;
+
       try
       {
-        File.Delete(Save.saveFolder + nameof (slot) + slot.ToString((IFormatProvider) CultureInfo.InvariantCulture) + ".dodomemory");
+        File.Delete(Save.saveFolder + nameof (slot) 
+            + slot.ToString((IFormatProvider) CultureInfo.InvariantCulture) + ".dodomemory");
         return true;
       }
       catch (Exception ex)
       {
+        System.Diagnostics.Debug.WriteLine("[ex] aveHandler - File.Delete error: " + ex.Message);
         return false;
       }
     }

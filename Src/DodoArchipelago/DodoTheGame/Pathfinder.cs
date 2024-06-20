@@ -31,23 +31,32 @@ namespace DodoTheGame
     public int RequestPathfind(Point istart, Point iend, int playerLevel, object requester = null)
     {
       ++this.lastRequestId;
-      Game1.Log(requester.GetType().ToString() + " requested pathfinding from (" + istart.X.ToString() + "; " + istart.Y.ToString() + ") to (" + iend.X.ToString() + "; " + iend.Y.ToString() + "). Associated ID: " + this.lastRequestId.ToString(), BreadcrumbLevel.Debug, nameof (Pathfinder));
+
+      Game1.Log(requester.GetType().ToString()
+          + " requested pathfinding from (" + istart.X.ToString() + "; " 
+          + istart.Y.ToString() + ") to (" + iend.X.ToString() + "; " 
+          + iend.Y.ToString() + "). Associated ID: " + this.lastRequestId.ToString(), 
+          BreadcrumbLevel.Debug, nameof (Pathfinder));
+
       this.referenceWorld.behaviorMap.StartBackgroundCaching();
       this.referenceWorld.behaviorMap.LockBackgroundCaching();
       this.referenceWorld.behaviorMap.FillBackgroundCaching(playerLevel);
-      new Thread((ParameterizedThreadStart) (requestId =>
-      {
-        List<Vector2> vector2List = this.Pathfind(istart, iend, playerLevel, (int) requestId);
+      
+      //new Thread((ParameterizedThreadStart) (requestId =>
+      //{
+        List<Vector2> vector2List 
+                = this.Pathfind(istart, iend, playerLevel, (int) /*requestId*/this.lastRequestId);
+
         EventHandler pathfound = this.Pathfound;
         if (pathfound != null)
           pathfound((object) this, (EventArgs) new PathfoundEventArgs()
           {
             Path = vector2List,
-            RequestId = (int) requestId
+            RequestId = (int)this.lastRequestId//requestId
           });
         this.referenceWorld.behaviorMap.UnlockBackgroundCaching();
         this.referenceWorld.behaviorMap.StopBackgroundCaching();
-      })).Start((object) this.lastRequestId);
+      //})).Start((object) this.lastRequestId);
       return this.lastRequestId;
     }
 

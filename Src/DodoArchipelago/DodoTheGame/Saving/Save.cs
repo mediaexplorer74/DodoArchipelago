@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
@@ -42,7 +43,15 @@ namespace DodoTheGame.Saving
     {
       if (Directory.Exists(Save.saveFolder))
         return;
-      Directory.CreateDirectory(Save.saveFolder);
+
+      try
+      {
+         Directory.CreateDirectory(Save.saveFolder);
+      }
+      catch (Exception ex)
+      {
+         Debug.WriteLine("[ex] Save - CreateDirectory error: " + ex.Message);
+      }
     }
 
     public SaveInfo GetSaveInfo(GraphicsDevice graphicsDevice)
@@ -51,28 +60,47 @@ namespace DodoTheGame.Saving
                 + "slot" + this.saveSlot.ToString() + ".dodomemory" : "Content\\slot0.dodomemory";
       string[] strArray = new string[5];
       string str1 = "";
-      string str2;
-      object[] objArray1;
-      using (FileStream fileStream = new FileStream(path, FileMode.Open))
-      {
-        using (StreamReader streamReader = new StreamReader((Stream) fileStream))
+      string str2 = "";
+      object[] objArray1 = default;
+            
+        try
         {
-          strArray[0] = streamReader.ReadLine();
-          strArray[1] = streamReader.ReadLine();
-          strArray[2] = streamReader.ReadLine();
-          strArray[3] = streamReader.ReadLine();
-          strArray[4] = streamReader.ReadLine();
-          str2 = streamReader.ReadLine();
-          objArray1 = Save.serializer.Deserialize<object[]>(strArray[0]);
-          using (SHA512 shA512 = (SHA512) new SHA512Managed())
-          {
-            foreach (string str3 in strArray)
-              str1 += Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(str3 + "ourhardworkbythishashguardedpleasedontcheat")));
-          }
+            using (FileStream fileStream = new FileStream(path, FileMode.Open))
+            {
+                using (StreamReader streamReader = new StreamReader((Stream)fileStream))
+                {
+                    strArray[0] = streamReader.ReadLine();
+                    strArray[1] = streamReader.ReadLine();
+                    strArray[2] = streamReader.ReadLine();
+                    strArray[3] = streamReader.ReadLine();
+                    strArray[4] = streamReader.ReadLine();
+                    str2 = streamReader.ReadLine();
+                    objArray1 = Save.serializer.Deserialize<object[]>(strArray[0]);
+                    using (SHA512 shA512 = (SHA512)new SHA512Managed())
+                    {
+                        foreach (string str3 in strArray)
+                            str1 += Convert.ToBase64String(shA512.ComputeHash(
+                                Encoding.UTF8.GetBytes(str3 + 
+                                "ourhardworkbythishashguardedpleasedontcheat")));
+                    }
+                }
+            }
         }
-      }
-      if (str1 == str2)
-      {
+        catch (Exception ex)
+        {
+            Debug.WriteLine("[ex] Save - new FileStream path error: " + ex.Message);
+        }
+
+
+        if (str1 == str2)
+        {
+            if (objArray1 == null)
+            {
+                Debug.WriteLine("[!] A corrupted save was not loaded!");
+                Game1.Log("A corrupted save was not loaded.", BreadcrumbLevel.Warning, "saving");
+                return new SaveInfo(false, 0, new DateTime(), (Texture2D)null);
+            }
+
         if ((string) objArray1[3] != "000024")
           throw new Exception("This save file is not supported by this build");
         Texture2D texture = Save.BytePngToTexture(Convert.FromBase64String(strArray[4]), graphicsDevice);
@@ -83,6 +111,8 @@ namespace DodoTheGame.Saving
         Game1.Log("A save info was loaded.", BreadcrumbLevel.Info, "saving");
         return new SaveInfo(true, playTime, localTime, texture);
       }
+
+      Debug.WriteLine("[!] A corrupted save was not loaded.");
       Game1.Log("A corrupted save was not loaded.", BreadcrumbLevel.Warning, "saving");
       return new SaveInfo(false, 0, new DateTime(), (Texture2D) null);
     }

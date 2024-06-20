@@ -26,13 +26,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 //using System.Web.Script.Serialization;
 
 
 namespace DodoTheGame
 {
-  //internal class Game1 : Game
+
   partial class Game1 : Game
   {
     public const string Manifest = "DodoTheGame/The Dodo Archipelago RELEASE 1.0";
@@ -371,9 +372,9 @@ namespace DodoTheGame
       this.renderTarget2 = new RenderTarget2D(Game1.graphics.GraphicsDevice, (int) Game1.renderSize.X, (int) Game1.renderSize.Y, false, this.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
       Recorder.Player = Game1.player;
 
-            //TODO
-            /*
-      Save.serializer.RegisterConverters((IEnumerable<JavaScriptConverter>) new List<JavaScriptConverter>()
+  
+      Save.serializer.RegisterConverters((IEnumerable<JavaScriptConverter>) 
+          new List<JavaScriptConverter>()
       {
         (JavaScriptConverter) new ItemStackConverter(),
         (JavaScriptConverter) new Texture2DConverter(),
@@ -383,7 +384,7 @@ namespace DodoTheGame
         (JavaScriptConverter) new IWorldObjectConverter(),
         (JavaScriptConverter) new INPCConverter()
       });
-            */
+
       MediaPlayer.Volume = Sound.bgmVolume;
       this.IsFixedTimeStep = false;
       base.Initialize();
@@ -1963,14 +1964,29 @@ namespace DodoTheGame
           if (GUIManager.pendingExit && !SaveHandler.CurrentlySaving)
           {
             GUIManager.pendingExit = false;
+
             if (this.WorldLoader == Game1.WorldLoaderType.dynamicSaves)
-              SaveHandler.SaveGame(Game1.world, Game1.player, this.lastFrame);
-                       
-            Game1.Close();  //Environment.Exit(0);
+            {
+                try
+                {
+                    SaveHandler.SaveGame(Game1.world, Game1.player, this.lastFrame);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("[ex] SaveGame error: " + ex.Message);
+                }
+            }
+            
+            CoreApplication.Exit();
           }
           GUIManager.GUIInput(userInputStatus, this);
           GUIManager.Update(gameTime);
-          if (GUIManager.currentHUDs.Contains((IGUI) GUIManager.escapeGUI) || GUIManager.currentHUDs.Contains((IGUI) GUIManager.inventoryGUI) || GUIManager.currentHUDs.Contains((IGUI) GUIManager.mainmenu) || GUIManager.currentHUDs.Contains((IGUI) GUIManager.loadGUI) || GUIManager.currentHUDs.Contains((IGUI) GUIManager.settings))
+
+          if (GUIManager.currentHUDs.Contains((IGUI) GUIManager.escapeGUI) 
+                        || GUIManager.currentHUDs.Contains((IGUI) GUIManager.inventoryGUI) 
+                        || GUIManager.currentHUDs.Contains((IGUI) GUIManager.mainmenu) 
+                        || GUIManager.currentHUDs.Contains((IGUI) GUIManager.loadGUI) 
+                        || GUIManager.currentHUDs.Contains((IGUI) GUIManager.settings))
           {
             base.Update(gameTime);
           }
@@ -1978,12 +1994,16 @@ namespace DodoTheGame
           {
             if (Game1.player.currentMovementType == Player.DodoMovement.Bicycle)
             {
-              if (Game1.player.actionTime <= this.dodoBicycle1Sprite.MillisecondsPerFrame * this.dodoBicycle1Sprite.TotalFrameCount)
+              if (Game1.player.actionTime <= this.dodoBicycle1Sprite.MillisecondsPerFrame 
+                                * this.dodoBicycle1Sprite.TotalFrameCount)
               {
                 DayCycle.dayTime += 1.5;
                 DayCycle.timeSpeed = 2.0;
               }
-              else if (Game1.player.actionTime <= this.dodoBicycle1Sprite.MillisecondsPerFrame * this.dodoBicycle1Sprite.TotalFrameCount + this.dodoBicycle2Sprite.MillisecondsPerFrame * this.dodoBicycle2Sprite.TotalFrameCount)
+              else if (Game1.player.actionTime <= this.dodoBicycle1Sprite.MillisecondsPerFrame 
+                                * this.dodoBicycle1Sprite.TotalFrameCount 
+                                + this.dodoBicycle2Sprite.MillisecondsPerFrame 
+                                * this.dodoBicycle2Sprite.TotalFrameCount)
               {
                 DayCycle.dayTime += 3.5;
                 DayCycle.timeSpeed = 4.0;
@@ -1999,9 +2019,14 @@ namespace DodoTheGame
             Game1.player.Update(gameTime, Game1.world, this, userInputStatus);
             ScreenShake.Update(gameTime, Game1.player);
             NPCManager.Update(Game1.world, gameTime);
-            foreach (IWorldObject worldObject in Game1.world.objects.Where<IWorldObject>((Func<IWorldObject, bool>) (p => p.StandardSprite != null && p.StandardSprite.animated || p is Growable)))
+            foreach (IWorldObject worldObject 
+                            in Game1.world.objects.Where<IWorldObject>(
+                                (Func<IWorldObject, bool>) 
+                                (p => p.StandardSprite != null && p.StandardSprite.animated 
+                                || p is Growable)))
             {
-              if (worldObject.StandardSprite != null && !this.knownSprites.Contains(worldObject.StandardSprite))
+              if (worldObject.StandardSprite != null 
+                                && !this.knownSprites.Contains(worldObject.StandardSprite))
                 this.knownSprites.Add(worldObject.StandardSprite);
               if (worldObject is Growable growable)
               {
@@ -2015,19 +2040,27 @@ namespace DodoTheGame
             this.knownSprites.ForEach((Action<Sprite>) (spr => spr.Update(gameTime)));
             if (Game1.player.inReachObject != null)
             {
-              if (userInputStatus.interactLeft == UserInputStatus.InputState.Pressed && Game1.player.inReachObject.Interactions[0] != null)
+              if (userInputStatus.interactLeft == UserInputStatus.InputState.Pressed
+                                && Game1.player.inReachObject.Interactions[0] != null)
                 Game1.player.inReachObject.Interact(Cardinal.Left, this, Game1.player);
-              if (userInputStatus.interactRight == UserInputStatus.InputState.Pressed && Game1.player.inReachObject.Interactions[1] != null)
+
+              if (userInputStatus.interactRight == UserInputStatus.InputState.Pressed 
+                                && Game1.player.inReachObject.Interactions[1] != null)
                 Game1.player.inReachObject.Interact(Cardinal.Right, this, Game1.player);
-              if (userInputStatus.interactUp == UserInputStatus.InputState.Pressed && Game1.player.inReachObject.Interactions[3] != null)
+
+              if (userInputStatus.interactUp == UserInputStatus.InputState.Pressed 
+                                && Game1.player.inReachObject.Interactions[3] != null)
                 Game1.player.inReachObject.Interact(Cardinal.Up, this, Game1.player);
-              if (userInputStatus.interactDown == UserInputStatus.InputState.Pressed && Game1.player.inReachObject.Interactions[2] != null)
+
+              if (userInputStatus.interactDown == UserInputStatus.InputState.Pressed 
+                                && Game1.player.inReachObject.Interactions[2] != null)
                 Game1.player.inReachObject.Interact(Cardinal.Down, this, Game1.player);
             }
             this.lastUIS = userInputStatus;
             Wind.Update(gameTime, Game1.player);
             DayCycle.Update(this, gameTime);
-            float num1 = Math.Abs(Game1.player.bikeVelocity.X) + Math.Abs(Game1.player.bikeVelocity.Y) / 15f;
+            float num1 = Math.Abs(Game1.player.bikeVelocity.X) 
+                            + Math.Abs(Game1.player.bikeVelocity.Y) / 15f;
             if ((double) num1 > 1.0)
               num1 = 1f;
             int num2 = (int) Math.Round(0.60000002384185791 * (300.0 - 220.0 * (double) num1));
@@ -2045,7 +2078,8 @@ namespace DodoTheGame
             ButterflyManager.sprite.Update(gameTime);
             for (int index = Game1.foregroundEffectList.Count - 1; index >= 0; --index)
             {
-              if (Game1.foregroundEffectList[index] is HarvestResults foregroundEffect && foregroundEffect.ToDiscard)
+              if (Game1.foregroundEffectList[index] 
+                                is HarvestResults foregroundEffect && foregroundEffect.ToDiscard)
                 Game1.foregroundEffectList.RemoveAt(index);
             }
             base.Update(gameTime);
@@ -2056,12 +2090,7 @@ namespace DodoTheGame
       }
     }
 
-        private static void Close()
-        {
-            //TODO
-        }
-
-        protected override void Draw(GameTime gameTime)
+    protected override void Draw(GameTime gameTime)
     {
       Game1.wavecounterdebug = 0;
       if (this.startupIntroDone && !Recorder.rerendering)

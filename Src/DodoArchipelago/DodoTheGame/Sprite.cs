@@ -63,7 +63,12 @@ namespace DodoTheGame
       this.subSprites = ssList ?? new List<SubSprite>();
       this.name = name;
       this.fullTexture = texture;
-      this.height = this.fullTexture.Height;
+
+      if (this.fullTexture != null)
+        this.height = this.fullTexture.Height;
+      else
+        this.height = 1;
+      
       this.currentElapsedMilliseconds = 0;
       this.horizontalMirroring = horizontalMirror;
     }

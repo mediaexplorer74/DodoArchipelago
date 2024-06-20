@@ -23,14 +23,24 @@ namespace DodoTheGame.Localization
     public static void Init()
     {
       FileInfo[] fileInfoArray = ContentLoadingWrapper.ListAssets("localization");
+      
       LocalizationManager.Languages = new List<Language>();
+
       foreach (FileInfo fileInfo in fileInfoArray)
-        LocalizationManager.Languages.Add(
-            LocalizationManager.serializer.Deserialize<Language>(
-                File.ReadAllText("Content\\localization\\" + fileInfo.Name)));
+      {
+        string json_data =  File.ReadAllText("Content\\localization\\" + fileInfo.Name);
+
+        Language lg = 
+            LocalizationManager.serializer.Deserialize<Language>(json_data);
+
+        LocalizationManager.Languages.Add(lg);
+      }
     }
 
-    public static void SetLanguage(Language lg) => LocalizationManager.CurrentLanguage = lg;
+    public static void SetLanguage(Language lg)
+    {
+        LocalizationManager.CurrentLanguage = lg;
+    }
 
     public static string GetString(string id, bool required = true)
     {

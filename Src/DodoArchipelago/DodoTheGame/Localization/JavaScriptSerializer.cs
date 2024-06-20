@@ -1,9 +1,6 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Localization.LocalizationManager
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.Localization.LocalizationManager
 
+using Newtonsoft.Json;
 using System;
 
 namespace DodoTheGame.Localization
@@ -14,22 +11,26 @@ namespace DodoTheGame.Localization
 
         public object ConvertToType(object v, Type type)
         {
-            throw new NotImplementedException();
+            //TODO
+            return v;
         }
 
-        internal T Deserialize<T>(string v)
+        internal T Deserialize<T>(string json)
         {
-            throw new NotImplementedException();
+            T m = JsonConvert.DeserializeObject<T>(json);
+            return m;
         }
 
-        internal void RegisterConverters(System.Collections.Generic.IEnumerable<JavaScriptConverter> enumerable)
+        internal void RegisterConverters(
+            System.Collections.Generic.IEnumerable<JavaScriptConverter> enumerable)
         {
-            throw new NotImplementedException();
+            //
         }
 
-        internal string Serialize(object woModifiedInGameEditor)
+        internal string Serialize(object o)
         {
-            throw new NotImplementedException();
+            string json = JsonConvert.SerializeObject(o);
+            return json;
         }
     }
 }

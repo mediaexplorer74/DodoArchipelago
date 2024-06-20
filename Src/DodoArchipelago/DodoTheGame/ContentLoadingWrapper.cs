@@ -7,6 +7,8 @@
 using DodoTheGame.Localization;
 using Microsoft.Xna.Framework.Content;
 using SharpRaven.Data;
+using System;
+using System.Diagnostics;
 using System.IO;
 
 
@@ -26,8 +28,34 @@ namespace DodoTheGame
       if (ContentLoadingWrapper.loadedAssetCount > ContentLoadingWrapper.expectedAssetCount)
         Game1.Log("Loaded asset count is higher than expected", BreadcrumbLevel.Critical, "clw");
       string assetName1 = LocalizationManager.GetAssetName(assetName, false);
-      ContentLoadingWrapper.LastAssetName = assetName1 == null || !(assetName != assetName1) ? assetName : assetName + " => " + assetName1;
-      return assetName1 == null ? ContentLoadingWrapper.contentManager.Load<T>(assetName) : ContentLoadingWrapper.contentManager.Load<T>(assetName1);
+      ContentLoadingWrapper.LastAssetName = assetName1 == null 
+                || !(assetName != assetName1) ? assetName : assetName + " => " + assetName1;
+
+        T res = default;
+        if (assetName1 == null)
+        {
+            try
+            {
+                res = ContentLoadingWrapper.contentManager.Load<T>(assetName);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+        else
+        {
+            try
+            { 
+                res = ContentLoadingWrapper.contentManager.Load<T>(assetName1);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+       }
+
+        return res;
     }
 
     public static FileInfo[] ListAssets(string folder)

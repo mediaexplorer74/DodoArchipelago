@@ -176,20 +176,23 @@ namespace DodoTheGame
 
     public Game1()
     {
-      int inputType = default;
-      bool debugTools = default;
-      float sfxVolume = default;
-      float bgmVolume = default;
-      int width = default;
-      int height = default;
-      int highcontrast = default;
-      bool errorReporting = default;
+      int inputType = 1;
+      /*
+      bool debugTools = false;
+      float sfxVolume = 3;
+      float bgmVolume = 4;
+      int width = 640;
+      int height = 480;
+      */
+      int highcontrast = 0; // 1 - high contrast, 0 - normal mode
+      
+      bool errorReporting = false;
 
-      this.Content.RootDirectory = /*Environment.CurrentDirectory + */"\\Content";
+      this.Content.RootDirectory = /*Environment.CurrentDirectory + "\\" +*/ "Content";
       System.Diagnostics.Debug.WriteLine(File.ReadAllText(this.Content.RootDirectory + "\\ascii.txt"));
       System.Diagnostics.Debug.WriteLine("DodoTheGame/The Dodo Archipelago RELEASE 1.0");
       System.Diagnostics.Debug.WriteLine("(c) 2017-2020 Dodo Team");
-      System.Diagnostics.Debug.WriteLine("=================================================================");
+      System.Diagnostics.Debug.WriteLine("====================================================");
       Game1.renderSize = new Vector2(1280f, 720f);
       Recorder.exportFolder = /*Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) 
                 +*/ "\\DTGEXP\\";
@@ -197,23 +200,39 @@ namespace DodoTheGame
                 + */ "\\DTG\\";
       Game1.graphics = new GraphicsDeviceManager((Game) this);
       GameSettings gameSettings = SaveHandler.LoadSettings();
-      Sound.sfxVolume = gameSettings.sfxVolume;
-      Sound.bgmVolume = gameSettings.bgmVolume;
+       
+        try
+        {
+            Sound.sfxVolume = gameSettings.sfxVolume;
+            Sound.bgmVolume = gameSettings.bgmVolume;
+        }
+        catch (Exception ex)
+        {
+           System.Diagnostics.Debug.WriteLine("[ex] Set sfxVolume error: " + ex.Message);
+        }
+
       Game1.SetFullscreen(gameSettings.fullscreenSelected);
+
       Game1.windowSize = gameSettings.resolution;
-      if ((double) Game1.windowSize.X / 16.0 > (double) Game1.windowSize.Y / 9.0)
-        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32((float) 
-            (16.0 * (double) Game1.windowSize.Y / 9.0)), (float) Convert.ToInt32(Game1.windowSize.Y));
-      else if ((double) Game1.windowSize.X / 16.0 < (double) Game1.windowSize.Y / 9.0)
-      {
-        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32(Game1.windowSize.X), (float) Convert.ToInt32((float) (9.0 * (double) Game1.windowSize.X / 16.0)));
-      }
-      else
-      {
-        if ((double) Game1.windowSize.X / 16.0 != (double) Game1.windowSize.Y / 9.0)
-          throw new Exception("Unmanaged case");
-        Game1.renderSizeUpscaled = Game1.windowSize;
-      }
+
+        if ((double)Game1.windowSize.X / 16.0 > (double)Game1.windowSize.Y / 9.0)
+        {
+            Game1.renderSizeUpscaled = new Vector2((float)Convert.ToInt32((float)
+                (16.0 * (double)Game1.windowSize.Y / 9.0)),
+                (float)Convert.ToInt32(Game1.windowSize.Y));
+        }
+        else if ((double)Game1.windowSize.X / 16.0 < (double)Game1.windowSize.Y / 9.0)
+        {
+            Game1.renderSizeUpscaled = new Vector2((float)Convert.ToInt32(Game1.windowSize.X),
+                (float)Convert.ToInt32((float)(9.0 * (double)Game1.windowSize.X / 16.0)));
+        }
+        else
+        {
+            if ((double)Game1.windowSize.X / 16.0 != (double)Game1.windowSize.Y / 9.0)
+                throw new Exception("Unmanaged case");
+            Game1.renderSizeUpscaled = Game1.windowSize;
+        }
+
       this.Window.AllowUserResizing = true;
       this.Window.ClientSizeChanged += new EventHandler<EventArgs>(this.OnResize);
       string[] strArray = new string[5];
@@ -229,8 +248,11 @@ namespace DodoTheGame
       strArray[4] = num.ToString();
       Recorder.sessionStartcode = string.Concat(strArray);
       this.debugEnabled = false;
+
       this.userInput = new UserInput(inputType);
+
       Recorder.useHighContrast = highcontrast > 0;
+
       Game1.graphics.PreferredBackBufferWidth = (int) Game1.windowSize.X;
       Game1.graphics.PreferredBackBufferHeight = (int) Game1.windowSize.Y;
       Game1.graphics.HardwareModeSwitch = false;
@@ -242,8 +264,20 @@ namespace DodoTheGame
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
             this.UnhandledException);
       }
-      if (!Directory.Exists(Save.saveFolder))
-        Directory.CreateDirectory(Save.saveFolder);
+
+     if (!Directory.Exists(Save.saveFolder))
+     {
+        try
+        {
+            Directory.CreateDirectory(Save.saveFolder);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("[ex] CreateDirectory - saveFolder error: "
+                + ex.Message);
+        }
+     }
+
       Game1.Log("Initalised game", BreadcrumbLevel.Info);
     }
 
@@ -405,7 +439,9 @@ namespace DodoTheGame
       this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
       Game1.arialSpriteFont = ContentLoadingWrapper.Load<SpriteFont>("Arial");
       Game1.arial23SpriteFont = ContentLoadingWrapper.Load<SpriteFont>("Arial23");
-      ThreadPool.QueueUserWorkItem(new WaitCallback(this.LoadAllContent));
+           
+      //ThreadPool.QueueUserWorkItem(new WaitCallback(this.LoadAllContent));
+      this.LoadAllContent(default);
     }
 
     private void LoadAllContent(object stateInfo)
@@ -431,13 +467,16 @@ namespace DodoTheGame
       Game1.dodoteamlogo = ContentLoadingWrapper.Load<Texture2D>("dodoteam_black_small");
       Game1.monogamelogo = ContentLoadingWrapper.Load<Texture2D>("MonogameLogo");
       Game1.fmodlogo = ContentLoadingWrapper.Load<Texture2D>("FMODLogo");
-      Sound.InitSound(new List<SoundEffect>()
-      {
-        ContentLoadingWrapper.Load<SoundEffect>("wavebge"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/volcano"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/cascade")
-      }, this);
-      Sound.InitEvents(this);
+      
+      //TODO
+      //Sound.InitSound(new List<SoundEffect>()
+      //{
+      //  ContentLoadingWrapper.Load<SoundEffect>("wavebge"),
+      //  ContentLoadingWrapper.Load<SoundEffect>("soundeffects/volcano"),
+      //  ContentLoadingWrapper.Load<SoundEffect>("soundeffects/cascade")
+      //}, this);
+      //Sound.InitEvents(this);
+
       TerrainBackground background = new TerrainBackground();
       TerrainBackground texture1 = new TerrainBackground();
       Game1.commonSprites = new List<Sprite>();
@@ -1816,7 +1855,9 @@ namespace DodoTheGame
         WorldGenerator.GenerateWorld(Game1.world, this.presetList);
         Game1.player.inventory.inventory[0] = new ItemStack(10, 6);
         Game1.NPCs = new List<INPC>();
-        Sound.InitEvents(this);
+
+        //TODO
+        //Sound.InitEvents(this);
       }
       else if (SaveHandler.IsSlotRegistered(SaveHandler.LastSavedSlot))
       {
@@ -1853,7 +1894,10 @@ namespace DodoTheGame
       Stopwatch stopwatch = Stopwatch.StartNew();
       if (this.woModifiedInGameEditor == null)
         this.woModifiedInGameEditor = new List<IWorldObject>();
-      Sound.UpdateFMOD();
+
+      //TODO
+      //Sound.UpdateFMOD();
+      
       if (!this.startupIntroDone)
       {
         if (this.spriteBatch != null && Game1.rouliLSpriteFont != null && this.ressourceLoadingBackground720 != null && Game1.dodoteamlogo != null && Game1.monogamelogo != null && Game1.fmodlogo != null)
@@ -1870,7 +1914,10 @@ namespace DodoTheGame
       {
         if (this.startupFadeInTimer < 1100)
           this.startupFadeInTimer += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds);
-        Sound.Update(gameTime, this);
+
+        //TODO
+        //Sound.Update(gameTime, this);
+        
         MediaPlayer.Volume = Sound.bgmVolume;
         if (SaveHandler.CurrentlySaving)
         {
@@ -2423,9 +2470,23 @@ namespace DodoTheGame
       {
         this.GraphicsDevice.Clear(Color.Black);
         LOADING_STATE state;
-        if (this.spriteBatch != null && Game1.rouliLSpriteFont != null && this.ressourceLoadingBackground720 != null && Game1.dodoteamlogo != null && Game1.monogamelogo != null && Game1.fmodlogo != null && Sound.SoundSystemInitialized && Sound.fmodEvents != null && Sound.fmodEvents["event:/SFX/GameLogo"].getSampleLoadingState(out state) == RESULT.OK && state == LOADING_STATE.LOADED)
+
+       if (this.spriteBatch != null && Game1.rouliLSpriteFont != null 
+        && this.ressourceLoadingBackground720 != null 
+        && Game1.dodoteamlogo != null 
+        && Game1.monogamelogo != null
+        && Game1.fmodlogo != null 
+        //&& Sound.SoundSystemInitialized 
+        //&& Sound.fmodEvents != null 
+        //&& Sound.fmodEvents["event:/SFX/GameLogo"].getSampleLoadingState(out state) == RESULT.OK
+        //&& state == LOADING_STATE.LOADED
+        )
         {
-          Vector2 position = new Vector2((float) Math.Round(((double) Game1.windowSize.X - (double) Game1.renderSize.X) / 2.0, 0), (float) Math.Round(((double) Game1.windowSize.Y - (double) Game1.renderSize.Y) / 2.0, 0));
+          Vector2 position = new Vector2((float) Math.Round(
+              ((double) Game1.windowSize.X - (double) Game1.renderSize.X) / 2.0, 0), 
+              (float) Math.Round(((double) Game1.windowSize.Y 
+              - (double) Game1.renderSize.Y) / 2.0, 0));
+
           this.spriteBatch.Begin(SpriteSortMode.Immediate);
           this.spriteBatch.Draw(this.ressourceLoadingBackground720, position, Color.White);
           this.spriteBatch.End();

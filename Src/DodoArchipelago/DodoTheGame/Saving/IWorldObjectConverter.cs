@@ -19,7 +19,10 @@ namespace DodoTheGame.Saving
     {
       get
       {
-        return default;//((IEnumerable<Assembly>) AppDomain.CurrentDomain.GetAssemblies()).SelectMany<Assembly, Type>((Func<Assembly, IEnumerable<Type>>) (s => (IEnumerable<Type>) s.GetTypes())).Where<Type>((Func<Type, bool>) (p => typeof (IWorldObject).IsAssignableFrom(p)));
+        return default;//((IEnumerable<Assembly>) AppDomain.CurrentDomain.GetAssemblies()).SelectMany<Assembly,
+                       //Type>((Func<Assembly, IEnumerable<Type>>)
+                       //(s => (IEnumerable<Type>) s.GetTypes())).Where<Type>((Func<Type, bool>)
+                       //(p => typeof (IWorldObject).IsAssignableFrom(p)));
       }
     }
 
@@ -71,7 +74,8 @@ namespace DodoTheGame.Saving
           break;
         case BuildPoint buildPoint:
           dictionary.Add("bpIncompatibleTags", (object) buildPoint.bpIncompatibleTags);
-          dictionary.Add("otherBuildsSpecialIncompatibleTags", (object) buildPoint.otherBuildsSpecialIncompatibleTags);
+          dictionary.Add("otherBuildsSpecialIncompatibleTags",
+              (object) buildPoint.otherBuildsSpecialIncompatibleTags);
           dictionary.Add("isBpVisible", (object) buildPoint.isBpVisible);
           dictionary.Add("requiredLevel", (object) buildPoint.requiredLevel);
           break;
@@ -83,7 +87,8 @@ namespace DodoTheGame.Saving
           break;
         case Upgradable upgradable:
           dictionary.Add("incompatibleTagsToUpgrade", (object) upgradable.incompatibleTagsToUpgrade);
-          dictionary.Add("otherBuildsSpecialIncompatibleTags", (object) upgradable.otherBuildsSpecialIncompatibleTags);
+          dictionary.Add("otherBuildsSpecialIncompatibleTags",
+              (object) upgradable.otherBuildsSpecialIncompatibleTags);
           break;
         case LinkingGrowable linkingGrowable:
           dictionary.Add("growSprites", (object) linkingGrowable.growSprites);
@@ -108,22 +113,25 @@ namespace DodoTheGame.Saving
       switch ((string) dict["Type"])
       {
         case "Static":
-                    return (object)new Static()
-                    {
-                        VisibilityIncompatibleTags = (string[]) serializer.ConvertToType(dict["VisibilityIncompatibleTags"], typeof (string[])),
-                        VisibilityRequirementTags = (string[])serializer.ConvertToType(dict["VisibilityRequirementTags"], typeof(string[])),
-                        Tags = (string[])serializer.ConvertToType(dict["Tags"], typeof(string[])),
-                        PresetMarker = (string)dict["PresetMarker"],
-                        Visible = (bool)serializer.ConvertToType(dict["Visible"], typeof(bool)),
-                        ExplicitEpicenter = (Vector2)serializer.ConvertToType(dict["ExplicitEpicenter"], typeof(Vector2)),
-                        ExtraFloorHeight = (int)dict["ExtraFloorHeight"],
-                        ExtraReach = (Vector2)serializer.ConvertToType(dict["ExtraReach"], typeof(Vector2)),
-                        Hitbox = (List<Rectangle>)serializer.ConvertToType(dict["Hitbox"], typeof(List<Rectangle>)),
-                        Interactions = (IDodoInteraction[])serializer.ConvertToType(dict["Interactions"], typeof(IDodoInteraction[])),
-                        Location = (Vector2)serializer.ConvertToType(dict["Location"], typeof(Vector2)),
-                        ObjectId = (string)dict["ObjectId"],
-                        StandardSprite = (Sprite)serializer.ConvertToType(dict["StandardSprite"], typeof(Sprite))
-                    };
+          return (object)new Static()
+          {
+            VisibilityIncompatibleTags =
+            (string[]) serializer.ConvertToType(dict["VisibilityIncompatibleTags"], typeof (string[])),
+            VisibilityRequirementTags =
+            (string[])serializer.ConvertToType(dict["VisibilityRequirementTags"], typeof(string[])),
+            Tags = (string[])serializer.ConvertToType(dict["Tags"], typeof(string[])),
+            PresetMarker = (string)dict["PresetMarker"],
+            Visible = (bool)serializer.ConvertToType(dict["Visible"], typeof(bool)),
+            ExplicitEpicenter = (Vector2)serializer.ConvertToType(dict["ExplicitEpicenter"], typeof(Vector2)),
+            ExtraFloorHeight = (int)dict["ExtraFloorHeight"],
+            ExtraReach = (Vector2)serializer.ConvertToType(dict["ExtraReach"], typeof(Vector2)),
+            Hitbox = (List<Rectangle>)serializer.ConvertToType(dict["Hitbox"], typeof(List<Rectangle>)),
+            Interactions = (IDodoInteraction[])serializer.ConvertToType(dict["Interactions"],
+            typeof(IDodoInteraction[])),
+            Location = (Vector2)serializer.ConvertToType(dict["Location"], typeof(Vector2)),
+            ObjectId = (string)dict["ObjectId"],
+            StandardSprite = (Sprite)serializer.ConvertToType(dict["StandardSprite"], typeof(Sprite))
+          };
         case "Hourglass":
           return (object) new Hourglass()
           {
@@ -134,7 +142,8 @@ namespace DodoTheGame.Saving
             ExtraFloorHeight = (int) dict["ExtraFloorHeight"],
             ExtraReach = (Vector2) serializer.ConvertToType(dict["ExtraReach"], typeof (Vector2)),
             Hitbox = (List<Rectangle>) serializer.ConvertToType(dict["Hitbox"], typeof (List<Rectangle>)),
-            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"], typeof (IDodoInteraction[])),
+            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"],
+            typeof (IDodoInteraction[])),
             Location = (Vector2) serializer.ConvertToType(dict["Location"], typeof (Vector2)),
             ObjectId = (string) dict["ObjectId"],
             StandardSprite = (Sprite) serializer.ConvertToType(dict["StandardSprite"], typeof (Sprite))
@@ -149,12 +158,15 @@ namespace DodoTheGame.Saving
             ExtraFloorHeight = (int) dict["ExtraFloorHeight"],
             ExtraReach = (Vector2) serializer.ConvertToType(dict["ExtraReach"], typeof (Vector2)),
             Hitbox = (List<Rectangle>) serializer.ConvertToType(dict["Hitbox"], typeof (List<Rectangle>)),
-            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"], typeof (IDodoInteraction[])),
+            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"], 
+            typeof (IDodoInteraction[])),
             Location = (Vector2) serializer.ConvertToType(dict["Location"], typeof (Vector2)),
             ObjectId = (string) dict["ObjectId"],
             StandardSprite = (Sprite) serializer.ConvertToType(dict["StandardSprite"], typeof (Sprite)),
-            incompatibleTagsToUpgrade = (string[]) serializer.ConvertToType(dict["incompatibleTagsToUpgrade"], typeof (string[])),
-            otherBuildsSpecialIncompatibleTags = (string[]) serializer.ConvertToType(dict["otherBuildsSpecialIncompatibleTags"], typeof (string[]))
+            incompatibleTagsToUpgrade =
+            (string[]) serializer.ConvertToType(dict["incompatibleTagsToUpgrade"], typeof (string[])),
+            otherBuildsSpecialIncompatibleTags = 
+            (string[]) serializer.ConvertToType(dict["otherBuildsSpecialIncompatibleTags"], typeof (string[]))
           };
           if (upgradable.PresetMarker == "Tableau de bord")
             upgradable.Upgraded += (EventHandler) ((sender, args) =>
@@ -175,18 +187,23 @@ namespace DodoTheGame.Saving
             Tags = (string[]) serializer.ConvertToType(dict["Tags"], typeof (string[])),
             PresetMarker = (string) dict["PresetMarker"],
             Visible = (bool) serializer.ConvertToType(dict["Visible"], typeof (bool)),
-            ExplicitEpicenter = (Vector2) serializer.ConvertToType(dict["ExplicitEpicenter"], typeof (Vector2)),
+            ExplicitEpicenter = (Vector2) serializer.ConvertToType(dict["ExplicitEpicenter"], 
+            typeof (Vector2)),
             ExtraFloorHeight = (int) dict["ExtraFloorHeight"],
             ExtraReach = (Vector2) serializer.ConvertToType(dict["ExtraReach"], typeof (Vector2)),
             Hitbox = (List<Rectangle>) serializer.ConvertToType(dict["Hitbox"], typeof (List<Rectangle>)),
-            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"], typeof (IDodoInteraction[])),
+            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"],
+            typeof (IDodoInteraction[])),
             Location = (Vector2) serializer.ConvertToType(dict["Location"], typeof (Vector2)),
             ObjectId = (string) dict["ObjectId"],
             StandardSprite = (Sprite) serializer.ConvertToType(dict["StandardSprite"], typeof (Sprite)),
-            bpIncompatibleTags = (string[]) serializer.ConvertToType(dict["bpIncompatibleTags"], typeof (string[])),
+            bpIncompatibleTags = (string[]) serializer.ConvertToType(dict["bpIncompatibleTags"], 
+            typeof (string[])),
             isBpVisible = (bool) serializer.ConvertToType(dict["isBpVisible"], typeof (bool)),
             requiredLevel = (int) dict["requiredLevel"],
-            otherBuildsSpecialIncompatibleTags = (string[]) serializer.ConvertToType(dict["otherBuildsSpecialIncompatibleTags"], typeof (string[]))
+            otherBuildsSpecialIncompatibleTags =
+            (string[]) serializer.ConvertToType(dict["otherBuildsSpecialIncompatibleTags"],
+            typeof (string[]))
           };
           if (buildPoint.ObjectId == "bp1")
             buildPoint.Built += (EventHandler) ((sender, args) =>
@@ -201,21 +218,27 @@ namespace DodoTheGame.Saving
             Tags = (string[]) serializer.ConvertToType(dict["Tags"], typeof (string[])),
             PresetMarker = (string) dict["PresetMarker"],
             Visible = (bool) serializer.ConvertToType(dict["Visible"], typeof (bool)),
-            ExplicitEpicenter = (Vector2) serializer.ConvertToType(dict["ExplicitEpicenter"], typeof (Vector2)),
+            ExplicitEpicenter = (Vector2) serializer.ConvertToType(dict["ExplicitEpicenter"],
+            typeof (Vector2)),
             ExtraFloorHeight = (int) dict["ExtraFloorHeight"],
             ExtraReach = (Vector2) serializer.ConvertToType(dict["ExtraReach"], typeof (Vector2)),
             Hitbox = (List<Rectangle>) serializer.ConvertToType(dict["Hitbox"], typeof (List<Rectangle>)),
-            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"], typeof (IDodoInteraction[])),
+            Interactions = (IDodoInteraction[]) serializer.ConvertToType(dict["Interactions"], 
+            typeof (IDodoInteraction[])),
             Location = (Vector2) serializer.ConvertToType(dict["Location"], typeof (Vector2)),
             ObjectId = (string) dict["ObjectId"],
-            StandardSprite = (Sprite) serializer.ConvertToType(dict["StandardSprite"], typeof (Sprite)),
-            growSprites = (List<Sprite>) serializer.ConvertToType(dict["growSprites"], typeof (List<Sprite>)),
+            StandardSprite = (Sprite) serializer.ConvertToType(dict["StandardSprite"],
+            typeof (Sprite)),
+            growSprites = (List<Sprite>) serializer.ConvertToType(dict["growSprites"],
+            typeof (List<Sprite>)),
             growTime = Convert.ToInt32(dict["growTime"]),
             growTimePassed = Convert.ToInt32(dict["growTimePassed"]),
             mainGrowState = Convert.ToInt32(dict["mainGrowState"])
           };
           if (growable.ObjectId == "fleur geante 13-0")
-            growable.Harvested += (EventHandler) ((sender, args) => GlobalEventManager.RegisterEvent(new GlobalEvent(GlobalEvent.Event.VineFlowerHarvested)));
+            growable.Harvested +=  (EventHandler) ((sender, args) => 
+                            GlobalEventManager.RegisterEvent(
+                                new GlobalEvent(GlobalEvent.Event.VineFlowerHarvested)));
           return (object) growable;
         case "LGrowable":
           return (object) new LinkingGrowable()

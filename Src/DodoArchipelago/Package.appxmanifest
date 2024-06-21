@@ -9,7 +9,7 @@
   <Identity
     Name="ME.DodoArchipelagoV1"
     Publisher="CN=Admin"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="95d8b4c3-4464-403f-a6a9-0ab76de34797" PhonePublisherId="00004000-6400-4400-0000-000001000797"/>
 

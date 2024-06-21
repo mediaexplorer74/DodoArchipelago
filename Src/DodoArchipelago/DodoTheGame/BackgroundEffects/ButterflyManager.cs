@@ -1,8 +1,5 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.BackgroundEffects.ButterflyManager
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// DodoTheGame.BackgroundEffects.ButterflyManager
+
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -41,12 +38,17 @@ namespace DodoTheGame.BackgroundEffects
             generalGuidance = new Vector2(2f, 0.0f);
             break;
         }
-        ButterflyManager.butterflyList.Add(new Butterfly(startingPoint, ButterflyManager.sprite, 150, generalGuidance));
+        ButterflyManager.butterflyList.Add(new Butterfly(startingPoint, ButterflyManager.sprite, 
+            150, generalGuidance));
       }
       for (int index = ButterflyManager.butterflyList.Count - 1; index >= 0; --index)
       {
-        Vector2 drawpos = ButterflyManager.butterflyList[index].GetDrawpos(ButterflyManager.butterflyList[index].passedTime);
-        if ((double) drawpos.X > 22000.0 || (double) drawpos.X < -250.0 || (double) drawpos.Y > 15100.0 || (double) drawpos.Y < -250.0 || (double) Vector2.Distance(player.location, drawpos) > 5000.0)
+        Vector2 drawpos = ButterflyManager.butterflyList[index]
+                    .GetDrawpos(ButterflyManager.butterflyList[index].passedTime);
+
+        if ((double) drawpos.X > 22000.0 || (double) drawpos.X < -250.0 
+                    || (double) drawpos.Y > 15100.0 || (double) drawpos.Y < -250.0 
+                    || (double) Vector2.Distance(player.location, drawpos) > 5000.0)
           ButterflyManager.butterflyList.RemoveAt(index);
       }
     }

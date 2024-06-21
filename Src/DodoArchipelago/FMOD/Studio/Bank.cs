@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: FMOD.Studio.Bank
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: FMOD.Studio.Bank
 
 using System;
 using System.Runtime.InteropServices;
@@ -66,12 +62,14 @@ namespace FMOD.Studio
       {
         IntPtr num = Marshal.AllocHGlobal(256);
         int retrieved = 0;
-        RESULT stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(this.handle, index, out id, num, 256, out retrieved);
+        RESULT stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(
+            this.handle, index, out id, num, 256, out retrieved);
         if (stringInfo == RESULT.ERR_TRUNCATED)
         {
           Marshal.FreeHGlobal(num);
           num = Marshal.AllocHGlobal(retrieved);
-          stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(this.handle, index, out id, num, retrieved, out retrieved);
+          stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(
+              this.handle, index, out id, num, retrieved, out retrieved);
         }
         if (stringInfo == RESULT.OK)
           path = freeHelper.stringFromNative(num);

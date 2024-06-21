@@ -1,10 +1,10 @@
-# DodoArchipelago
+# DodoArchipelago (1.0.1-pre-pre-alpha)
 ![](Images/logo.png)
 
 ## About
 This is my *veeery quuuick* W10M port of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) project. :)
 
-Main goal: do some testing/exploration of Universal MonoGame Framework v3.8 package 
+Main goal: do some testing/exploration of my own custom Universal MonoGame Framework behaviour/game interaction. 
 
 
 ## Screenshot(s)
@@ -22,6 +22,7 @@ https://www.youtube.com/channel/UCdbQJRNyC7JdgvsxZLNhCzw
 - Game content - "sounds, textures: connection/incorporation" in progress
 - Original kbd control still presend for desktop mode 
 - No Screen scaling mode yet.
+- No sound (fmod not realized yet)
 
 ## GameDev: How-to
 https://gamedevelopment.tutsplus.com/tutorials/make-a-neon-vector-shooter-in-xna-basic-gameplay--gamedev-9859

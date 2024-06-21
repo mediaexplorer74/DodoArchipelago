@@ -56,8 +56,10 @@ namespace DodoTheGame
 
     public static FileInfo[] ListAssets(string folder)
     {
-      DirectoryInfo directoryInfo = new DirectoryInfo(ContentLoadingWrapper.contentManager.RootDirectory + "\\" + folder);
-      return directoryInfo.Exists ? directoryInfo.GetFiles("*.*") : throw new DirectoryNotFoundException();
+      DirectoryInfo directoryInfo = 
+                new DirectoryInfo(ContentLoadingWrapper.contentManager.RootDirectory + "\\" + folder);
+      return directoryInfo.Exists ? directoryInfo.GetFiles("*.*")
+                : throw new DirectoryNotFoundException();
     }
   }
 }

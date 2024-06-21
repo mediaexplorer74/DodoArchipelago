@@ -24,7 +24,7 @@
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
@@ -136,8 +136,6 @@
     <Compile Include="DodoTheGame\ManagementObject.cs" />
     <Compile Include="DodoTheGame\ManagementObjectCollection.cs" />
     <Compile Include="DodoTheGame\ManagementObjectSearcher.cs" />
-    <Compile Include="DodoTheGame\Properties\ApplicationSettingsBase.cs" />
-    <Compile Include="DodoTheGame\Properties\SettingsBase.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="DodoTheGame\GlobalEvent.cs" />
     <Compile Include="DodoTheGame\GlobalEventManager.cs" />
@@ -152,7 +150,6 @@
     <Compile Include="DodoTheGame\GUI\MainMenuGUI.cs" />
     <Compile Include="DodoTheGame\GUI\SettingsGUI.cs" />
     <Compile Include="DodoTheGame\GUI\TutorialGUI.cs" />
-    <Compile Include="DodoTheGame\HardwareInfo.cs" />
     <Compile Include="DodoTheGame\Hitbox\Box.cs" />
     <Compile Include="DodoTheGame\Hitbox\HorizontalLine.cs" />
     <Compile Include="DodoTheGame\Hitbox\IHitbox.cs" />
@@ -186,7 +183,6 @@
     <Compile Include="DodoTheGame\PlayerUnlockables.cs" />
     <Compile Include="DodoTheGame\Preset.cs" />
     <Compile Include="DodoTheGame\PresetGenerator.cs" />
-    <Compile Include="DodoTheGame\Properties\Settings.cs" />
     <Compile Include="DodoTheGame\Recorder.cs" />
     <Compile Include="DodoTheGame\Saving\GameSettings.cs" />
     <Compile Include="DodoTheGame\Saving\IDodoInteractionConverter.cs" />
@@ -2943,11 +2939,11 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
     </PackageReference>
-    <PackageReference Include="MonoGame.Framework.WindowsUniversal">
-      <Version>3.8.0.1641</Version>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
     </PackageReference>
     <PackageReference Include="XAct.Core.PCL">
       <Version>0.0.5014</Version>
@@ -2956,10 +2952,17 @@
     <!--PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" /-->
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MonoGame\MonoGame.Framework\MonoGame.Framework.WindowsUAP.csproj">
+      <Project>{09c41a48-7bf3-4a46-9eb8-ce95b4c27ca9}</Project>
+      <Name>MonoGame.Framework.WindowsUAP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpRaven\SharpRaven.csproj">
       <Project>{f65d5dfa-dc70-4709-8d9b-9a5d512bd9ea}</Project>
       <Name>SharpRaven</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DodoTheGame\Properties\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

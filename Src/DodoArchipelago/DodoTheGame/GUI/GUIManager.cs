@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.GUI.GUIManager
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.GUI.GUIManager
 
 using DodoTheGame.Saving;
 using Microsoft.Xna.Framework;
@@ -138,7 +134,8 @@ namespace DodoTheGame.GUI
       GUIManager.credits.mainbackground = ContentLoadingWrapper.Load<Texture2D>("mainmenu/bg");
       GUIManager.credits.creditsbackground = ContentLoadingWrapper.Load<Texture2D>("mainmenu/credits");
       GUIManager.inventoryGUI.background = ContentLoadingWrapper.Load<Texture2D>("ui/inv_bg");
-      GUIManager.inventoryGUI.animatedBackground = new Sprite("inv_bg_animated", ContentLoadingWrapper.Load<Texture2D>("ui/inv_bg_animated"))
+      GUIManager.inventoryGUI.animatedBackground = 
+                new Sprite("inv_bg_animated", ContentLoadingWrapper.Load<Texture2D>("ui/inv_bg_animated"))
       {
         animated = true,
         Width = 1098,
@@ -148,13 +145,15 @@ namespace DodoTheGame.GUI
       };
       GUIManager.inventoryGUI.inventaire = ContentLoadingWrapper.Load<Texture2D>("ui/inventaire");
       GUIManager.inventoryGUI.tile = ContentLoadingWrapper.Load<Texture2D>("ui/inventorytile");
-      GUIManager.inventoryGUI.selectedtiletexture = ContentLoadingWrapper.Load<Texture2D>("ui/inventorytile2");
+      GUIManager.inventoryGUI.selectedtiletexture = 
+                ContentLoadingWrapper.Load<Texture2D>("ui/inventorytile2");
       GUIManager.inventoryGUI.itemTextures = game.itemTextures;
       GUIManager.inventoryGUI.empty_flower = ContentLoadingWrapper.Load<Texture2D>("smallitems/empty");
       GUIManager.inventoryGUI.miniFlowersTextures = game.miniFlowersTextures;
       GUIManager.inventoryGUI.font = Game1.rouliLSpriteFont;
       GUIManager.editorHUD.background = ContentLoadingWrapper.Load<Texture2D>("ui/pause1");
-      GUIManager.tutorialHUD.animatedBackground = new Sprite("tuto", ContentLoadingWrapper.Load<Texture2D>("ui/tuto"))
+      GUIManager.tutorialHUD.animatedBackground = 
+                new Sprite("tuto", ContentLoadingWrapper.Load<Texture2D>("ui/tuto"))
       {
         animated = true,
         Width = 751,
@@ -184,7 +183,10 @@ namespace DodoTheGame.GUI
     public static void Update(GameTime gameTime)
     {
       GUIManager.currentHUDs.RemoveAll((Predicate<IGUI>) (p => p.ReadyToRemove));
-      if (GUIManager.currentHUDs.Contains((IGUI) GUIManager.settings) || GUIManager.currentHUDs.Contains((IGUI) GUIManager.loadGUI) || GUIManager.currentHUDs.Contains((IGUI) GUIManager.credits))
+
+      if (GUIManager.currentHUDs.Contains((IGUI) GUIManager.settings)
+                || GUIManager.currentHUDs.Contains((IGUI) GUIManager.loadGUI)
+                || GUIManager.currentHUDs.Contains((IGUI) GUIManager.credits))
         GUIManager.GUITimer += gameTime.ElapsedGameTime.Milliseconds / 2;
       else
         GUIManager.GUITimer += gameTime.ElapsedGameTime.Milliseconds;
@@ -228,7 +230,8 @@ namespace DodoTheGame.GUI
 
     public static void DrawGUI(SpriteBatch spriteBatch, Game1 game, GameTime gameTime)
     {
-      List<IGUI> list = GUIManager.currentHUDs.OrderBy<IGUI, int>((Func<IGUI, int>) (h => h.Layer)).ToList<IGUI>();
+      List<IGUI> list = GUIManager.currentHUDs.OrderBy<IGUI, int>(
+          (Func<IGUI, int>) (h => h.Layer)).ToList<IGUI>();
       try
       {
         foreach (IGUI gui in list)
@@ -253,7 +256,8 @@ namespace DodoTheGame.GUI
         GUIManager.holdcount = 0;
       if ((double) GUIManager.lastUIS.moveRight > 0.4 && (double) uis.moveRight < 0.4)
         GUIManager.holdcount = 0;
-      if ((double) uis.moveLeft > 0.4 && (double) GUIManager.lastUIS.moveLeft <= 0.4 && (double) uis.moveRight <= 0.4)
+      if ((double) uis.moveLeft > 0.4 && (double) GUIManager.lastUIS.moveLeft <= 0.4 
+                && (double) uis.moveRight <= 0.4)
       {
         left = true;
         GUIManager.holdcount = 0;
@@ -264,7 +268,8 @@ namespace DodoTheGame.GUI
         if (GUIManager.holdcount > 25 && GUIManager.holdcount % 2 == 0)
           left = true;
       }
-      if ((double) uis.moveRight > 0.4 && (double) GUIManager.lastUIS.moveRight <= 0.4 && (double) uis.moveLeft <= 0.4)
+      if ((double) uis.moveRight > 0.4 && (double) GUIManager.lastUIS.moveRight <= 0.4
+                && (double) uis.moveLeft <= 0.4)
       {
         right = true;
         GUIManager.holdcount = 0;

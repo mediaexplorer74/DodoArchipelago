@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Saving.IDodoInteractionConverter
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.Saving.IDodoInteractionConverter
 
 using DodoTheGame.Interactions;
 using DodoTheGame.Localization;
@@ -101,7 +97,7 @@ namespace DodoTheGame.Saving
         return (object) new Upgrade()
         {
           requiredLevelToUpgrade = Convert.ToInt32(dictionary["requiredLevelToUpgrade"]),
-          upgradeItems = default,//(List<ItemStack>) serializer.ConvertToType(dictionary["upgradeItems"], typeof (List<ItemStack>)),
+          upgradeItems = (List<ItemStack>) serializer.ConvertToType(dictionary["upgradeItems"], typeof (List<ItemStack>)),
           upgradePreset = (Preset) serializer.ConvertToType(dictionary["upgradePreset"], typeof (Preset))
         };
       if ((string) dictionary["Type"] == "Inspect")
@@ -109,17 +105,17 @@ namespace DodoTheGame.Saving
       if ((string) dictionary["Type"] == "Harvest")
         return (object) new Harvest()
         {
-          harvestItems = default,//(ItemStack[]) serializer.ConvertToType(dictionary["HarvestItem"], typeof (ItemStack[]))
+          harvestItems = (ItemStack[]) serializer.ConvertToType(dictionary["HarvestItem"], typeof (ItemStack[]))
         };
       if ((string) dictionary["Type"] == "TakeNotes")
         return (object) new TakeNotes()
         {
-          harvestItems = default,//(ItemStack[]) serializer.ConvertToType(dictionary["HarvestItem"], typeof (ItemStack[]))
+          harvestItems = (ItemStack[]) serializer.ConvertToType(dictionary["HarvestItem"], typeof (ItemStack[]))
         };
       return (string) dictionary["Type"] == "PlayerUnlock" ? (object) new UnlockPlayerUnlockable()
       {
         unlockable = (PlayerUnlockables.PlayerUnlockable) dictionary["Unlock"],
-        upgradeItems = default,//(List<ItemStack>) serializer.ConvertToType(dictionary["upgradeItems"], typeof (List<ItemStack>))
+        upgradeItems = (List<ItemStack>) serializer.ConvertToType(dictionary["upgradeItems"], typeof (List<ItemStack>))
       } : throw new Exception("Unknown interaction type");
     }
   }

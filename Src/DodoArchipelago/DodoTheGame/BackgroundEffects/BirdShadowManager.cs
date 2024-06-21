@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.BackgroundEffects.BirdShadowManager
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.BackgroundEffects.BirdShadowManager
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,7 +19,8 @@ namespace DodoTheGame.BackgroundEffects
 
     public static void Update(Player player, GameTime gameTime)
     {
-      if (Game1.RNG.Next(0, 100) > 1 && (double) BirdShadowManager.BirdShadowList.Count < 5.0 * DayCycle.timeSpeed)
+      if (Game1.RNG.Next(0, 100) > 1 
+                && (double) BirdShadowManager.BirdShadowList.Count < 5.0 * DayCycle.timeSpeed)
       {
         Vector2 startingPoint;
         switch (Game1.RNG.Next(0, 4))
@@ -41,15 +38,21 @@ namespace DodoTheGame.BackgroundEffects
             startingPoint = new Vector2(-200f, (float) Game1.RNG.Next(-200, 15000));
             break;
         }
-        BirdShadowManager.BirdShadowList.Add(new BirdShadow(startingPoint, Game1.RNG.NextDouble() * Math.PI * 2.0, BirdShadowManager.sprite, 2.7));
+        BirdShadowManager.BirdShadowList.Add(new BirdShadow(startingPoint, 
+            Game1.RNG.NextDouble() * Math.PI * 2.0, BirdShadowManager.sprite, 2.7));
       }
       BirdShadowManager.TimeSinceLastSeagullSound += gameTime.ElapsedGameTime.Milliseconds;
       for (int index = BirdShadowManager.BirdShadowList.Count - 1; index >= 0; --index)
       {
-        Vector2 drawpos = BirdShadowManager.BirdShadowList[index].GetDrawpos(BirdShadowManager.BirdShadowList[index].passedTime);
-        if ((double) drawpos.X > 22000.0 || (double) drawpos.X < -250.0 || (double) drawpos.Y > 15100.0 || (double) drawpos.Y < -250.0)
+        Vector2 drawpos = BirdShadowManager.BirdShadowList[index]
+                    .GetDrawpos(BirdShadowManager.BirdShadowList[index].passedTime);
+
+        if ((double) drawpos.X > 22000.0 || (double) drawpos.X < -250.0 
+                    || (double) drawpos.Y > 15100.0 || (double) drawpos.Y < -250.0)
           BirdShadowManager.BirdShadowList.RemoveAt(index);
-        if ((double) (drawpos - player.location).Length() < 600.0 && BirdShadowManager.TimeSinceLastSeagullSound > 4800)
+
+        if ((double) (drawpos - player.location).Length() < 600.0 
+                    && BirdShadowManager.TimeSinceLastSeagullSound > 4800)
         {
           EventHandler seagull = BirdShadowManager.Seagull;
           if (seagull != null)

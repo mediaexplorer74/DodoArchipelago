@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Sound
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// DodoTheGame.Sound
 
 using DodoTheGame.BackgroundEffects;
 using DodoTheGame.BGM;
@@ -36,7 +32,8 @@ namespace DodoTheGame
     private static EventHandler<EventArgs> MidnightTune;
     private static bool midnightTunePlayed = false;
     private static FMOD.Studio.System fmodSys;
-    private static readonly Dictionary<string, string> fmodEventHandling = new Dictionary<string, string>()
+    private static readonly Dictionary<string, string> fmodEventHandling 
+            = new Dictionary<string, string>()
     {
       {
         "Player.Dolphin",
@@ -157,7 +154,8 @@ namespace DodoTheGame
       if (Sound.fmodEventHandling.ContainsKey(eventName))
         Sound.FmodCreateAndPlay(Sound.fmodEventHandling[eventName]);
       else
-        Game1.Log("Sound.ReceiveEvent count not find an FMOD event for event " + eventName, BreadcrumbLevel.Debug);
+        Game1.Log("Sound.ReceiveEvent count not find an FMOD event for event " 
+            + eventName, BreadcrumbLevel.Debug);
     }
 
     internal static void FMODErrCheck(RESULT res)
@@ -176,10 +174,14 @@ namespace DodoTheGame
         Sound.backgroundEffectList.Add(instance);
       }
       int num = (int) FMOD.Studio.System.create(out Sound.fmodSys);
-      Sound.FMODErrCheck(Sound.fmodSys.initialize(32, FMOD.Studio.INITFLAGS.LIVEUPDATE, FMOD.INITFLAGS.NORMAL, (IntPtr) 0));
+
+      Sound.FMODErrCheck(Sound.fmodSys.initialize(32,
+          FMOD.Studio.INITFLAGS.LIVEUPDATE, FMOD.INITFLAGS.NORMAL, (IntPtr) 0));
       Bank bank;
-      Sound.FMODErrCheck(Sound.fmodSys.loadBankFile("Content/Master.bank", LOAD_BANK_FLAGS.NORMAL, out bank));
-      Sound.FMODErrCheck(Sound.fmodSys.loadBankFile("Content/Master.strings.bank", LOAD_BANK_FLAGS.NORMAL, out Bank _));
+      Sound.FMODErrCheck(Sound.fmodSys.loadBankFile(
+          "Content/Master.bank", LOAD_BANK_FLAGS.NORMAL, out bank));
+      Sound.FMODErrCheck(Sound.fmodSys.loadBankFile(
+          "Content/Master.strings.bank", LOAD_BANK_FLAGS.NORMAL, out Bank _));
       Sound.fmodEvents = new Dictionary<string, EventDescription>();
       EventDescription[] array;
       Sound.FMODErrCheck(bank.getEventList(out array));
@@ -196,32 +198,84 @@ namespace DodoTheGame
 
     public static void InitEvents(Game1 game)
     {
-      Game1.player.Walked += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.Walked"));
-      Game1.player.CollisionWithObjectOrTerrain += (EventHandler<PlayerCollisionEventArgs>) ((sender, e) => Sound.ReceiveEvent(sender, (EventArgs) e, "Player.CollisionWithObjectOrTerrain"));
-      Game1.player.Dolphin += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.Dolphin"));
-      Game1.player.EnteredWater += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.EnteredWater"));
-      Game1.player.LeftWater += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.LeftWater"));
-      Game1.player.StartedBuilding += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.StartedBuilding"));
-      Game1.player.StartedHarvesting += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.StartedHarvesting"));
-      Game1.player.StartedSwimmingPulse += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.StartedSwimmingPulse"));
-      Game1.player.MovedBike += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.MovedBike"));
-      Game1.player.BikeAppearing += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.BikeAppearing"));
-      GUIManager.inventoryGUI.Closed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "InventoryGUI.Closed"));
-      GUIManager.inventoryGUI.Opened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "InventoryGUI.Opened"));
-      GUIManager.inventoryGUI.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "InventoryGUI.MovedItemSelection"));
-      GUIManager.escapeGUI.Opened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EscapeGUI.Opened"));
-      GUIManager.escapeGUI.Closed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EscapeGUI.Closed"));
-      GUIManager.escapeGUI.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EscapeGUI.MovedItemSelection"));
-      GUIManager.settings.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "SettingsGUI.MovedItemSelection"));
-      GUIManager.mainmenu.Opened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "MainMenu.Opened"));
-      GUIManager.mainmenu.Closed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "MainMenu.Closed"));
-      EnvironmentalSoundManager.Owl += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EnvironmentalSoundManager.Owl"));
-      BirdShadowManager.Seagull += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "BirdShadowManager.Seagull"));
-      GUIManager.mainmenu.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "MainMenu.MovedItemSelection"));
-      BuildPoint.BuildBoxOpened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxOpened"));
-      BuildPoint.BuildBoxClosed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxClosed"));
-      Game1.StartupLogo += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Game1.StartupLogo"));
-      Sound.MidnightTune += (EventHandler<EventArgs>) ((sender, e) => Sound.ReceiveEvent(sender, e, "Sound.MidnightTune"));
+      Game1.player.Walked += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.Walked"));
+
+      Game1.player.CollisionWithObjectOrTerrain +=
+                (EventHandler<PlayerCollisionEventArgs>) ((sender, e) 
+                => Sound.ReceiveEvent(sender, (EventArgs) e, "Player.CollisionWithObjectOrTerrain"));
+
+      Game1.player.Dolphin += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.Dolphin"));
+
+      Game1.player.EnteredWater += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.EnteredWater"));
+
+      Game1.player.LeftWater += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.LeftWater"));
+
+      Game1.player.StartedBuilding += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.StartedBuilding"));
+
+      Game1.player.StartedHarvesting += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "Player.StartedHarvesting"));
+
+      Game1.player.StartedSwimmingPulse += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.StartedSwimmingPulse"));
+
+      Game1.player.MovedBike += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.MovedBike"));
+
+      Game1.player.BikeAppearing += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.BikeAppearing"));
+
+      GUIManager.inventoryGUI.Closed += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "InventoryGUI.Closed"));
+
+      GUIManager.inventoryGUI.Opened += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "InventoryGUI.Opened"));
+
+      GUIManager.inventoryGUI.MovedItemSelection += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "InventoryGUI.MovedItemSelection"));
+
+      GUIManager.escapeGUI.Opened += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "EscapeGUI.Opened"));
+
+      GUIManager.escapeGUI.Closed += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "EscapeGUI.Closed"));
+
+      GUIManager.escapeGUI.MovedItemSelection += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "EscapeGUI.MovedItemSelection"));
+
+      GUIManager.settings.MovedItemSelection += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "SettingsGUI.MovedItemSelection"));
+
+      GUIManager.mainmenu.Opened += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "MainMenu.Opened"));
+
+      GUIManager.mainmenu.Closed += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "MainMenu.Closed"));
+
+      EnvironmentalSoundManager.Owl += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "EnvironmentalSoundManager.Owl"));
+
+      BirdShadowManager.Seagull += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "BirdShadowManager.Seagull"));
+
+      GUIManager.mainmenu.MovedItemSelection += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "MainMenu.MovedItemSelection"));
+
+      BuildPoint.BuildBoxOpened += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxOpened"));
+
+      BuildPoint.BuildBoxClosed += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxClosed"));
+
+      Game1.StartupLogo += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "Game1.StartupLogo"));
+
+      Sound.MidnightTune += (EventHandler<EventArgs>) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Sound.MidnightTune"));
     }
 
     private static void StateSongChanged(object sender, EventArgs e)

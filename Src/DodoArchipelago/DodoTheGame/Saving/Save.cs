@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Saving.Save
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.Saving.Save
 
 using DodoTheGame.Localization;
 using DodoTheGame.NPC;
@@ -134,7 +130,8 @@ namespace DodoTheGame.Saving
     public void LoadFromFile(List<Sprite> commonSprites, Game1 game)
     {
       Game1.Log("Loading save data...", BreadcrumbLevel.Info, "saving");
-      string path = this.saveSlot != 0 ? Save.saveFolder + "slot" + this.saveSlot.ToString() + ".dodomemory" : "Content\\slot0.dodomemory";
+      string path = this.saveSlot != 0 ? Save.saveFolder + "slot" 
+                + this.saveSlot.ToString() + ".dodomemory" : "Content\\slot0.dodomemory";
       string str1 = "";
       string str2;
       object[] objArray;
@@ -163,7 +160,9 @@ namespace DodoTheGame.Saving
           using (SHA512 shA512 = (SHA512) new SHA512Managed())
           {
             foreach (string str3 in strArray)
-              str1 += Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(str3 + "ourhardworkbythishashguardedpleasedontcheat")));
+              str1 += Convert.ToBase64String(
+                  shA512.ComputeHash(Encoding.UTF8.GetBytes(str3 
+                  + "ourhardworkbythishashguardedpleasedontcheat")));
           }
         }
       }
@@ -175,7 +174,9 @@ namespace DodoTheGame.Saving
         {
           currentMovementType = (Player.DodoMovement) objArray[10],
           facing = (int) objArray[11],
-          location = new Vector2(Convert.ToSingle(objArray[12], (IFormatProvider) CultureInfo.InvariantCulture), Convert.ToSingle(objArray[13], (IFormatProvider) CultureInfo.InvariantCulture)),
+          location = new Vector2(Convert.ToSingle(objArray[12], 
+          (IFormatProvider) CultureInfo.InvariantCulture),
+          Convert.ToSingle(objArray[13], (IFormatProvider) CultureInfo.InvariantCulture)),
           inventory = inventory,
           playTime = (int) objArray[14],
           unlockedPlayerTools = new Dictionary<PlayerUnlockables.PlayerUnlockable, bool>()
@@ -192,6 +193,7 @@ namespace DodoTheGame.Saving
           bgmThemeDay = (int) objArray[18],
           bgmThemeCount = (int) objArray[19]
         };
+
         player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike] = (bool) objArray[15];
         player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] = (bool) objArray[16];
         player.TimeBar = Convert.ToSingle(objArray[20], (IFormatProvider) CultureInfo.InvariantCulture);
@@ -202,6 +204,7 @@ namespace DodoTheGame.Saving
           objects = worldObjectList,
           NPCs = npcList
         };
+
         DayCycle.dayTime = Convert.ToDouble(objArray[23], (IFormatProvider) CultureInfo.InvariantCulture);
         Wind.RawAngle = Convert.ToDouble(objArray[24], (IFormatProvider) CultureInfo.InvariantCulture);
         DayCycle.currentWindIndex = Convert.ToInt32(objArray[25]);
@@ -211,7 +214,8 @@ namespace DodoTheGame.Saving
       }
       else
       {
-        Game1.Log("A corrupted save was not loaded. Default save will be loaded.", BreadcrumbLevel.Warning, "saving");
+        Game1.Log("A corrupted save was not loaded. Default save will be loaded.", 
+            BreadcrumbLevel.Warning, "saving");
         this.saveSlot = 0;
         this.LoadFromFile(commonSprites, game);
       }
@@ -220,7 +224,8 @@ namespace DodoTheGame.Saving
     public void SaveToFile(bool compressed = false, byte[] lastFramePngBytes = null)
     {
       string saveData = this.GenerateSaveData(lastFramePngBytes);
-      File.WriteAllText(Save.saveFolder + "slot" + this.saveSlot.ToString() + ".dodomemory", saveData);
+      File.WriteAllText(Save.saveFolder + "slot" + this.saveSlot.ToString() 
+          + ".dodomemory", saveData);
     }
 
     public string GenerateSaveData(byte[] lastFramePngBytes = null)
@@ -248,23 +253,29 @@ namespace DodoTheGame.Saving
         (object) this.player.allowSuperdodo,
         (object) this.player.bgmThemeDay,
         (object) this.player.bgmThemeCount,
-        (object) Convert.ToString(this.player.TimeBar, (IFormatProvider) CultureInfo.InvariantCulture),
+        (object) Convert.ToString(this.player.TimeBar, 
+        (IFormatProvider) CultureInfo.InvariantCulture),
         (object) this.world.name,
         (object) this.world.Level,
         (object) Convert.ToString(DayCycle.CurrentTime, (IFormatProvider) CultureInfo.InvariantCulture),
         (object) Wind.RawAngle,
         (object) DayCycle.currentWindIndex
       };
+
       byte[] inArray;
+
       if (lastFramePngBytes == null)
       {
         Game1.Log("Generating screenshot data...", BreadcrumbLevel.Debug, "saving");
         MemoryStream memoryStream = new MemoryStream();
-        this.lastFrame.SaveAsPng((Stream) memoryStream, Convert.ToInt32(Game1.renderSize.X), Convert.ToInt32(Game1.renderSize.Y));
+
+        this.lastFrame.SaveAsPng((Stream) memoryStream, Convert.ToInt32(Game1.renderSize.X), 
+            Convert.ToInt32(Game1.renderSize.Y));
         inArray = memoryStream.ToArray();
       }
       else
         inArray = lastFramePngBytes;
+
       string base64String = Convert.ToBase64String(inArray);
       Game1.Log("Serializing everything...", BreadcrumbLevel.Debug, "saving");
       string[] strArray = new string[5]
@@ -275,11 +286,29 @@ namespace DodoTheGame.Saving
         Save.serializer.Serialize((object) this.world.NPCs),
         base64String
       };
-      string str1 = strArray[0] + "\n" + strArray[1] + "\n" + strArray[2] + "\n" + strArray[3] + "\n" + strArray[4];
+
+      string str1 = strArray[0] + "\n" + strArray[1] + "\n" + strArray[2]
+                + "\n" + strArray[3] + "\n" + strArray[4];
+
       Game1.Log("Generating security hashes...", BreadcrumbLevel.Debug, "saving");
       string str2;
+
       using (SHA512 shA512 = (SHA512) new SHA512Managed())
-        str2 = Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[0] + "ourhardworkbythishashguardedpleasedontcheat"))) + Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[1] + "ourhardworkbythishashguardedpleasedontcheat"))) + Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[2] + "ourhardworkbythishashguardedpleasedontcheat"))) + Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[3] + "ourhardworkbythishashguardedpleasedontcheat"))) + Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[4] + "ourhardworkbythishashguardedpleasedontcheat")));
+        str2 = Convert.ToBase64String(shA512.ComputeHash(
+            Encoding.UTF8.GetBytes(strArray[0]
+            + "ourhardworkbythishashguardedpleasedontcheat")))
+                    + Convert.ToBase64String(shA512.ComputeHash(
+                        Encoding.UTF8.GetBytes(strArray[1] 
+                        + "ourhardworkbythishashguardedpleasedontcheat"))) 
+                    + Convert.ToBase64String(
+                        shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[2] 
+                        + "ourhardworkbythishashguardedpleasedontcheat"))) 
+                    + Convert.ToBase64String(
+                        shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[3] 
+                        + "ourhardworkbythishashguardedpleasedontcheat")))
+                    + Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(strArray[4]
+                    + "ourhardworkbythishashguardedpleasedontcheat")));
+
       Game1.Log("Save data generation done.", BreadcrumbLevel.Info, "saving");
       return str1 + "\n" + str2;
     }

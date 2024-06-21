@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.GUI.InventoryGUI
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.GUI.InventoryGUI
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -45,14 +41,18 @@ namespace DodoTheGame.GUI
     {
       this.animatedBackground.backwardAnimation = this.closing;
       this.animatedBackground.Draw(spriteBatch, new Vector2(90f, 35f), gameTime);
+
       if (this.closing && this.animatedBackground.CurrentFrame == 0)
         this.ReadyToRemove = true;
+
       if (this.closing || this.animatedBackground.CurrentFrame <= 4)
         return;
       Recorder.RDraw(spriteBatch, this.inventaire, new Vector2(550f, 80f), Color.White);
       Vector2[] vector2Array = new Vector2[30];
+
       for (int index = 0; index < 24; ++index)
-        vector2Array[index] = new Vector2((float) (140 + 126 * (index % 8)), (float) (135 + 123 * ((index - index % 8) / 8)));
+        vector2Array[index] = new Vector2((float) (140 + 126 * (index % 8)), 
+            (float) (135 + 123 * ((index - index % 8) / 8)));
       
       for (int index = 0; index < 24; ++index)
       {
@@ -64,9 +64,15 @@ namespace DodoTheGame.GUI
         {
             if (Game1.player.inventory.inventory[index] != null)
             {
-                Recorder.RDraw(spriteBatch, this.itemTextures[Game1.player.inventory.inventory[index].itemId], vector2Array[index], Color.White);
-                int x = (int)this.font.MeasureString(Game1.player.inventory.inventory[index].count.ToString()).X;
-                Recorder.RDrawString(spriteBatch, this.font, Game1.player.inventory.inventory[index].count.ToString(), new Vector2(vector2Array[index].X + 98f - (float)x, vector2Array[index].Y + 76f), Color.White);
+                Recorder.RDraw(spriteBatch, 
+                    this.itemTextures[Game1.player.inventory.inventory[index].itemId], 
+                    vector2Array[index], Color.White);
+                int x = 
+                    (int)this.font.MeasureString(
+                        Game1.player.inventory.inventory[index].count.ToString()).X;
+                Recorder.RDrawString(spriteBatch, this.font, 
+                    Game1.player.inventory.inventory[index].count.ToString(), 
+                    new Vector2(vector2Array[index].X + 98f - (float)x, vector2Array[index].Y + 76f), Color.White);
             }
         }
       }

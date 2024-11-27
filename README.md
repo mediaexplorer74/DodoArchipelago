@@ -11,7 +11,7 @@ Main goal: do more exploration of special game "frameworks" such FMOD and port i
 ![](Images/shot01.png)
 ![](Images/shot02.png)
 ![](Images/shot03.png)
-![](Images/shot43.png)
+![](Images/shot04.png)
 
 ## Words from the author(s)
 

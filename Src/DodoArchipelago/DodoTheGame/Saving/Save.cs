@@ -14,7 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using XSystem.Security.Cryptography;
 using SHA512 = XSystem.Security.Cryptography.SHA512;
-//using System.Web.Script.Serialization;
+//using System.Web.Script.Serialization; // TODO: fit It and delete xact.core.pcl
 using Windows.Storage;
 
 
@@ -71,7 +71,9 @@ namespace DodoTheGame.Saving
                     strArray[3] = streamReader.ReadLine();
                     strArray[4] = streamReader.ReadLine();
                     str2 = streamReader.ReadLine();
+
                     objArray1 = Save.serializer.Deserialize<object[]>(strArray[0]);
+                    
                     using (SHA512 shA512 = (SHA512)new SHA512Managed())
                     {
                         foreach (string str3 in strArray)

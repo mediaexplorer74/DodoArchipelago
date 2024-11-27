@@ -1,8 +1,11 @@
-# DodoArchipelago 1.0.(1) - main branch
+# DodoArchipelago 1.0.1 - dev branch
 ![](Images/logo.png)
 
 ## About
-This is my *veeery quuuick* W10M port of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... 
+
+It's only PoC (Proove-of-Concept). 
+
+This is my *veeery quuuick* W10M port of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" via empty world with empty inventary! :))))
 
 Main goal: do more exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... 
 
@@ -48,7 +51,7 @@ Here's what you can expect:
 - Game content - "sounds, textures: connection/incorporation" in progress
 - Original kbd control still presend for desktop mode 
 - No Screen scaling mode yet.
-- Experimentation (debugging) with special "Debug panel" :)
+- Experimentation (debugging) with special "Debug panel" (blocked in *main* branch, available in *dev* branch)
 - You can change the language in the settings of the game (requires a restart).
 - Use WASD (or ZQSD on a french keyboard) and Space to move and select in the menus.
 - Use Left-Right-Up-Down for build/take a note etc. (BUT world generator *damaged*/not reversed by JetBrains DotPeek, so no world items such a house, etc.! holly shit, heh!!)
@@ -67,7 +70,7 @@ Here's what you can expect:
 - https://github.com/Rouli-M/ReturnOfTheFrogarians (Additional project to research)
 
 ## .
-As is. Learn purposes only. DIY.
+As is. No support. Learn purposes only. DIY!
 
 ## ..
 [m][e] Feb 2024

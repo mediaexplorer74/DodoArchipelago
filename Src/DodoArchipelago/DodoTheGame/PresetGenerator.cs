@@ -1,15 +1,11 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.PresetGenerator
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.PresetGenerator
+
 
 using DodoTheGame.Interactions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpRaven.Data;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 
 namespace DodoTheGame
 {
@@ -18,18 +14,24 @@ namespace DodoTheGame
     public static List<Preset> GeneratePresets()
     {
       List<Preset> presets = new List<Preset>();
-      Game1.Log("Declaring sprite and presets...", BreadcrumbLevel.Info);
-      Sprite sprite1 = new Sprite("board1", ContentLoadingWrapper.Load<Texture2D>("board/board1"), new List<SubSprite>()
+      Debug.WriteLine("[i] Declaring sprite and presets...");
+      Sprite sprite1 = new Sprite("board1", ContentLoadingWrapper.Load<Texture2D>("board/board1"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board1_shadow"), new Vector2(-4f, 128f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board1_shadow"),
+        new Vector2(-4f, 128f), opacity: 0.4f)
       });
-      Sprite sprite2 = new Sprite("board2", ContentLoadingWrapper.Load<Texture2D>("board/board2"), new List<SubSprite>()
+      Sprite sprite2 = new Sprite("board2", ContentLoadingWrapper.Load<Texture2D>("board/board2"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board2_shadow"), new Vector2(-5f, 140f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board2_shadow"), 
+        new Vector2(-5f, 140f), opacity: 0.4f)
       });
-      Sprite sprite3 = new Sprite("board3", ContentLoadingWrapper.Load<Texture2D>("board/board3"), new List<SubSprite>()
+      Sprite sprite3 = new Sprite("board3", ContentLoadingWrapper.Load<Texture2D>("board/board3"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board3_shadow"), new Vector2(5f, 299f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board3_shadow"), 
+        new Vector2(5f, 299f), opacity: 0.4f)
       })
       {
         Width = 274,
@@ -43,7 +45,9 @@ namespace DodoTheGame
       IDodoInteraction[] interactions1 = new IDodoInteraction[4];
       Vector2? extraReach1 = new Vector2?();
       string[] tags1 = new string[1]{ "boardAnimation" };
-      Preset upgradePreset1 = new Preset("Tableau de bord 3", "Board3", Preset.WOType.Static, sprite3, hitbox1, epicenterOffset1, interactions1, "Builds", extraReach1, tags: tags1);
+      Preset upgradePreset1 = new Preset("Tableau de bord 3", "Board3",
+          Preset.WOType.Static, sprite3,
+          hitbox1, epicenterOffset1, interactions1, "Builds", extraReach1, tags: tags1);
       Sprite sprite4 = sprite2;
       List<Rectangle> hitbox2 = new List<Rectangle>();
       hitbox2.Add(new Rectangle(2, 150, 180, 30));
@@ -103,7 +107,8 @@ namespace DodoTheGame
       {
         "level1builds"
       };
-      Preset preset1 = new Preset("Tableau de bord", "Tableau de bord", Preset.WOType.Upgradable, sprite5, hitbox3, epicenterOffset3, interactions3, "Builds", extraReach3, tags: tags3, otherBuildsSpecialIncompatibleTags: otherBuildsSpecialIncompatibleTags2);
+      Preset preset1 = new Preset("Tableau de bord", "Tableau de bord", Preset.WOType.Upgradable, sprite5, hitbox3, epicenterOffset3,
+          interactions3, "Builds", extraReach3, tags: tags3, otherBuildsSpecialIncompatibleTags: otherBuildsSpecialIncompatibleTags2);
       presetList1.Add(preset1);
       Sprite sprite6 = new Sprite("house4", ContentLoadingWrapper.Load<Texture2D>("house/house4"), new List<SubSprite>()
       {
@@ -114,7 +119,8 @@ namespace DodoTheGame
       Vector2 epicenterOffset4 = new Vector2(120f, 242f);
       IDodoInteraction[] interactions4 = new IDodoInteraction[4];
       Vector2? extraReach4 = new Vector2?();
-      Preset upgradePreset3 = new Preset("Maison", "house4", Preset.WOType.Static, sprite6, hitbox4, epicenterOffset4, interactions4, "Builds", extraReach4, new List<ItemStack>()
+      Preset upgradePreset3 = new Preset("Maison", "house4", Preset.WOType.Static, sprite6, hitbox4, epicenterOffset4, 
+          interactions4, "Builds", extraReach4, new List<ItemStack>()
       {
         new ItemStack(1, 5),
         new ItemStack(1, 5)
@@ -141,6 +147,7 @@ namespace DodoTheGame
       };
       Vector2? extraReach5 = new Vector2?(new Vector2(55f, 10f));
       Preset upgradePreset4 = new Preset("Maison", "house3", Preset.WOType.Upgradable, sprite7, hitbox5, epicenterOffset5, interactions5, "Builds", extraReach5);
+
       Sprite sprite8 = new Sprite("house2", ContentLoadingWrapper.Load<Texture2D>("house/house2"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("house/house2_shadow"), new Vector2(-2f, 189f), opacity: 0.4f)
@@ -148,6 +155,7 @@ namespace DodoTheGame
       List<Rectangle> hitbox6 = new List<Rectangle>();
       hitbox6.Add(new Rectangle(17, 189, 103, 40));
       Vector2 epicenterOffset6 = new Vector2(68f, 215f);
+
       IDodoInteraction[] interactions6 = new IDodoInteraction[4]
       {
         (IDodoInteraction) new Upgrade(upgradePreset4, new List<ItemStack>()
@@ -162,8 +170,11 @@ namespace DodoTheGame
         null,
         null
       };
+
       Vector2? extraReach6 = new Vector2?(new Vector2(30f, 15f));
-      Preset upgradePreset5 = new Preset("Maison", "house2", Preset.WOType.Upgradable, sprite8, hitbox6, epicenterOffset6, interactions6, "Builds", extraReach6);
+      Preset upgradePreset5 = new Preset("Maison", "house2", Preset.WOType.Upgradable, sprite8, hitbox6,
+          epicenterOffset6, interactions6, "Builds", extraReach6);
+
       Sprite sprite9 = new Sprite("house1", ContentLoadingWrapper.Load<Texture2D>("house/house1"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("house/house1_shadow"), new Vector2(-8f, 95f), opacity: 0.4f)
@@ -188,7 +199,8 @@ namespace DodoTheGame
       };
       Vector2? extraReach7 = new Vector2?(new Vector2(30f, 15f));
       string[] tags4 = new string[1]{ "level2builds" };
-      Preset preset2 = new Preset("Maison", "UpgradableHouse", Preset.WOType.Upgradable, sprite10, hitbox7, epicenterOffset7, interactions7, "Builds", extraReach7, tags: tags4);
+      Preset preset2 = new Preset("Maison", "UpgradableHouse", Preset.WOType.Upgradable, sprite10, hitbox7, epicenterOffset7, 
+          interactions7, "Builds", extraReach7, tags: tags4);
       presetList2.Add(preset2);
       Sprite sprite11 = new Sprite("quechua2", ContentLoadingWrapper.Load<Texture2D>("quechua2"), new List<SubSprite>()
       {
@@ -199,7 +211,8 @@ namespace DodoTheGame
       Vector2 epicenterOffset8 = new Vector2(105f, 214f);
       IDodoInteraction[] interactions8 = new IDodoInteraction[4];
       Vector2? extraReach8 = new Vector2?();
-      Preset upgradePreset6 = new Preset("Tente", "quechua2", Preset.WOType.Static, sprite11, hitbox8, epicenterOffset8, interactions8, "Builds", extraReach8, new List<ItemStack>()
+      Preset upgradePreset6 = new Preset("Tente", "quechua2", Preset.WOType.Static, sprite11, hitbox8, epicenterOffset8, 
+          interactions8, "Builds", extraReach8, new List<ItemStack>()
       {
         new ItemStack(1, 5),
         new ItemStack(1, 5)

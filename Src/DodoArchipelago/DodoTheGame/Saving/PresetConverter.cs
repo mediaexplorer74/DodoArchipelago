@@ -1,4 +1,8 @@
-﻿// Type: DodoTheGame.Saving.PresetConverter
+﻿
+// Type: DodoTheGame.Saving.PresetConverter
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using DodoTheGame.Interactions;
 using DodoTheGame.Localization;
@@ -17,8 +21,7 @@ namespace DodoTheGame.Saving
     {
       get
       {
-        return (IEnumerable<Type>) new ReadOnlyCollection<Type>(
-            (IList<Type>) new List<Type>((IEnumerable<Type>) new Type[1]
+        return (IEnumerable<Type>) new ReadOnlyCollection<Type>((IList<Type>) new List<Type>((IEnumerable<Type>) new Type[1]
         {
           typeof (Preset)
         }));

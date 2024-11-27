@@ -2,7 +2,6 @@
 
 using DodoTheGame.Localization;
 using Microsoft.Xna.Framework.Content;
-using SharpRaven.Data;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -18,11 +17,17 @@ namespace DodoTheGame
 
     public static string LastAssetName { get; private set; } = "";
 
+
+    // Load<T>(string assetName)
     public static T Load<T>(string assetName)
     {
       ++ContentLoadingWrapper.loadedAssetCount;
+
       if (ContentLoadingWrapper.loadedAssetCount > ContentLoadingWrapper.expectedAssetCount)
-        Game1.Log("Loaded asset count is higher than expected", BreadcrumbLevel.Critical, "clw");
+      {
+        Debug.WriteLine("Loaded asset count is higher than expected");
+      }
+
       string assetName1 = LocalizationManager.GetAssetName(assetName, false);
       ContentLoadingWrapper.LastAssetName = assetName1 == null 
                 || !(assetName != assetName1) ? assetName : assetName + " => " + assetName1;
@@ -36,7 +41,8 @@ namespace DodoTheGame
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Debug.WriteLine("[ex] contentManager.Load error: "
+                                   +"[" + assetName + "]" + ex.Message);
             }
         }
         else
@@ -47,19 +53,20 @@ namespace DodoTheGame
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                    Debug.WriteLine("[ex] contentManager.Load error: "
+                                       + "[" + assetName1 + "]" + ex.Message);
             }
        }
 
         return res;
-    }
+    }//Load<T>...
 
+
+    // ListAssets(...)
     public static FileInfo[] ListAssets(string folder)
     {
-      DirectoryInfo directoryInfo = 
-                new DirectoryInfo(ContentLoadingWrapper.contentManager.RootDirectory + "\\" + folder);
-      return directoryInfo.Exists ? directoryInfo.GetFiles("*.*")
-                : throw new DirectoryNotFoundException();
-    }
+      DirectoryInfo directoryInfo = new DirectoryInfo(ContentLoadingWrapper.contentManager.RootDirectory + "\\" + folder);
+      return directoryInfo.Exists ? directoryInfo.GetFiles("*.*") : throw new DirectoryNotFoundException();
+    }//
   }
 }

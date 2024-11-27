@@ -1,14 +1,10 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Interactions.UnlockPlayerUnlockable
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// DodoTheGame.Interactions.UnlockPlayerUnlockable
 
 using DodoTheGame.Localization;
 using DodoTheGame.WorldObject;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -29,7 +25,8 @@ namespace DodoTheGame.Interactions
     {
       get
       {
-        return string.Format(LocalizationManager.GetString("InteractionUnlock"), (object) LocalizationManager.GetString(this.unlockable.ToString() + "WithArticle"));
+        return string.Format(LocalizationManager.GetString("InteractionUnlock"), 
+            (object) LocalizationManager.GetString(this.unlockable.ToString() + "WithArticle"));
       }
     }
 
@@ -49,7 +46,11 @@ namespace DodoTheGame.Interactions
     {
       if (!(parentWo is Upgradable))
         throw new Exception("UnlockPlayerUnlockable interaction is not supported for this IWO");
-      if (player.unlockedPlayerTools[this.unlockable] || player.currentMovementType != Player.DodoMovement.Bike && player.currentMovementType != Player.DodoMovement.Walk && player.currentMovementType != Player.DodoMovement.Swim)
+
+      if (player.unlockedPlayerTools[this.unlockable] 
+                || player.currentMovementType != Player.DodoMovement.Bike 
+                && player.currentMovementType != Player.DodoMovement.Walk
+                && player.currentMovementType != Player.DodoMovement.Swim)
         return;
       if (!this.alreadyInteracted)
       {
@@ -65,8 +66,12 @@ namespace DodoTheGame.Interactions
         {
           ItemStack itm = upgradeItem;
           int num = 0;
-          foreach (ItemStack itemStack in ((IEnumerable<ItemStack>) player.inventory.inventory).Where<ItemStack>((Func<ItemStack, bool>) (i => i != null && i.itemId == itm.itemId)).ToList<ItemStack>())
+
+          foreach (ItemStack itemStack in ((IEnumerable<ItemStack>) player.inventory.inventory)
+                        .Where<ItemStack>((Func<ItemStack, bool>) (i => i != null
+                        && i.itemId == itm.itemId)).ToList<ItemStack>())
             num += itemStack.count;
+
           if (num < itm.count)
           {
             flag = false;
@@ -97,7 +102,7 @@ namespace DodoTheGame.Interactions
           ((Upgradable) parentWo).ResetOpenBuildboxes();
         }
         else
-          Game1.Log("Unlock failed: missing items", BreadcrumbLevel.Debug);
+          Debug.WriteLine("[i] Unlock failed: missing items");
       }
     }
   }

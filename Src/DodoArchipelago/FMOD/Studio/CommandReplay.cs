@@ -1,4 +1,8 @@
-﻿// Type: FMOD.Studio.CommandReplay
+﻿
+// Type: FMOD.Studio.CommandReplay
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using System;
 using System.Runtime.InteropServices;
@@ -27,8 +31,7 @@ namespace FMOD.Studio
 
     public RESULT getCommandInfo(int commandIndex, out COMMAND_INFO info)
     {
-      return CommandReplay.FMOD_Studio_CommandReplay_GetCommandInfo(
-          this.handle, commandIndex, out info);
+      return CommandReplay.FMOD_Studio_CommandReplay_GetCommandInfo(this.handle, commandIndex, out info);
     }
 
     public RESULT getCommandString(int commandIndex, out string buffer)
@@ -38,8 +41,7 @@ namespace FMOD.Studio
       {
         int num1 = 256;
         IntPtr num2 = Marshal.AllocHGlobal(256);
-        RESULT commandString = CommandReplay.FMOD_Studio_CommandReplay_GetCommandString(
-            this.handle, commandIndex, num2, num1);
+        RESULT commandString = CommandReplay.FMOD_Studio_CommandReplay_GetCommandString(this.handle, commandIndex, num2, num1);
         while (true)
         {
           switch (commandString)
@@ -50,9 +52,7 @@ namespace FMOD.Studio
               Marshal.FreeHGlobal(num2);
               num1 *= 2;
               num2 = Marshal.AllocHGlobal(num1);
-
-              commandString = CommandReplay.FMOD_Studio_CommandReplay_GetCommandString(
-                  this.handle, commandIndex, num2, num1);
+              commandString = CommandReplay.FMOD_Studio_CommandReplay_GetCommandString(this.handle, commandIndex, num2, num1);
               continue;
             default:
               goto label_5;
@@ -68,15 +68,13 @@ label_5:
 
     public RESULT getCommandAtTime(float time, out int commandIndex)
     {
-      return CommandReplay.FMOD_Studio_CommandReplay_GetCommandAtTime(
-          this.handle, time, out commandIndex);
+      return CommandReplay.FMOD_Studio_CommandReplay_GetCommandAtTime(this.handle, time, out commandIndex);
     }
 
     public RESULT setBankPath(string bankPath)
     {
       using (StringHelper.ThreadSafeEncoding freeHelper = StringHelper.GetFreeHelper())
-        return CommandReplay.FMOD_Studio_CommandReplay_SetBankPath(
-            this.handle, freeHelper.byteFromStringUTF8(bankPath));
+        return CommandReplay.FMOD_Studio_CommandReplay_SetBankPath(this.handle, freeHelper.byteFromStringUTF8(bankPath));
     }
 
     public RESULT start() => CommandReplay.FMOD_Studio_CommandReplay_Start(this.handle);
@@ -110,8 +108,7 @@ label_5:
 
     public RESULT getCurrentCommand(out int commandIndex, out float currentTime)
     {
-      return CommandReplay.FMOD_Studio_CommandReplay_GetCurrentCommand(
-          this.handle, out commandIndex, out currentTime);
+      return CommandReplay.FMOD_Studio_CommandReplay_GetCurrentCommand(this.handle, out commandIndex, out currentTime);
     }
 
     public RESULT release() => CommandReplay.FMOD_Studio_CommandReplay_Release(this.handle);

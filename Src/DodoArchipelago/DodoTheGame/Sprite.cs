@@ -1,4 +1,8 @@
-﻿// Type: DodoTheGame.Sprite
+﻿
+// Type: DodoTheGame.Sprite
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +13,7 @@ using System.Linq;
 
 namespace DodoTheGame
 {
-  internal class Sprite
+  public class Sprite
   {
     public bool animated;
     public bool loopAnimation = true;
@@ -39,16 +43,19 @@ namespace DodoTheGame
 
     public int FrameCountPerAtlasLine
     {
-      get => this.fullTexture != null && this.animated ? this.fullTexture.Width / this.width : 0;
+        get
+        {
+            return this.fullTexture != null && this.animated ? this.fullTexture.Width / this.width : 0;
+        }
+
+       
     }
 
     public int TotalFrameCount
     {
       get
       {
-        return this.fullTexture != null && this.animated 
-                    ? this.fullTexture.Width / this.width * this.AltasLines 
-                    : 0;
+        return this.fullTexture != null && this.animated ? this.fullTexture.Width / this.width * this.AltasLines : 0;
       }
     }
 
@@ -56,8 +63,7 @@ namespace DodoTheGame
     {
     }
 
-    public Sprite(string name, Texture2D texture, 
-        List<SubSprite> ssList = null, bool horizontalMirror = false)
+    public Sprite(string name, Texture2D texture, List<SubSprite> ssList = null, bool horizontalMirror = false)
     {
       this.subSprites = ssList ?? new List<SubSprite>();
       this.name = name;
@@ -83,16 +89,10 @@ namespace DodoTheGame
       bool inReachEffect = false)
     {
       SpriteEffects spriteEffects = globaleffect;
-
       if (this.horizontalMirroring)
-        spriteEffects = globaleffect == SpriteEffects.FlipHorizontally 
-                    ? SpriteEffects.None 
-                    : SpriteEffects.FlipHorizontally;
-
+        spriteEffects = globaleffect == SpriteEffects.FlipHorizontally ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
       if (this.verticalMirroring)
-        spriteEffects = globaleffect == SpriteEffects.FlipVertically 
-                    ? SpriteEffects.None
-                    : SpriteEffects.FlipVertically;
+        spriteEffects = globaleffect == SpriteEffects.FlipVertically ? SpriteEffects.None : SpriteEffects.FlipVertically;
       Color color = colorn ?? Color.White;
       foreach (SubSprite subSprite in this.subSprites)
       {
@@ -102,21 +102,16 @@ namespace DodoTheGame
         {
           if (subSprite.animated)
             subSprite.CurrentFrame = this.CurrentFrame;
-
-          subSprite.Draw(spriteBatch, new Vector2(location.X, location.Y), 
-              gametime, spriteEffects, nightFactor);
+          subSprite.Draw(spriteBatch, new Vector2(location.X, location.Y), gametime, spriteEffects, nightFactor);
         }
       }
-      Texture2D texture = inReachEffect 
-                ? Game1.TextureBrightnessEffect(this.fullTexture, 0.12f)
-                : this.fullTexture;
+      Texture2D texture = inReachEffect ? Game1.TextureBrightnessEffect(this.fullTexture, 0.12f) : this.fullTexture;
       if (this.animated)
       {
         if (this.autoUpdate)
-          this.currentElapsedMilliseconds += (int) Math.Round(
-              gametime.ElapsedGameTime.TotalMilliseconds) 
+          this.currentElapsedMilliseconds += 
+                        (int) Math.Round(gametime.ElapsedGameTime.TotalMilliseconds)
                         * (int) Convert.ToInt16(Math.Round(DayCycle.timeSpeed, 0));
-
         if (this.currentElapsedMilliseconds >= this.MillisecondsPerFrame)
         {
           this.currentElapsedMilliseconds = 0;
@@ -129,24 +124,30 @@ namespace DodoTheGame
           if (this.CurrentFrame > this.TotalFrameCount - 1)
             this.CurrentFrame = this.loopAnimation ? 0 : this.TotalFrameCount - 1;
         }
-        Rectangle rectangle = new Rectangle(
-            this.Width * (this.CurrentFrame % this.FrameCountPerAtlasLine), 
-            this.height * (this.CurrentFrame / this.FrameCountPerAtlasLine), 
-            this.Width, this.height);
 
-        Rectangle destinationRectangle = new Rectangle((int) location.X,
-            (int) location.Y, this.Width, this.height);
-        Recorder.RDraw(spriteBatch, texture, destinationRectangle, 
-            new Rectangle?(rectangle), color, Convert.ToSingle(rotation), 
-            Vector2.Zero, spriteEffects, 0.0f);
+        Rectangle rectangle = new Rectangle(this.Width *
+            (this.CurrentFrame % 1), this.height
+            * (this.CurrentFrame / 1), this.Width, this.height);
+        // HACK 1
+        if (this.FrameCountPerAtlasLine != 0)            
+            rectangle = new Rectangle(this.Width *
+                (this.CurrentFrame % this.FrameCountPerAtlasLine), this.height
+                * (this.CurrentFrame / this.FrameCountPerAtlasLine), this.Width, this.height);
+
+        Rectangle destinationRectangle = new Rectangle((int) location.X, (int) location.Y, this.Width, this.height);
+
+        // HACK 2
+        if (texture == null)
+            texture = new Texture2D(Game1.graphics.GraphicsDevice, 100, 100);
+
+        Recorder.RDraw(spriteBatch, texture, destinationRectangle, new Rectangle?(rectangle), color, 
+            Convert.ToSingle(rotation), Vector2.Zero, spriteEffects, 0.0f);
       }
       else if (this.fullTexture == null)
-        Console.WriteLine("null Sprite.fullTexture: " + this.name);
+        System.Diagnostics.Debug.WriteLine("null Sprite.fullTexture: " + this.name);
       else
-        Recorder.RDraw(spriteBatch, texture, location, new Rectangle?(),
-            color, Convert.ToSingle(rotation), new Vector2(0.0f, 0.0f), new Vector2(1f, 1f),
-            spriteEffects, 0.0f);
-
+        Recorder.RDraw(spriteBatch, texture, location, new Rectangle?(), color, 
+            Convert.ToSingle(rotation), new Vector2(0.0f, 0.0f), new Vector2(1f, 1f), spriteEffects, 0.0f);
       foreach (SubSprite subSprite in this.subSprites)
       {
         if (subSprite.aboveMainSprite)
@@ -164,28 +165,19 @@ namespace DodoTheGame
       double rotation = 0.0)
     {
       SpriteEffects effect = globaleffect;
-
       if (this.horizontalMirroring)
-        effect = globaleffect == SpriteEffects.FlipHorizontally 
-                    ? SpriteEffects.None 
-                    : SpriteEffects.FlipHorizontally;
-
+        effect = globaleffect == SpriteEffects.FlipHorizontally ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
       if (this.verticalMirroring)
-        effect = globaleffect == SpriteEffects.FlipVertically 
-                    ? SpriteEffects.None 
-                    : SpriteEffects.FlipVertically;
-
+        effect = globaleffect == SpriteEffects.FlipVertically ? SpriteEffects.None : SpriteEffects.FlipVertically;
       foreach (SubSprite subSprite in this.subSprites.Where<SubSprite>(
           (Func<SubSprite, bool>) (p => p.renderOnCommonShadowBatch && !p.aboveMainSprite)))
       {
         if (subSprite.animated)
           subSprite.CurrentFrame = this.CurrentFrame;
         if (effect == SpriteEffects.FlipHorizontally || subSprite.mirror)
-          subSprite.Draw(spriteBatch, new Vector2(location.X, location.Y), 
-              gametime, effect, nightFactor);
+          subSprite.Draw(spriteBatch, new Vector2(location.X, location.Y), gametime, effect, nightFactor);
         else
-          subSprite.Draw(spriteBatch, new Vector2(location.X, location.Y), 
-              gametime, effect, nightFactor);
+          subSprite.Draw(spriteBatch, new Vector2(location.X, location.Y), gametime, effect, nightFactor);
       }
     }
 
@@ -193,11 +185,11 @@ namespace DodoTheGame
     {
       if (this.autoUpdate)
         return;
-      if (this.name == "dodo/bicycle1" || this.name == "dodo/bicycle2" 
+      if (this.name == "dodo/bicycle1" || this.name == "dodo/bicycle2"
                 || this.name == "dodo/bicycle3new" || this.name == "loading_feather")
         this.currentElapsedMilliseconds += (int) Math.Round(gameTime.ElapsedGameTime.TotalMilliseconds);
       else
-        this.currentElapsedMilliseconds += (int) Math.Round(gameTime.ElapsedGameTime.TotalMilliseconds)
+        this.currentElapsedMilliseconds += (int) Math.Round(gameTime.ElapsedGameTime.TotalMilliseconds) 
                     * (int) Convert.ToInt16(Math.Round(DayCycle.timeSpeed, 0));
     }
 
@@ -216,11 +208,11 @@ namespace DodoTheGame
           num2 = 1f;
         num1 = sub.opacity * num2;
       }
-      Recorder.RDraw(spriteBatch, sub.FullTexture, sub.mirror 
+      Recorder.RDraw(spriteBatch, sub.FullTexture, sub.mirror
           ? new Vector2(backgroundLocation.X + spriteLocation.X + sub.offsetOnReverse.X, 
-            backgroundLocation.Y + spriteLocation.Y + sub.offsetOnReverse.Y) 
-          : new Vector2(backgroundLocation.X + spriteLocation.X + sub.offset.X, 
-            backgroundLocation.Y + spriteLocation.Y + sub.offset.Y), Color.White * num1);
+          backgroundLocation.Y + spriteLocation.Y + sub.offsetOnReverse.Y) 
+          : new Vector2(backgroundLocation.X + spriteLocation.X + sub.offset.X,
+          backgroundLocation.Y + spriteLocation.Y + sub.offset.Y), Color.White * num1);
     }
 
     public void ResetAnimation()

@@ -2,9 +2,9 @@
 
 using DodoTheGame.Hitbox;
 using Microsoft.Xna.Framework;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -28,11 +28,11 @@ namespace DodoTheGame
     {
       ++this.lastRequestId;
 
-      Game1.Log(requester.GetType().ToString()
+      Debug.WriteLine("[i] " + requester.GetType().ToString()
           + " requested pathfinding from (" + istart.X.ToString() + "; " 
           + istart.Y.ToString() + ") to (" + iend.X.ToString() + "; " 
           + iend.Y.ToString() + "). Associated ID: " + this.lastRequestId.ToString(), 
-          BreadcrumbLevel.Debug, nameof (Pathfinder));
+          nameof (Pathfinder));
 
       this.referenceWorld.behaviorMap.StartBackgroundCaching();
       this.referenceWorld.behaviorMap.LockBackgroundCaching();
@@ -66,10 +66,7 @@ namespace DodoTheGame
         double num2 = (double) index / Math.Ceiling(num1 / 12.0);
         Vector2 vector2_2 = vector2_1 * Convert.ToSingle(num2);
         Vector2 vector2_3 = istart.ToVector2() + vector2_2;
-
-        vector2_3 = new Vector2(Convert.ToSingle(Math.Round((double) vector2_3.X)), 
-            Convert.ToSingle(Math.Round((double) vector2_3.Y)));
-
+        vector2_3 = new Vector2(Convert.ToSingle(Math.Round((double) vector2_3.X)), Convert.ToSingle(Math.Round((double) vector2_3.Y)));
         vector2List1.Add(vector2_3);
       }
       bool flag = false;
@@ -92,8 +89,8 @@ namespace DodoTheGame
         else
           vector2List2.Add(vector2_4);
       }
-      Game1.Log("Pathfinding request " + requestId.ToString() + " completed.",
-          BreadcrumbLevel.Debug, nameof (Pathfinder));
+      Debug.WriteLine("[i] Pathfinding request " + requestId.ToString() + " completed.", 
+          nameof (Pathfinder));
       return vector2List2;
     }
 
@@ -107,9 +104,7 @@ namespace DodoTheGame
       }, withNPCs: false).Item1)
         return 0;
       TerrainBehavior locationInfo = this.referenceWorld.behaviorMap.GetLocationInfo(location);
-
-      return locationInfo.collision || locationInfo.movementType 
-                == Player.DodoMovement.Swim ? (byte) 0 : (byte) 1;
+      return locationInfo.collision || locationInfo.movementType == Player.DodoMovement.Swim ? (byte) 0 : (byte) 1;
     }
 
     private List<Vector2> AStarPathfind(Point istart, Point iend)
@@ -125,9 +120,7 @@ namespace DodoTheGame
       predictedDistance.Add(key, (float) (Math.Abs(key.X - current.X) + Math.Abs(key.Y - current.Y)));
       while (source.Count > 0)
       {
-        Point point1 = source.OrderBy<Point, float>(
-            (Func<Point, float>) (p => predictedDistance[p])).First<Point>();
-
+        Point point1 = source.OrderBy<Point, float>((Func<Point, float>) (p => predictedDistance[p])).First<Point>();
         if (point1.X == current.X && point1.Y == current.Y)
         {
           List<Point> pointList2 = this.ReconstructPath(cameFrom, current);
@@ -144,21 +137,16 @@ namespace DodoTheGame
           string str1 = count.ToString();
           count = source.Count;
           string str2 = count.ToString();
-          Game1.Log("[A*] Closed: " + str1 + " Open: " + str2, BreadcrumbLevel.Debug, "Pathfinding");
+          Debug.WriteLine("[i] " + "[A*] Closed: " + str1 + " Open: " + str2, "Pathfinding");
           int num = dictionary[point1] + 1;
-          if ((!pointList1.Contains(neighborNode) || num < dictionary[neighborNode]) 
-                        && (!pointList1.Contains(neighborNode) || num < dictionary[neighborNode]))
+          if ((!pointList1.Contains(neighborNode) || num < dictionary[neighborNode]) && (!pointList1.Contains(neighborNode) || num < dictionary[neighborNode]))
           {
             if (cameFrom.Keys.Contains<Point>(neighborNode))
               cameFrom[neighborNode] = point1;
             else
               cameFrom.Add(neighborNode, point1);
-
             dictionary[neighborNode] = num;
-            predictedDistance[neighborNode] = (float) (dictionary[neighborNode] 
-                            + Math.Abs(neighborNode.X - current.X) 
-                            + Math.Abs(neighborNode.Y - current.Y));
-
+            predictedDistance[neighborNode] = (float) (dictionary[neighborNode] + Math.Abs(neighborNode.X - current.X) + Math.Abs(neighborNode.Y - current.Y));
             if (!source.Contains(neighborNode))
               source.Add(neighborNode);
           }

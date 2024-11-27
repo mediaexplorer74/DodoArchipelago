@@ -1,8 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Player
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.Player
 
 using DodoTheGame.BackgroundEffects;
 using DodoTheGame.Hitbox;
@@ -10,15 +6,15 @@ using DodoTheGame.Interactions;
 using DodoTheGame.WorldObject;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 
 namespace DodoTheGame
 {
-  internal class Player
+  public class Player
   {
     public bool DolphinDuringThisSink;
     public Player.DodoMovement currentMovementType;
@@ -48,9 +44,11 @@ namespace DodoTheGame
     public double speed;
     private float bikeTimeInWater;
     public bool collisionAtPreviousRequest;
+
     public IWorldObject inReachObject;
-    public Inventory inventory;
+    public Inventory inventory = new Inventory(); //!
     public IWorldObject buildingObject;
+    
     public int actionTime;
     public double movementTransitionElapsedTime;
     public bool buildSFXstarted;
@@ -89,7 +87,10 @@ namespace DodoTheGame
     {
       get
       {
-        return new Vector2(Convert.ToSingle(2.0 * Wind.GetSpeed) * Convert.ToSingle(Math.Cos(Convert.ToDouble(Wind.GetAngle - Math.PI / 2.0))), Convert.ToSingle(2.0 * Wind.GetSpeed) * Convert.ToSingle(Math.Sin(Convert.ToDouble(Wind.GetAngle - Math.PI / 2.0))));
+        return new Vector2(Convert.ToSingle(2.0 * Wind.GetSpeed)
+            * Convert.ToSingle(Math.Cos(Convert.ToDouble(Wind.GetAngle - Math.PI / 2.0))), 
+            Convert.ToSingle(2.0 * Wind.GetSpeed)
+            * Convert.ToSingle(Math.Sin(Convert.ToDouble(Wind.GetAngle - Math.PI / 2.0))));
       }
     }
 
@@ -108,9 +109,12 @@ namespace DodoTheGame
           case Player.DodoMovement.Swim:
             return (int) this.location.Y + 94;
           case Player.DodoMovement.Build:
-            return Convert.ToInt32((float) ((double) this.buildingObject.Location.Y - 88.0 - 32.0 + 203.0));
+            return Convert.ToInt32((float) (
+                (double) this.buildingObject.Location.Y - 88.0 - 32.0 + 203.0));
           case Player.DodoMovement.Harvest:
-            return Convert.ToInt32(new Vector2(this.buildingObject.ExplicitEpicenter.X - 130f, this.buildingObject.ExplicitEpicenter.Y - 192f).Y + 197f);
+            return Convert.ToInt32(new Vector2(
+                this.buildingObject.ExplicitEpicenter.X - 130f, 
+                this.buildingObject.ExplicitEpicenter.Y - 192f).Y + 197f);
           case Player.DodoMovement.Bike:
             return (int) this.location.Y + 97 + 16 - 15;
           case Player.DodoMovement.Bicycle:
@@ -136,13 +140,16 @@ namespace DodoTheGame
         switch (this.currentMovementType)
         {
           case Player.DodoMovement.Walk:
-            return new Vector2((float) ((double) this.location.X + 50.0 + 15.0), this.location.Y + 96f);
+            return new Vector2((float) ((double) this.location.X + 50.0 + 15.0), 
+                this.location.Y + 96f);
           case Player.DodoMovement.Swim:
-            return new Vector2((float) ((double) this.location.X + 50.0 + 15.0), this.location.Y + 96f);
+            return new Vector2((float) ((double) this.location.X + 50.0 + 15.0),
+                this.location.Y + 96f);
           case Player.DodoMovement.Bike:
             return new Vector2(this.location.X + 62f, this.location.Y + 83f);
           default:
-            return new Vector2((float) ((double) this.location.X + 50.0 + 15.0), this.location.Y + 96f);
+            return new Vector2((float) ((double) this.location.X + 50.0 + 15.0), 
+                this.location.Y + 96f);
         }
       }
     }
@@ -155,7 +162,8 @@ namespace DodoTheGame
 
     public bool HasHeadOutsideWater
     {
-      get => this.currentMovementType != Player.DodoMovement.Drown || this.timeSinceDrowning <= 720;
+      get => this.currentMovementType != Player.DodoMovement.Drown
+                || this.timeSinceDrowning <= 720;
     }
 
     internal TerrainType StandingOnTerrainType { get; private set; }
@@ -185,16 +193,22 @@ namespace DodoTheGame
     {
       if (dodoMovement != Player.DodoMovement.Bike)
         return new Tuple<bool, Vector2>(false, new Vector2(0.0f, 0.0f));
+
       World world1 = world;
       Box box = new Box();
-      box.Rectangle = new Microsoft.Xna.Framework.Rectangle(Convert.ToInt32(this.location.X - 23f), Convert.ToInt32(this.location.Y + 90f), 170, 10);
+      box.Rectangle = new Microsoft.Xna.Framework.Rectangle(
+          Convert.ToInt32(this.location.X - 23f), Convert.ToInt32(this.location.Y + 90f), 170, 10);
+
       string[] iwosPresetsToIgnore = new string[3]
       {
         "flatronce",
         "ronces",
         "turningronce"
       };
-      Tuple<bool, object> tuple = world1.TestCollision((IHitbox) box, iwosPresetsToIgnore: iwosPresetsToIgnore);
+
+      Tuple<bool, object> tuple = world1.TestCollision((IHitbox) box, 
+          iwosPresetsToIgnore: iwosPresetsToIgnore);
+
       if (tuple.Item1)
         return new Tuple<bool, Vector2>(true, new Vector2(0.0f, 0.0f));
       int num = tuple.Item1 ? 1 : 0;
@@ -207,34 +221,48 @@ namespace DodoTheGame
       {
         World world1 = world;
         Box box1 = new Box();
-        box1.Rectangle = new Microsoft.Xna.Framework.Rectangle(Convert.ToInt32((float) ((double) this.location.X + (double) movementVector.X - 23.0)), Convert.ToInt32((float) ((double) this.location.Y + (double) movementVector.Y + 90.0)), 170, 10);
+        box1.Rectangle = new Microsoft.Xna.Framework.Rectangle(
+            Convert.ToInt32((float) ((double) this.location.X + (double) movementVector.X - 23.0)),
+            Convert.ToInt32((float) ((double) this.location.Y + (double) movementVector.Y + 90.0)), 
+            170, 10);
+
         string[] iwosPresetsToIgnore1 = new string[3]
         {
           "flatronce",
           "ronces",
           "turningronce"
         };
-        Tuple<bool, object> tuple1 = world1.TestCollision((IHitbox) box1, iwosPresetsToIgnore: iwosPresetsToIgnore1);
+
+        Tuple<bool, object> tuple1 = world1.TestCollision((IHitbox) box1, 
+            iwosPresetsToIgnore: iwosPresetsToIgnore1);
         World world2 = world;
         Box box2 = new Box();
-        box2.Rectangle = new Microsoft.Xna.Framework.Rectangle(Convert.ToInt32((float) ((double) this.location.X + (double) movementVector.X - 23.0)), Convert.ToInt32(this.location.Y + 90f), 170, 10);
+        box2.Rectangle = new Microsoft.Xna.Framework.Rectangle(Convert.ToInt32((float) (
+            (double) this.location.X + (double) movementVector.X - 23.0)), 
+            Convert.ToInt32(this.location.Y + 90f), 170, 10);
+
         string[] iwosPresetsToIgnore2 = new string[3]
         {
           "flatronce",
           "ronces",
           "turningronce"
         };
-        Tuple<bool, object> tuple2 = world2.TestCollision((IHitbox) box2, iwosPresetsToIgnore: iwosPresetsToIgnore2);
+        Tuple<bool, object> tuple2 = world2.TestCollision((IHitbox) box2, 
+            iwosPresetsToIgnore: iwosPresetsToIgnore2);
         World world3 = world;
         Box box3 = new Box();
-        box3.Rectangle = new Microsoft.Xna.Framework.Rectangle(Convert.ToInt32(this.location.X - 23f), Convert.ToInt32((float) ((double) this.location.Y + (double) movementVector.Y + 90.0)), 170, 10);
+        box3.Rectangle = new Microsoft.Xna.Framework.Rectangle(
+            Convert.ToInt32(this.location.X - 23f), Convert.ToInt32(
+                (float) ((double) this.location.Y + (double) movementVector.Y + 90.0)), 170, 10);
+
         string[] iwosPresetsToIgnore3 = new string[3]
         {
           "flatronce",
           "ronces",
           "turningronce"
         };
-        Tuple<bool, object> tuple3 = world3.TestCollision((IHitbox) box3, iwosPresetsToIgnore: iwosPresetsToIgnore3);
+        Tuple<bool, object> tuple3 = world3.TestCollision((IHitbox) box3, 
+            iwosPresetsToIgnore: iwosPresetsToIgnore3);
         if (!tuple1.Item1)
         {
           this.location.X += this.bikeVelocity.X + this.WindAction.X;
@@ -254,15 +282,20 @@ namespace DodoTheGame
           if (withObjectOrTerrain != null)
             withObjectOrTerrain((object) this, new PlayerCollisionEventArgs()
             {
-              CollidedObject = tuple1.Item1 ? tuple1.Item2 : (tuple2.Item1 ? tuple2.Item2 : (tuple3.Item1 ? tuple3.Item2 : (object) null))
+              CollidedObject = tuple1.Item1 ? tuple1.Item2 
+              : (tuple2.Item1 
+              ? tuple2.Item2 : (tuple3.Item1 ? tuple3.Item2 
+              : (object) null))
             });
         }
         this.collisionAtPreviousRequest = tuple1.Item1 || tuple2.Item1 || tuple3.Item1;
       }
       else if (this.currentMovementType == Player.DodoMovement.Swim)
       {
-        Vector2 vector2 = new Vector2(this.location.X + movementVector.X, this.location.Y + movementVector.Y);
-        Tuple<bool, object> tuple4 = world.TestCollision((IHitbox) new HorizontalLine()
+        Vector2 vector2 = new Vector2(this.location.X + movementVector.X, 
+            this.location.Y + movementVector.Y);
+        Tuple<bool, object> tuple4 = world.TestCollision((IHitbox) 
+            new HorizontalLine()
         {
           StartingPoint = new Vector2(vector2.X + 37f, this.location.Y + 88f),
           Span = 43
@@ -289,9 +322,13 @@ namespace DodoTheGame
       {
         if (this.currentMovementType != Player.DodoMovement.Walk)
           return;
-        Vector2 location = new Vector2(this.location.X + 42f + movementVector.X, this.location.Y + 94f + movementVector.Y);
-        Vector2 vector2_1 = new Vector2(this.location.X + 42f + movementVector.X, this.location.Y + 94f);
-        Vector2 vector2_2 = new Vector2(this.location.X + 42f, this.location.Y + 94f + movementVector.Y);
+        Vector2 location = new Vector2(this.location.X + 42f + movementVector.X, 
+            this.location.Y + 94f + movementVector.Y);
+        Vector2 vector2_1 = new Vector2(this.location.X + 42f + movementVector.X, 
+            this.location.Y + 94f);
+        Vector2 vector2_2 = new Vector2(this.location.X + 42f, 
+            this.location.Y + 94f + movementVector.Y);
+
         this.StandingOnTerrainType = world.behaviorMap.GetLocationInfo(location).terrainType;
         if ((double) this.timeSinceLastWalkEvent > 430.0)
         {
@@ -332,14 +369,18 @@ namespace DodoTheGame
           this.location.X += movementVector.X;
         else if (!tuple8.Item1)
           this.location.Y += movementVector.Y;
-        this.speed = Math.Sqrt(Math.Pow((double) movementVector.X, 2.0) + Math.Pow((double) movementVector.X, 2.0));
+        this.speed = Math.Sqrt(Math.Pow((double) movementVector.X, 2.0)
+            + Math.Pow((double) movementVector.X, 2.0));
+
         if (!this.collisionAtPreviousRequest && (tuple6.Item1 || tuple8.Item1 || tuple7.Item1))
         {
-          EventHandler<PlayerCollisionEventArgs> withObjectOrTerrain = this.CollisionWithObjectOrTerrain;
+          EventHandler<PlayerCollisionEventArgs> 
+                        withObjectOrTerrain = this.CollisionWithObjectOrTerrain;
           if (withObjectOrTerrain != null)
             withObjectOrTerrain((object) this, new PlayerCollisionEventArgs()
             {
-              CollidedObject = tuple6.Item1 ? tuple6.Item2 : (tuple7.Item1 ? tuple7.Item2 : (tuple8.Item1 ? tuple8.Item2 : (object) null))
+              CollidedObject = tuple6.Item1 ? tuple6.Item2 : (tuple7.Item1 
+              ? tuple7.Item2 : (tuple8.Item1 ? tuple8.Item2 : (object) null))
             });
         }
         this.collisionAtPreviousRequest = tuple6.Item1 || tuple8.Item1 || tuple7.Item1;
@@ -354,7 +395,12 @@ namespace DodoTheGame
 
     public void Update(GameTime gameTime, World world, Game1 game, UserInputStatus state)
     {
+
       KeyboardState state1 = Microsoft.Xna.Framework.Input.Keyboard.GetState();
+
+      //DEBUG:  KeyboardState ks, Game1 game, GameTime gameTime
+      DebugAssistant.KeyInput(state1, game, gameTime);
+
       TimeSpan elapsedGameTime;
       if (this.currentMovementType == Player.DodoMovement.Walk)
       {
@@ -380,7 +426,8 @@ namespace DodoTheGame
       }
       if (state.bike == UserInputStatus.InputState.Pressed)
       {
-        if (this.currentMovementType == Player.DodoMovement.Walk && this.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike])
+        if (this.currentMovementType == Player.DodoMovement.Walk
+                    && this.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike])
         {
           EventHandler bikeAppearing = this.BikeAppearing;
           if (bikeAppearing != null)
@@ -395,7 +442,9 @@ namespace DodoTheGame
           this.location.Y = Convert.ToSingle(Math.Round((double) this.location.Y));
         }
       }
-      if ((state.bicycle == UserInputStatus.InputState.Pressed || state.bicycle == UserInputStatus.InputState.Held) && this.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] && this.currentMovementType == Player.DodoMovement.Walk)
+      if ((state.bicycle == UserInputStatus.InputState.Pressed 
+                || state.bicycle == UserInputStatus.InputState.Held)
+                && this.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] && this.currentMovementType == Player.DodoMovement.Walk)
       {
         if (this.currentMovementType != Player.DodoMovement.Bicycle && (double) this.TimeBar > 3.0)
           this.currentMovementType = Player.DodoMovement.WalkToBicycle;
@@ -405,7 +454,8 @@ namespace DodoTheGame
       if (this.SwimPulseCount >= 3 && this.currentMovementType == Player.DodoMovement.Swim)
       {
         this.swimCountdown = this.swimCountdownSize;
-        if (world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType == Player.DodoMovement.Walk)
+        if (world.behaviorMap.GetLocationInfo(
+            this.PlayerEpicenter).movementType == Player.DodoMovement.Walk)
         {
           this.swimCooldown = this.swimLag;
           this.swimMovementStepDone = 0;
@@ -431,7 +481,8 @@ namespace DodoTheGame
           else if (this.SwimPulseCount < 2)
             this.safeSwimCheckpoint = Vector2.Zero;
         }
-        if (world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType == Player.DodoMovement.Walk)
+        if (world.behaviorMap.GetLocationInfo(
+            this.PlayerEpicenter).movementType == Player.DodoMovement.Walk)
         {
           this.swimCooldown = this.swimLag;
           this.swimCountdown = this.swimCountdownSize;
@@ -451,7 +502,7 @@ namespace DodoTheGame
       }
       else if (this.movementUpdateTiming >= 100.0)
       {
-        Game1.Log("movementUpdateTiming overflow", BreadcrumbLevel.Warning);
+        Debug.WriteLine("[!] movementUpdateTiming overflow");
         this.movementUpdateTiming = 0.0;
         flag = true;
       }
@@ -491,12 +542,18 @@ namespace DodoTheGame
           if ((double) this.bikeVelocity.X > 0.0)
             this.facing = 1;
           this.Move(world, this.bikeVelocity + this.WindAction);
-          Microsoft.Xna.Framework.Rectangle hitbox = new Microsoft.Xna.Framework.Rectangle(Convert.ToInt32(Math.Round((double) this.location.X - 23.0)), Convert.ToInt32(Math.Round((double) this.location.Y + 75.0)), 170, 16);
-          if ((double) world.behaviorMap.TestHalfColorRatio(hitbox, new Color(0, 0, (int) byte.MaxValue)) > 0.89999997615814209)
+
+          Microsoft.Xna.Framework.Rectangle hitbox = 
+                        new Microsoft.Xna.Framework.Rectangle(
+                            Convert.ToInt32(Math.Round((double) this.location.X - 23.0)), 
+                            Convert.ToInt32(Math.Round((double) this.location.Y + 75.0)), 170, 16);
+
+          if ((double) world.behaviorMap.TestHalfColorRatio(hitbox, new Color(0, 0,
+              (int) byte.MaxValue)) > 0.89999997615814209)
           {
             if ((double) this.bikeTimeInWater < 1.0)
             {
-              Game1.Log("Bike checkpoint", BreadcrumbLevel.Debug);
+              Debug.WriteLine("[i] Bike checkpoint");
               this.walkMovementCheckpoint = new Vector2(this.location.X, this.location.Y);
             }
             double bikeTimeInWater = (double) this.bikeTimeInWater;
@@ -515,9 +572,11 @@ namespace DodoTheGame
             this.IsBikeInWater = false;
             this.bikeTimeInWater = 0.0f;
           }
-          if (this.IsBikeInWater && Math.Sqrt(Math.Pow((double) this.bikeVelocity.X, 2.0) + Math.Pow((double) this.bikeVelocity.Y, 2.0)) < 3.4000000953674316)
+          if (this.IsBikeInWater && Math.Sqrt(Math.Pow((double) this.bikeVelocity.X, 2.0) 
+              + Math.Pow((double) this.bikeVelocity.Y, 2.0)) < 3.4000000953674316)
           {
-            if (world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType == Player.DodoMovement.Walk)
+            if (world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType 
+                            == Player.DodoMovement.Walk)
             {
               this.currentMovementType = Player.DodoMovement.Walk;
             }
@@ -544,7 +603,12 @@ namespace DodoTheGame
           if (this.swimMovementStepDone > 20 && this.swimMovementStepDone < 60)
           {
             ++this.swimMovementStepDone;
-            movementVector = new Vector2((float) (num * this.swimAimX) * (float) ((0.89999997615814209 + (double) this.SwimPulseCount * 0.10000000149011612) * 0.070000000298023224 * (double) (40 - (this.swimMovementStepDone - 20)) + 1.0), (float) (int) Math.Round((double) (num * this.swimAimY) * ((0.89999997615814209 + (double) this.SwimPulseCount * 0.10000000149011612) * 0.070000000298023224 * (double) (40 - (this.swimMovementStepDone - 20)) + 1.0)));
+
+            movementVector = new Vector2((float) (num * this.swimAimX) *
+                (float) ((0.89999997615814209 + (double) this.SwimPulseCount * 0.10000000149011612)
+                * 0.070000000298023224 * (double) (40 - (this.swimMovementStepDone - 20)) + 1.0), 
+                (float) (int) Math.Round((double) (num * this.swimAimY) * ((0.89999997615814209 + (double) this.SwimPulseCount * 0.10000000149011612) 
+                * 0.070000000298023224 * (double) (40 - (this.swimMovementStepDone - 20)) + 1.0)));
           }
           else
             ++this.swimMovementStepDone;
@@ -557,8 +621,10 @@ namespace DodoTheGame
           this.bikeVelocity = Vector2.Zero;
         }
       }
+
       if (this.currentMovementType != Player.DodoMovement.Bike)
         this.RoundLocation();
+
       if (this.swimCooldown > 0)
       {
         int swimCooldown = this.swimCooldown;
@@ -566,33 +632,44 @@ namespace DodoTheGame
         int totalMilliseconds4 = (int) elapsedGameTime.TotalMilliseconds;
         this.swimCooldown = swimCooldown - totalMilliseconds4;
       }
+
       if (this.swimCooldown < 0)
         this.swimCooldown = 0;
+
       if (state1.IsKeyDown(Keys.LeftControl) && this.allowSuperdodo && this.swimCooldown > 20)
         this.swimCooldown = 0;
+
       if (this.currentMovementType != Player.DodoMovement.Swim)
       {
         this.swimCooldown = this.swimLag;
         this.swimCountdown = this.swimCountdownSize;
         this.swimMovementStepDone = 0;
       }
-      if (this.currentMovementType != Player.DodoMovement.Bicycle && this.currentMovementType != Player.DodoMovement.WalkToBicycle)
+
+      if (this.currentMovementType != Player.DodoMovement.Bicycle
+                && this.currentMovementType != Player.DodoMovement.WalkToBicycle)
       {
         if ((double) this.TimeBar < 100.0)
           this.TimeBar += 0.01f;
         else
           this.TimeBar = 100f;
       }
-      if (this.currentMovementType == Player.DodoMovement.Walk && world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType == Player.DodoMovement.Swim && (!state1.IsKeyDown(Keys.LeftControl) || !this.allowSuperdodo))
+
+      if (this.currentMovementType == Player.DodoMovement.Walk
+                && world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType
+                == Player.DodoMovement.Swim && (!state1.IsKeyDown(Keys.LeftControl) 
+                || !this.allowSuperdodo))
       {
         EventHandler enteredWater = this.EnteredWater;
         if (enteredWater != null)
           enteredWater((object) this, EventArgs.Empty);
-        this.walkMovementCheckpoint = new Vector2(this.locationInLastUpdate.X, this.locationInLastUpdate.Y);
-        Game1.Log("Walk checkpoint", BreadcrumbLevel.Debug);
+        this.walkMovementCheckpoint = new Vector2(this.locationInLastUpdate.X, 
+            this.locationInLastUpdate.Y);
+        Debug.WriteLine("[i] Walk checkpoint");
         this.SwimPulseCount = 0;
         this.currentMovementType = Player.DodoMovement.Swim;
       }
+
       if (this.currentMovementType == Player.DodoMovement.Build)
       {
         int actionTime = this.actionTime;
@@ -603,16 +680,23 @@ namespace DodoTheGame
         {
           this.buildSFXstarted = false;
           IWorldObject worldObject;
+
           if (this.buildingObject is BuildPoint buildingObject2)
             worldObject = buildingObject2.Build(world, this);
           else
-            worldObject = this.buildingObject is Upgradable buildingObject1 ? buildingObject1.Upgrade(world, this) : throw new Exception("Player.buildingObject was null or set to an unknown IWO type");
-          Vector2 lineStart = new Vector2((float) ((double) this.location.X + 32.0 + 10.0), this.location.Y + 94f);
+            worldObject = this.buildingObject is Upgradable buildingObject1
+                            ? buildingObject1.Upgrade(world, this) 
+                            : throw new Exception(
+                                "Player.buildingObject was null or set to an unknown IWO type");
+          Vector2 lineStart = new Vector2((float) ((double) this.location.X + 32.0 + 10.0), 
+              this.location.Y + 94f);
+
           if (this.safeSwimCheckpoint != Vector2.Zero)
           {
             this.location = this.safeSwimCheckpoint;
             this.safeSwimCheckpoint = Vector2.Zero;
           }
+
           if (worldObject.TestHorizontalLineCollision(lineStart, 32))
           {
             Vector2 zero = Vector2.Zero;
@@ -622,10 +706,11 @@ namespace DodoTheGame
               ++lineStart.Y;
             }
             this.location += zero;
-            Game1.Log("Player teleported (" + zero.X.ToString() + "; " + zero.Y.ToString() + ") to prevent it from being inside a hitbox", BreadcrumbLevel.Debug);
+            Debug.WriteLine("[i] Player teleported (" + zero.X.ToString() + "; " 
+                + zero.Y.ToString() + ") to prevent it from being inside a hitbox");
           }
           else
-            Game1.Log("Build hitbox not detected", BreadcrumbLevel.Debug);
+            Debug.WriteLine("[i] Build hitbox not detected");
         }
         else if (this.actionTime > 210 && !this.buildSFXstarted)
         {
@@ -683,7 +768,8 @@ namespace DodoTheGame
           this.currentMovementType = Player.DodoMovement.Walk;
           this.movementTransitionElapsedTime = 0.0;
         }
-        if (game.dodoWalkToBicycleSprite.CurrentFrame == game.dodoWalkToBicycleSprite.TotalFrameCount - 1 && this.movementTransitionElapsedTime > (double) game.dodoWalkToBicycleSprite.MillisecondsPerFrame)
+        if (game.dodoWalkToBicycleSprite.CurrentFrame == game.dodoWalkToBicycleSprite.TotalFrameCount - 1 
+                    && this.movementTransitionElapsedTime > (double) game.dodoWalkToBicycleSprite.MillisecondsPerFrame)
         {
           if (this.BuildingBicycleException)
             this.BuildingBicycleException = false;
@@ -698,12 +784,17 @@ namespace DodoTheGame
         elapsedGameTime = gameTime.ElapsedGameTime;
         int num = (int) Math.Round(elapsedGameTime.TotalMilliseconds);
         this.actionTime = actionTime + num;
+
         if (this.actionTime > 1555)
         {
           this.buildSFXstarted = false;
           this.actionTime = 0;
-          this.currentMovementType = world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType != Player.DodoMovement.Walk ? Player.DodoMovement.Swim : Player.DodoMovement.Walk;
-          ((Harvest) ((IEnumerable<IDodoInteraction>) this.inReachObject.Interactions).First<IDodoInteraction>((Func<IDodoInteraction, bool>) (p => p != null && p.GetType() == typeof (Harvest)))).RegisterSuccess(this, this.inReachObject, gameTime);
+          this.currentMovementType = world.behaviorMap.GetLocationInfo(this.PlayerEpicenter).movementType != Player.DodoMovement.Walk
+                        ? Player.DodoMovement.Swim : Player.DodoMovement.Walk;
+
+          ((Harvest) ((IEnumerable<IDodoInteraction>) this.inReachObject.Interactions)
+                        .First<IDodoInteraction>((Func<IDodoInteraction, bool>)
+                        (p => p != null && p.GetType() == typeof (Harvest)))).RegisterSuccess(this, this.inReachObject, gameTime);
           this.inReachObject.Visible = true;
           if (this.safeSwimCheckpoint != Vector2.Zero)
           {
@@ -750,7 +841,7 @@ namespace DodoTheGame
           EventHandler dolphin = this.Dolphin;
           if (dolphin != null)
             dolphin((object) this, EventArgs.Empty);
-          Console.WriteLine("Dolphin alert");
+          System.Diagnostics.Debug.WriteLine("Dolphin alert");
           this.DolphinDuringThisSink = true;
         }
         else if (this.timeSinceDrowning >= 2520)
@@ -839,7 +930,15 @@ namespace DodoTheGame
         {
           int num = this.facing == 0 ? 44 : 86;
           this.inReachObject = (IWorldObject) null;
-          if ((double) Math.Abs(parentWo.Epicenter.X - (this.location.X + (float) num)) < 50.0 + (double) parentWo.ExtraReach.X && (double) Math.Abs(parentWo.Epicenter.Y - (this.location.Y + 83f)) < 37.0 + (double) parentWo.ExtraReach.Y && (!(parentWo is BuildPoint) || (parentWo as BuildPoint).isBpVisible) && (parentWo.Interactions[0] != null && parentWo.Interactions[0].ComputeShowState(parentWo, this) || parentWo.Interactions[1] != null && parentWo.Interactions[1].ComputeShowState(parentWo, this) || parentWo.Interactions[2] != null && parentWo.Interactions[2].ComputeShowState(parentWo, this) || parentWo.Interactions[3] != null && parentWo.Interactions[3].ComputeShowState(parentWo, this) || parentWo is Hourglass))
+          if ((double) Math.Abs(parentWo.Epicenter.X - 
+              (this.location.X + (float) num)) < 50.0 + (double) parentWo.ExtraReach.X
+              && (double) Math.Abs(parentWo.Epicenter.Y - (this.location.Y + 83f)) < 37.0 + (double) parentWo.ExtraReach.Y 
+              && (!(parentWo is BuildPoint) || (parentWo as BuildPoint).isBpVisible) 
+              && (parentWo.Interactions[0] != null && parentWo.Interactions[0].ComputeShowState(parentWo, this) 
+              || parentWo.Interactions[1] != null && parentWo.Interactions[1].ComputeShowState(parentWo, this) 
+              || parentWo.Interactions[2] != null && parentWo.Interactions[2].ComputeShowState(parentWo, this) 
+              || parentWo.Interactions[3] != null && parentWo.Interactions[3].ComputeShowState(parentWo, this) 
+              || parentWo is Hourglass))
           {
             this.inReachObject = parentWo;
             break;
@@ -855,11 +954,17 @@ namespace DodoTheGame
       float factor = 920.0 - (double) num4 <= 0.0 ? 0.0f : (float) (0.20000000298023224 * ((920.0 - (double) num4) / 920.0));
       if ((double) factor > 0.20000000298023224)
         factor = 0.2f;
+
       Sound.UpdateBGE(0, factor);
+      
       Vector2 vector2 = this.location - new Vector2(6700f, 5171f);
+      
       Sound.UpdateBGE(2, (double) vector2.Length() >= 1000.0 ? 0.0f : (float) (0.699999988079071 * ((1000.0 - (double) vector2.Length()) / 1000.0)));
+      
       vector2 = this.location - new Vector2(14760f, 4710f);
+      
       Sound.UpdateBGE(1, (double) vector2.Length() >= 1000.0 ? 0.0f : (float) (0.699999988079071 * ((1000.0 - (double) vector2.Length()) / 1000.0)));
+      
       this.wasBikeInWaterLastUpdate = this.IsBikeInWater;
       this.locationInLastUpdate = new Vector2(this.location.X, this.location.Y);
     }
@@ -875,7 +980,7 @@ namespace DodoTheGame
       this.movementRequestTiming += gameTime.ElapsedGameTime.TotalMilliseconds;
       if (this.movementRequestTiming >= 100.0)
       {
-        Game1.Log("movementRequestTiming overflow", BreadcrumbLevel.Critical);
+        //Debug.WriteLine("[!!!] movementRequestTiming overflow");
         this.movementRequestTiming = 0.0;
       }
       else
@@ -948,7 +1053,7 @@ namespace DodoTheGame
       }
     }
 
-    internal enum DodoMovement
+    public enum DodoMovement
     {
       Walk,
       Swim,

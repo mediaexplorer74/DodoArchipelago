@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: DodoTheGame.TerrainBackground
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace DodoTheGame
 {
-  internal class TerrainBackground
+  public class TerrainBackground
   {
     public List<TerrainBackgroundPart> partList;
     private bool isCaching;
@@ -98,7 +98,7 @@ namespace DodoTheGame
       foreach (TerrainBackgroundPart part in this.partList)
       {
         Recorder.RDraw(spriteBatch, part.GetCurrentTexture(playerLevel), new Vector2(part.virtualOrigin.X + backgroundPosition.X, part.virtualOrigin.Y + backgroundPosition.Y), Color.White);
-        Console.WriteLine("Drew " + part.GetCurrentTexture(playerLevel).Name + " at " + (part.virtualOrigin.X + backgroundPosition.X).ToString() + " " + (part.virtualOrigin.Y + backgroundPosition.Y).ToString());
+        System.Diagnostics.Debug.WriteLine("Drew " + part.GetCurrentTexture(playerLevel).Name + " at " + (part.virtualOrigin.X + backgroundPosition.X).ToString() + " " + (part.virtualOrigin.Y + backgroundPosition.Y).ToString());
       }
     }
 

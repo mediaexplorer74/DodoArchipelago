@@ -1,11 +1,11 @@
 ﻿// Type: DodoTheGame.BackgroundEffects.BirdShadowManager
 
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 
 namespace DodoTheGame.BackgroundEffects
 {
@@ -38,16 +38,17 @@ namespace DodoTheGame.BackgroundEffects
             startingPoint = new Vector2(-200f, (float) Game1.RNG.Next(-200, 15000));
             break;
         }
-        BirdShadowManager.BirdShadowList.Add(new BirdShadow(startingPoint, 
-            Game1.RNG.NextDouble() * Math.PI * 2.0, BirdShadowManager.sprite, 2.7));
+        BirdShadowManager.BirdShadowList.Add(
+            new BirdShadow(startingPoint, Game1.RNG.NextDouble() * Math.PI * 2.0, 
+            BirdShadowManager.sprite, 2.7));
       }
       BirdShadowManager.TimeSinceLastSeagullSound += gameTime.ElapsedGameTime.Milliseconds;
       for (int index = BirdShadowManager.BirdShadowList.Count - 1; index >= 0; --index)
       {
-        Vector2 drawpos = BirdShadowManager.BirdShadowList[index]
-                    .GetDrawpos(BirdShadowManager.BirdShadowList[index].passedTime);
+        Vector2 drawpos = BirdShadowManager.BirdShadowList[index].GetDrawpos(
+            BirdShadowManager.BirdShadowList[index].passedTime);
 
-        if ((double) drawpos.X > 22000.0 || (double) drawpos.X < -250.0 
+        if ((double) drawpos.X > 22000.0 || (double) drawpos.X < -250.0
                     || (double) drawpos.Y > 15100.0 || (double) drawpos.Y < -250.0)
           BirdShadowManager.BirdShadowList.RemoveAt(index);
 
@@ -57,7 +58,7 @@ namespace DodoTheGame.BackgroundEffects
           EventHandler seagull = BirdShadowManager.Seagull;
           if (seagull != null)
             seagull((object) null, EventArgs.Empty);
-          Game1.Log("Seagull Sound", BreadcrumbLevel.Info);
+          Debug.WriteLine("[i] Seagull Sound");
           BirdShadowManager.TimeSinceLastSeagullSound = 0;
         }
       }

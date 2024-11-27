@@ -1,14 +1,10 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Interactions.Upgrade
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.Interactions.Upgrade
 
 using DodoTheGame.Localization;
 using DodoTheGame.WorldObject;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -27,13 +23,17 @@ namespace DodoTheGame.Interactions
     {
       get
       {
-        return !this.alreadyInteracted ? LocalizationManager.GetString("InteractionUpgradeSee") : LocalizationManager.GetString("InteractionUpgradeActivate");
+        return !this.alreadyInteracted 
+                    ? LocalizationManager.GetString("InteractionUpgradeSee")
+                    : LocalizationManager.GetString("InteractionUpgradeActivate");
       }
     }
 
     public void Trigger(Game1 game, Player player, IWorldObject parentWo)
     {
-      Upgradable upg = parentWo is Upgradable ? (Upgradable) parentWo : throw new Exception("Upgrade interaction is not supported for this IWO");
+      Upgradable upg = parentWo is Upgradable 
+                ? (Upgradable) parentWo 
+                : throw new Exception("Upgrade interaction is not supported for this IWO");
       if (!this.alreadyInteracted)
       {
         ((Upgradable) parentWo).ResetOpenBuildboxes();
@@ -41,15 +41,36 @@ namespace DodoTheGame.Interactions
       }
       else
       {
-        if (parentWo.PresetMarker == "Atelier" && !player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike] || parentWo.PresetMarker == "Atelier 2" && !player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] || player.currentMovementType == Player.DodoMovement.Build || Game1.world.Level < this.requiredLevelToUpgrade || upg.incompatibleTagsToUpgrade.Length != 0 && Game1.world.objects.Any<IWorldObject>((Func<IWorldObject, bool>) (p => ((IEnumerable<string>) p.Tags).Intersect<string>((IEnumerable<string>) upg.incompatibleTagsToUpgrade).Any<string>())) || upg.otherBuildsSpecialIncompatibleTags.Length != 0 && Game1.world.objects.Any<IWorldObject>((Func<IWorldObject, bool>) (p => ((IEnumerable<string>) p.Tags).Intersect<string>((IEnumerable<string>) upg.otherBuildsSpecialIncompatibleTags).Any<string>())))
+        if (parentWo.PresetMarker == "Atelier" 
+                    && !player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike] 
+                    || parentWo.PresetMarker == "Atelier 2" 
+                    && !player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] 
+                    || player.currentMovementType == Player.DodoMovement.Build 
+                    || Game1.world.Level < this.requiredLevelToUpgrade 
+                    || upg.incompatibleTagsToUpgrade.Length != 0 
+                    && Game1.world.objects.Any<IWorldObject>((Func<IWorldObject, bool>)
+                    (p => ((IEnumerable<string>) p.Tags)
+                    .Intersect<string>((IEnumerable<string>) 
+                    upg.incompatibleTagsToUpgrade).Any<string>())) 
+                    || upg.otherBuildsSpecialIncompatibleTags.Length != 0 
+                    && Game1.world.objects.Any<IWorldObject>((Func<IWorldObject, bool>) 
+                    (p => ((IEnumerable<string>) p.Tags)
+                    .Intersect<string>((IEnumerable<string>) 
+                    upg.otherBuildsSpecialIncompatibleTags).Any<string>())))
           return;
+
         bool flag = true;
         foreach (ItemStack upgradeItem in this.upgradeItems)
         {
           ItemStack itm = upgradeItem;
           int num = 0;
-          foreach (ItemStack itemStack in ((IEnumerable<ItemStack>) player.inventory.inventory).Where<ItemStack>((Func<ItemStack, bool>) (i => i != null && i.itemId == itm.itemId)).ToList<ItemStack>())
+
+          foreach (ItemStack itemStack 
+                        in ((IEnumerable<ItemStack>) player.inventory.inventory)
+                        .Where<ItemStack>((Func<ItemStack, bool>) 
+                        (i => i != null && i.itemId == itm.itemId)).ToList<ItemStack>())
             num += itemStack.count;
+
           if (num < itm.count)
           {
             flag = false;
@@ -76,12 +97,13 @@ namespace DodoTheGame.Interactions
           player.actionTime = 0;
         }
         else
-          Game1.Log("Upgrade failed: missing items", BreadcrumbLevel.Debug);
+          Debug.WriteLine("[i] Upgrade failed: missing items");
       }
     }
 
     public Upgrade()
     {
+       //TODO
     }
 
     public Upgrade(Preset upgradePreset, List<ItemStack> upgradeItems, int requiredLevelToUpgrade)

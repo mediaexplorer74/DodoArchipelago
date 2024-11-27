@@ -3,9 +3,9 @@
 using DodoTheGame.Saving;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -134,24 +134,26 @@ namespace DodoTheGame.GUI
       GUIManager.credits.mainbackground = ContentLoadingWrapper.Load<Texture2D>("mainmenu/bg");
       GUIManager.credits.creditsbackground = ContentLoadingWrapper.Load<Texture2D>("mainmenu/credits");
       GUIManager.inventoryGUI.background = ContentLoadingWrapper.Load<Texture2D>("ui/inv_bg");
+
       GUIManager.inventoryGUI.animatedBackground = 
-                new Sprite("inv_bg_animated", ContentLoadingWrapper.Load<Texture2D>("ui/inv_bg_animated"))
-      {
-        animated = true,
-        Width = 1098,
-        height = 570,
-        MillisecondsPerFrame = 12,
-        loopAnimation = false
-      };
+          new Sprite("inv_bg_animated", ContentLoadingWrapper.Load<Texture2D>("ui/inv_bg_animated"))
+          {
+            animated = true,
+            Width = 1098,
+            height = 570,
+            MillisecondsPerFrame = 12,
+            loopAnimation = false
+          };
+
       GUIManager.inventoryGUI.inventaire = ContentLoadingWrapper.Load<Texture2D>("ui/inventaire");
       GUIManager.inventoryGUI.tile = ContentLoadingWrapper.Load<Texture2D>("ui/inventorytile");
-      GUIManager.inventoryGUI.selectedtiletexture = 
-                ContentLoadingWrapper.Load<Texture2D>("ui/inventorytile2");
+      GUIManager.inventoryGUI.selectedtiletexture = ContentLoadingWrapper.Load<Texture2D>("ui/inventorytile2");
       GUIManager.inventoryGUI.itemTextures = game.itemTextures;
       GUIManager.inventoryGUI.empty_flower = ContentLoadingWrapper.Load<Texture2D>("smallitems/empty");
       GUIManager.inventoryGUI.miniFlowersTextures = game.miniFlowersTextures;
       GUIManager.inventoryGUI.font = Game1.rouliLSpriteFont;
       GUIManager.editorHUD.background = ContentLoadingWrapper.Load<Texture2D>("ui/pause1");
+
       GUIManager.tutorialHUD.animatedBackground = 
                 new Sprite("tuto", ContentLoadingWrapper.Load<Texture2D>("ui/tuto"))
       {
@@ -164,7 +166,7 @@ namespace DodoTheGame.GUI
 
     public static void ClearThenSet(IGUI hud)
     {
-      Game1.Log("HUDs cleared and " + hud.GetType().FullName + " added.", BreadcrumbLevel.Debug);
+      Debug.WriteLine("[i] HUDs cleared and " + hud.GetType().FullName + " added.");
       if (hud == GUIManager.settings && GUIManager.currentHUDs.Contains((IGUI) GUIManager.escapeGUI))
         GUIManager.SettingsOpenFromEscape = true;
       else if (hud == GUIManager.escapeGUI && GUIManager.currentHUDs.Contains((IGUI) GUIManager.settings))
@@ -172,8 +174,10 @@ namespace DodoTheGame.GUI
       GUIManager.Clear();
       hud.Open();
       GUIManager.currentHUDs.Add(hud);
+
       if (!(hud.GetType() == typeof (LoadGUI)))
         return;
+
       GUIManager.loadGUI.saveInfo1 = SaveHandler.GetSlotInfo(1, Game1.graphics.GraphicsDevice);
       GUIManager.loadGUI.saveInfo2 = SaveHandler.GetSlotInfo(2, Game1.graphics.GraphicsDevice);
       GUIManager.loadGUI.saveInfo3 = SaveHandler.GetSlotInfo(3, Game1.graphics.GraphicsDevice);
@@ -183,8 +187,7 @@ namespace DodoTheGame.GUI
     public static void Update(GameTime gameTime)
     {
       GUIManager.currentHUDs.RemoveAll((Predicate<IGUI>) (p => p.ReadyToRemove));
-
-      if (GUIManager.currentHUDs.Contains((IGUI) GUIManager.settings)
+      if (GUIManager.currentHUDs.Contains((IGUI) GUIManager.settings) 
                 || GUIManager.currentHUDs.Contains((IGUI) GUIManager.loadGUI)
                 || GUIManager.currentHUDs.Contains((IGUI) GUIManager.credits))
         GUIManager.GUITimer += gameTime.ElapsedGameTime.Milliseconds / 2;
@@ -197,11 +200,15 @@ namespace DodoTheGame.GUI
       if (!force)
       {
         foreach (IGUI currentHuD in GUIManager.currentHUDs)
-          currentHuD.Close();
+        {
+            currentHuD.Close();
+        }
       }
       else
         GUIManager.currentHUDs.Clear();
+
       GUIManager.currentHUDs.RemoveAll((Predicate<IGUI>) (p => p.ReadyToRemove));
+
       if (!includingInteractHUD)
       {
         GUIManager.interactGUI.Open();
@@ -230,8 +237,7 @@ namespace DodoTheGame.GUI
 
     public static void DrawGUI(SpriteBatch spriteBatch, Game1 game, GameTime gameTime)
     {
-      List<IGUI> list = GUIManager.currentHUDs.OrderBy<IGUI, int>(
-          (Func<IGUI, int>) (h => h.Layer)).ToList<IGUI>();
+      List<IGUI> list = GUIManager.currentHUDs.OrderBy<IGUI, int>((Func<IGUI, int>) (h => h.Layer)).ToList<IGUI>();
       try
       {
         foreach (IGUI gui in list)
@@ -239,25 +245,30 @@ namespace DodoTheGame.GUI
       }
       catch (Exception ex)
       {
-        Game1.Log("An IHUD.Draw has failed", BreadcrumbLevel.Error, "hud");
+       Debug.WriteLine("[ex] An IHUD.Draw has failed",  " hud");
       }
     }
 
+    // GUIInput
     public static void GUIInput(UserInputStatus uis, Game1 game)
     {
       if (GUIManager.lastUIS == null)
         GUIManager.lastUIS = uis;
+
       bool left = false;
       bool right = false;
       bool up = false;
       bool down = false;
       bool action1 = false;
+      
       if ((double) GUIManager.lastUIS.moveLeft > 0.4 && (double) uis.moveLeft < 0.4)
         GUIManager.holdcount = 0;
+      
       if ((double) GUIManager.lastUIS.moveRight > 0.4 && (double) uis.moveRight < 0.4)
         GUIManager.holdcount = 0;
-      if ((double) uis.moveLeft > 0.4 && (double) GUIManager.lastUIS.moveLeft <= 0.4 
-                && (double) uis.moveRight <= 0.4)
+      
+      if ((double) uis.moveLeft > 0.4
+                && (double) GUIManager.lastUIS.moveLeft <= 0.4 && (double) uis.moveRight <= 0.4)
       {
         left = true;
         GUIManager.holdcount = 0;
@@ -268,7 +279,9 @@ namespace DodoTheGame.GUI
         if (GUIManager.holdcount > 25 && GUIManager.holdcount % 2 == 0)
           left = true;
       }
-      if ((double) uis.moveRight > 0.4 && (double) GUIManager.lastUIS.moveRight <= 0.4
+
+      if ((double) uis.moveRight > 0.4 
+                && (double) GUIManager.lastUIS.moveRight <= 0.4 
                 && (double) uis.moveLeft <= 0.4)
       {
         right = true;
@@ -280,21 +293,32 @@ namespace DodoTheGame.GUI
         if (GUIManager.holdcount > 25 && GUIManager.holdcount % 2 == 0)
           right = true;
       }
+
       if ((double) uis.moveUp > 0.4 && (double) GUIManager.lastUIS.moveUp <= 0.4)
         up = true;
+      
       if ((double) uis.moveDown > 0.4 && (double) GUIManager.lastUIS.moveDown <= 0.4)
         down = true;
-      if (uis.spacebar == UserInputStatus.InputState.Pressed)
+      
+       if (uis.spacebar == UserInputStatus.InputState.Pressed)
         action1 = true;
-      try
+      
+       //RnD
+       try
       {
         foreach (IGUI currentHuD in GUIManager.currentHUDs)
-          currentHuD.Input(left, right, up, down, action1, (double) uis.moveDown > 0.4 || uis.spacebar == UserInputStatus.InputState.Held, uis.alt, game);
+        {
+            currentHuD.Input(left, right, up, down, action1, 
+                (int)(double)uis.moveDown > 0.4  || uis.spacebar == UserInputStatus.InputState.Held, 
+                uis.alt, game);
+        }
       }
       catch (Exception ex)
       {
-        Game1.Log("An IHUD.Input has failed", BreadcrumbLevel.Error, "hud");
+        Debug.WriteLine("[ex] An IHUD.Input has failed - hud - " + ex.Message);
       }
+       
+
       GUIManager.lastUIS = uis;
     }
   }

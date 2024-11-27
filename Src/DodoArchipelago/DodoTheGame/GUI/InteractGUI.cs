@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: DodoTheGame.GUI.InteractGUI
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,6 +36,7 @@ namespace DodoTheGame.GUI
     public Texture2D dirdownright;
     public Texture2D dirright;
     public Texture2D dirupright;
+
     private float compassFadeOut;
     private float compassOpacity;
 
@@ -51,8 +52,11 @@ namespace DodoTheGame.GUI
     {
       bool flag = false;
       Vector2 vector2 = new Vector2(9000f, 7950f);
-      if (((double) Game1.player.walkMovementIdleTime > 300.0 || Game1.world.Level == 0) && Math.Sqrt(Math.Pow((double) Game1.player.location.X - (double) vector2.X, 2.0) + Math.Pow((double) Game1.player.location.Y - (double) vector2.Y, 2.0)) > 750.0)
-        flag = true;
+      if (((double) Game1.player.walkMovementIdleTime > 300.0 || Game1.world.Level == 0) 
+                && Math.Sqrt(Math.Pow((double) Game1.player.location.X - (double) vector2.X, 2.0)
+                + Math.Pow((double) Game1.player.location.Y - (double) vector2.Y, 2.0)) > 750.0)
+      flag = true;
+
       if (flag || (double) this.compassOpacity > 0.0)
       {
         if (flag)
@@ -65,8 +69,12 @@ namespace DodoTheGame.GUI
           this.compassOpacity -= 0.05f;
           this.compassOpacity = (double) this.compassOpacity < 0.0 ? 0.0f : this.compassOpacity;
         }
-        double num = Math.Atan2((double) Game1.player.location.Y - (double) vector2.Y, (double) Game1.player.location.X - (double) vector2.X) * 180.0 / Math.PI;
+
+        double num = Math.Atan2((double) Game1.player.location.Y - (double) vector2.Y, 
+            (double) Game1.player.location.X - (double) vector2.X) * 180.0 / Math.PI;
+        
         Vector2 location = Vector2.Zero;
+        
         if (num >= -135.0 && num <= -45.0)
         {
           float single = Convert.ToSingle(Math.Round(10.0 + 1190.0 * (Math.Abs(num + 45.0) / 90.0)));
@@ -94,6 +102,7 @@ namespace DodoTheGame.GUI
         }
         Recorder.RDraw(spriteBatch, this.dir, location, Color.White * this.compassOpacity);
       }
+
       float num1 = 0.4f;
       float num2 = 0.4f;
       float num3 = 0.4f;
@@ -108,38 +117,56 @@ namespace DodoTheGame.GUI
       string text2 = "";
       string text3 = "";
       string text4 = "";
+
       Vector2 renderSize = Game1.renderSize;
+
       if (Game1.player.inReachObject != null)
       {
-        if (Game1.player.inReachObject.Interactions[3] != null && Game1.player.inReachObject.Interactions[3].ComputeShowState(Game1.player.inReachObject, Game1.player))
+        if (Game1.player.inReachObject.Interactions[3] != null 
+                    && Game1.player.inReachObject.Interactions[3].ComputeShowState(Game1.player.inReachObject, Game1.player))
         {
           num1 = 1f;
           text1 = Game1.player.inReachObject.Interactions[3].ShowName;
         }
-        if (Game1.player.inReachObject.Interactions[2] != null && Game1.player.inReachObject.Interactions[2].ComputeShowState(Game1.player.inReachObject, Game1.player))
+        if (Game1.player.inReachObject.Interactions[2] != null 
+                    && Game1.player.inReachObject.Interactions[2].ComputeShowState(Game1.player.inReachObject, Game1.player))
         {
           num3 = 1f;
           text2 = Game1.player.inReachObject.Interactions[2].ShowName;
         }
-        if (Game1.player.inReachObject.Interactions[0] != null && Game1.player.inReachObject.Interactions[0].ComputeShowState(Game1.player.inReachObject, Game1.player))
+        if (Game1.player.inReachObject.Interactions[0] != null
+                    && Game1.player.inReachObject.Interactions[0].ComputeShowState(Game1.player.inReachObject, Game1.player))
         {
           num2 = 1f;
           text3 = Game1.player.inReachObject.Interactions[0].ShowName;
         }
-        if (Game1.player.inReachObject.Interactions[1] != null && Game1.player.inReachObject.Interactions[1].ComputeShowState(Game1.player.inReachObject, Game1.player))
+        if (Game1.player.inReachObject.Interactions[1] != null
+                    && Game1.player.inReachObject.Interactions[1].ComputeShowState(Game1.player.inReachObject, Game1.player))
         {
           num4 = 1f;
           text4 = Game1.player.inReachObject.Interactions[1].ShowName;
         }
       }
+
       if (game.userInput.inputMethod == 1 || game.userInput.inputMethod == 3)
       {
-        Recorder.RDraw(spriteBatch, this.up, new Vector2((float) ((double) renderSize.X - 167.0 - 10.0), (float) ((double) renderSize.Y - 92.0 - 10.0)), Color.White * num1);
-        Recorder.RDraw(spriteBatch, this.left, new Vector2((float) ((double) renderSize.X - 200.0 - 20.0), renderSize.Y - 70f), Color.White * num2);
-        Recorder.RDraw(spriteBatch, this.down, new Vector2((float) ((double) renderSize.X - 167.0 - 10.0), renderSize.Y - 60f), Color.White * num3);
-        Recorder.RDraw(spriteBatch, this.right, new Vector2(renderSize.X - 134f, renderSize.Y - 70f), Color.White * num4);
+        Recorder.RDraw(spriteBatch, this.up, new Vector2((float) ((double) renderSize.X - 167.0 - 10.0), 
+            (float) ((double) renderSize.Y - 92.0 - 10.0)), Color.White * num1);
+
+        Recorder.RDraw(spriteBatch, this.left, 
+            new Vector2((float) ((double) renderSize.X - 200.0 - 20.0), renderSize.Y - 70f), Color.White * num2);
+
+        Recorder.RDraw(spriteBatch, this.down, 
+            new Vector2((float) ((double) renderSize.X - 167.0 - 10.0), renderSize.Y - 60f), Color.White * num3);
+
+        Recorder.RDraw(spriteBatch, this.right, 
+            new Vector2(renderSize.X - 134f, renderSize.Y - 70f), Color.White * num4);
+
         Recorder.RDraw(spriteBatch, this.a, new Vector2(25f, renderSize.Y - 65f), Color.White * num5);
-        Recorder.RDraw(spriteBatch, this.bag_icon, new Vector2(75f, renderSize.Y - 70f), Color.White * num8);
+
+        Recorder.RDraw(spriteBatch, this.bag_icon, 
+            new Vector2(75f, renderSize.Y - 70f), Color.White * num8);
+
         if (Game1.player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike])
         {
           Recorder.RDraw(spriteBatch, this.e, new Vector2(130f, renderSize.Y - 65f), Color.White * num6);
@@ -153,23 +180,35 @@ namespace DodoTheGame.GUI
       }
       else if (game.userInput.inputMethod == 2)
       {
-        Recorder.RDraw(spriteBatch, this.upsw, new Vector2((float) ((double) renderSize.X - 167.0 - 10.0), (float) ((double) renderSize.Y - 92.0 - 10.0)), Color.White * num1);
-        Recorder.RDraw(spriteBatch, this.leftsw, new Vector2((float) ((double) renderSize.X - 200.0 - 20.0), renderSize.Y - 70f), Color.White * num2);
-        Recorder.RDraw(spriteBatch, this.downsw, new Vector2((float) ((double) renderSize.X - 167.0 - 10.0), renderSize.Y - 60f), Color.White * num3);
+        Recorder.RDraw(spriteBatch, this.upsw, new Vector2((float) ((double) renderSize.X - 167.0 - 10.0),
+            (float) ((double) renderSize.Y - 92.0 - 10.0)), Color.White * num1);
+        Recorder.RDraw(spriteBatch, this.leftsw, new Vector2((float) ((double) renderSize.X - 200.0 - 20.0), renderSize.Y - 70f), 
+            Color.White * num2);
+        Recorder.RDraw(spriteBatch, this.downsw, new Vector2((float) ((double) renderSize.X - 167.0 - 10.0), renderSize.Y - 60f),
+            Color.White * num3);
         Recorder.RDraw(spriteBatch, this.rightsw, new Vector2(renderSize.X - 134f, renderSize.Y - 70f), Color.White * num4);
       }
       if (text3 != "")
-        Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text3, new Vector2((float) ((double) renderSize.X - 205.0 - (double) Game1.rouliMSpriteFont.MeasureString(text3).X - 20.0), renderSize.Y - 67f), Color.Black);
+        Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text3, 
+            new Vector2((float) ((double) renderSize.X - 205.0 - (double) Game1.rouliMSpriteFont.MeasureString(text3).X - 20.0), renderSize.Y - 67f), 
+            Color.Black);
       if (text4 != "")
-        Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text4, new Vector2(renderSize.X - 99f, renderSize.Y - 67f), Color.Black);
+        Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text4, 
+            new Vector2(renderSize.X - 99f, renderSize.Y - 67f), Color.Black);
       if (text1 != "")
-        Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text1, new Vector2((float) ((double) renderSize.X - 150.0 - (double) Game1.rouliMSpriteFont.MeasureString(text1).X / 2.0 - 10.0), (float) ((double) renderSize.Y - 115.0 - 10.0)), Color.Black);
+        Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text1, 
+            new Vector2((float) ((double) renderSize.X - 150.0 - (double) Game1.rouliMSpriteFont.MeasureString(text1).X / 2.0 - 10.0),
+            (float) ((double) renderSize.Y - 115.0 - 10.0)), Color.Black);
+
       if (!(text2 != ""))
         return;
-      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text2, new Vector2((float) ((double) renderSize.X - 150.0 - (double) Game1.rouliMSpriteFont.MeasureString(text2).X / 2.0 - 10.0), renderSize.Y - 33f), Color.Black);
+      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, text2, 
+          new Vector2((float) ((double) renderSize.X - 150.0 - (double) Game1.rouliMSpriteFont.MeasureString(text2).X / 2.0 - 10.0), 
+          renderSize.Y - 33f), Color.Black);
     }
 
-    public void Input(
+    public void Input
+    (
       bool left,
       bool right,
       bool up,
@@ -177,8 +216,11 @@ namespace DodoTheGame.GUI
       bool action1,
       bool hold,
       UserInputStatus.InputState alt,
-      Game1 game)
+      Game1 game
+    )
     {
+      if (action1 == true)
+        System.Diagnostics.Debug.WriteLine("[InteractGUI] hold=" + hold.ToString()  + ", action1=" + action1);
     }
 
     public void Close() => this.ReadyToRemove = true;

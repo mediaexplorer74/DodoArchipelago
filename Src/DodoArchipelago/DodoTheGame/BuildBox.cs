@@ -1,15 +1,12 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.BuildBox
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.BuildBox
+
 
 using DodoTheGame.Localization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 
@@ -52,11 +49,12 @@ namespace DodoTheGame
       GameTime gameTime,
       bool open)
     {
-      Game1.Log("BB drawn, " + (open ? nameof (open) : "closed"), BreadcrumbLevel.Debug);
+      Debug.WriteLine("[!] BB drawn, " + (open ? nameof (open) : "closed"));
       Vector2 zero = Vector2.Zero;
       Sprite sprite;
       Vector2 location;
-      if (this.Items.Count<ItemStack>((Func<ItemStack, bool>) (p => p != null)) <= 3 && this.Requirements.Count < 2)
+      if (this.Items.Count<ItemStack>((Func<ItemStack, bool>) (p => p != null)) <= 3 
+                && this.Requirements.Count < 2)
       {
         sprite = this.Requirements.Count == 0 ? Game1.buildBoxSprite : Game1.buildBoxPlusSprite;
         location = new Vector2(screenlocation.X + 40f, screenlocation.Y - 175f);
@@ -84,7 +82,8 @@ namespace DodoTheGame
       }
       if ((double) location.X < 1.0)
         location.X = 1f;
-      if (this.Items.Count<ItemStack>((Func<ItemStack, bool>) (p => p != null)) <= 3 && this.Requirements.Count < 2)
+      if (this.Items.Count<ItemStack>((Func<ItemStack, bool>) (p => p != null)) <= 3 
+                && this.Requirements.Count < 2)
       {
         if ((double) location.X > 917.0)
           location.X = 917f;
@@ -98,10 +97,15 @@ namespace DodoTheGame
         sprite.Draw(spriteBatch, location, gameTime, colorn: new Color?(Color.White * 1f));
         if (this.Requirements.Count > 0 && sprite.CurrentFrame > 2)
         {
-          if (this.Items.Count<ItemStack>((Func<ItemStack, bool>) (p => p != null)) <= 3 && this.Requirements.Count < 2)
-            Recorder.RDraw(spriteBatch, BuildBox.separator, new Vector2((float) ((double) location.X + (double) zero.X + 360.0), (float) ((double) location.Y + (double) zero.Y + 26.0)), Color.White);
+          if (this.Items.Count<ItemStack>((Func<ItemStack, bool>) (p => p != null)) <= 3 
+                        && this.Requirements.Count < 2)
+            Recorder.RDraw(spriteBatch, BuildBox.separator, new Vector2(
+                (float) ((double) location.X + (double) zero.X + 360.0), 
+                (float) ((double) location.Y + (double) zero.Y + 26.0)), Color.White);
           else
-            Recorder.RDraw(spriteBatch, BuildBox.separator, new Vector2((float) ((double) location.X + (double) zero.X + 360.0), (float) ((double) location.Y + (double) zero.Y + 58.0)), Color.White);
+            Recorder.RDraw(spriteBatch, BuildBox.separator, new Vector2(
+                (float) ((double) location.X + (double) zero.X + 360.0), 
+                (float) ((double) location.Y + (double) zero.Y + 58.0)), Color.White);
         }
         int num1 = 0;
         foreach (ItemStack itemStack in this.Items)
@@ -109,15 +113,45 @@ namespace DodoTheGame
           ItemStack itm = itemStack;
           if (num1 < 3)
           {
-            Recorder.RDraw(spriteBatch, Game1.smallItemTextures[itm.itemId], new Vector2((float) ((double) location.X - 40.0 - 5.0 + 73.0) + (float) (109 * num1) + zero.X, (float) ((double) location.Y + 175.0 - 92.0) + zero.Y), Color.White);
-            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "x" + itm.count.ToString((IFormatProvider) CultureInfo.InvariantCulture), new Vector2((float) ((double) location.X - 40.0 - 5.0 + 123.0) + (float) (109 * num1) + zero.X, (float) ((double) location.Y + 175.0 - 67.0) + zero.Y), Color.Black);
-            Recorder.RDraw(spriteBatch, ((IEnumerable<ItemStack>) player.inventory.inventory).Any<ItemStack>((Func<ItemStack, bool>) (p => p != null && p.itemId == itm.itemId && p.count >= itm.count)) ? Game1.itemsok : Game1.itemsnok, new Vector2((float) ((double) location.X - 35.0 + 158.0 - 15.0) + (float) (109 * num1) + zero.X, (float) ((double) location.Y + 175.0 - 64.0) + zero.Y), Color.White);
+            Recorder.RDraw(spriteBatch, Game1.smallItemTextures[itm.itemId], 
+                new Vector2((float) ((double) location.X - 40.0 - 5.0 + 73.0) + 
+                (float) (109 * num1) + zero.X, (float) ((double) location.Y + 175.0 - 92.0) + zero.Y),
+                Color.White);
+
+            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, 
+                "x" + itm.count.ToString((IFormatProvider) CultureInfo.InvariantCulture), 
+                new Vector2((float) ((double) location.X - 40.0 - 5.0 + 123.0) 
+                + (float) (109 * num1) + zero.X, (float) ((double) location.Y + 175.0 - 67.0) + zero.Y),
+                Color.Black);
+
+            Recorder.RDraw(spriteBatch, ((IEnumerable<ItemStack>) player.inventory.inventory)
+                .Any<ItemStack>((Func<ItemStack, bool>) (p => p != null
+                && p.itemId == itm.itemId 
+                && p.count >= itm.count)) ? Game1.itemsok : Game1.itemsnok, 
+                new Vector2((float) ((double) location.X - 35.0 + 158.0 - 15.0) 
+                + (float) (109 * num1) + zero.X, 
+                (float) ((double) location.Y + 175.0 - 64.0) + zero.Y), Color.White);
           }
           else
           {
-            Recorder.RDraw(spriteBatch, Game1.smallItemTextures[itm.itemId], new Vector2((float) ((double) location.X - 40.0 - 5.0 + 73.0) + (float) (109 * (num1 - 3)) + zero.X, (float) ((double) location.Y + 65.0 + 240.0 - 157.0) + zero.Y), Color.White);
-            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "x" + itm.count.ToString((IFormatProvider) CultureInfo.InvariantCulture), new Vector2((float) ((double) location.X - 40.0 - 5.0 + 123.0) + (float) (109 * (num1 - 3)) + zero.X, (float) ((double) location.Y + 240.0 - 132.0 + 65.0) + zero.Y), Color.Black);
-            Recorder.RDraw(spriteBatch, ((IEnumerable<ItemStack>) player.inventory.inventory).Any<ItemStack>((Func<ItemStack, bool>) (p => p != null && p.itemId == itm.itemId && p.count >= itm.count)) ? Game1.itemsok : Game1.itemsnok, new Vector2((float) ((double) location.X - 35.0 + 158.0 - 15.0) + (float) (109 * (num1 - 3)) + zero.X, (float) ((double) location.Y + 240.0 - 129.0 + 65.0) + zero.Y), Color.White);
+            Recorder.RDraw(spriteBatch, Game1.smallItemTextures[itm.itemId], 
+                new Vector2((float) ((double) location.X - 40.0 - 5.0 + 73.0) 
+                + (float) (109 * (num1 - 3)) + zero.X, (float) (
+                (double) location.Y + 65.0 + 240.0 - 157.0) + zero.Y), Color.White);
+
+            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "x" 
+                + itm.count.ToString((IFormatProvider) CultureInfo.InvariantCulture), 
+                new Vector2((float) ((double) location.X - 40.0 - 5.0 + 123.0)
+                + (float) (109 * (num1 - 3)) + zero.X, (float) ((double) location.Y 
+                + 240.0 - 132.0 + 65.0) + zero.Y), Color.Black);
+
+            Recorder.RDraw(spriteBatch, ((IEnumerable<ItemStack>) player.inventory.inventory)
+                .Any<ItemStack>((Func<ItemStack, bool>) (p => p != null 
+                && p.itemId == itm.itemId && p.count >= itm.count)) 
+                ? Game1.itemsok 
+                : Game1.itemsnok, new Vector2((float) (
+                (double) location.X - 35.0 + 158.0 - 15.0) + (float) (109 * (num1 - 3)) + zero.X, 
+                (float) ((double) location.Y + 240.0 - 129.0 + 65.0) + zero.Y), Color.White);
           }
           ++num1;
         }
@@ -126,24 +160,50 @@ namespace DodoTheGame
           int num2 = 0;
           foreach (Tuple<BuildBox.Requirement, bool> requirement in this.Requirements)
           {
-            Recorder.RDraw(spriteBatch, BuildBox.requirementIconList[(int) requirement.Item1], new Vector2((float) ((double) location.X + (double) zero.X + 372.0), location.Y + 15f + zero.Y + (float) (95 * num2)), Color.White);
-            Recorder.RDraw(spriteBatch, requirement.Item2 ? Game1.itemsok : Game1.itemsnok, new Vector2((float) ((double) location.X + (double) zero.X + 372.0 + 95.0), (float) ((double) location.Y + 15.0 + 60.0) + zero.Y + (float) (95 * num2)), Color.White);
+            Recorder.RDraw(spriteBatch, BuildBox.requirementIconList[(int) requirement.Item1],
+                new Vector2((float) ((double) location.X + (double) zero.X + 372.0), 
+                location.Y + 15f + zero.Y + (float) (95 * num2)), Color.White);
+
+            Recorder.RDraw(spriteBatch, requirement.Item2 ? Game1.itemsok : Game1.itemsnok,
+                new Vector2((float) ((double) location.X + (double) zero.X + 372.0 + 95.0),
+                (float) ((double) location.Y + 15.0 + 60.0) + zero.Y + (float) (95 * num2)),
+                Color.White);
             ++num2;
           }
         }
         if (this.Type == BuildBox.BoxType.Upgrade || this.Type == BuildBox.BoxType.Unlock)
         {
           if (this.Items.Count <= 3)
-            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, LocalizationManager.GetPresetDisplayName(this.WOName) ?? "", new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, (float) ((double) location.Y + 175.0 - 172.0 + 15.0 - 7.0) + zero.Y), Color.Black);
+            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, 
+                LocalizationManager.GetPresetDisplayName(this.WOName) ?? "", 
+                new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X,
+                (float) ((double) location.Y + 175.0 - 172.0 + 15.0 - 7.0) + zero.Y), Color.Black);
+
           else
-            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, LocalizationManager.GetPresetDisplayName(this.WOName) ?? "", new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, (float) ((double) location.Y + 240.0 - 172.0 + 15.0 - 65.0 - 7.0) + zero.Y), Color.Black);
+            Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, 
+                LocalizationManager.GetPresetDisplayName(this.WOName) ?? "", 
+                new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X,
+                (float) ((double) location.Y + 240.0 - 172.0 + 15.0 - 65.0 - 7.0) + zero.Y),
+                Color.Black);
         }
         else
-          Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, LocalizationManager.GetPresetDisplayName(this.WOName) ?? "", new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, (float) ((double) location.Y + 175.0 - 172.0 + 15.0 - 7.0) + zero.Y), Color.Black);
+          Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, 
+              LocalizationManager.GetPresetDisplayName(this.WOName) ?? "", 
+              new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, 
+              (float) ((double) location.Y + 175.0 - 172.0 + 15.0 - 7.0) + zero.Y), 
+              Color.Black);
         if (this.Items.Count <= 3)
-          Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, LocalizationManager.GetString("BuildBoxRequired"), new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, (float) ((double) location.Y + 175.0 - 172.0 + 15.0 + 35.0 - 7.0) + zero.Y), Color.Black);
+          Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, 
+              LocalizationManager.GetString("BuildBoxRequired"), 
+              new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, 
+              (float) ((double) location.Y + 175.0 - 172.0 + 15.0 + 35.0 - 7.0) + zero.Y), 
+              Color.Black);
         else
-          Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, LocalizationManager.GetString("BuildBoxRequired"), new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, (float) ((double) location.Y + 240.0 - 172.0 + 15.0 + 35.0 - 65.0 - 7.0) + zero.Y), Color.Black);
+          Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, 
+              LocalizationManager.GetString("BuildBoxRequired"), 
+              new Vector2((float) ((double) location.X - 40.0 + 58.0 + 15.0) + zero.X, 
+              (float) ((double) location.Y + 240.0 - 172.0 + 15.0 + 35.0 - 65.0 - 7.0) + zero.Y), 
+              Color.Black);
       }
       else
       {

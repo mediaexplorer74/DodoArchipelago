@@ -16,7 +16,8 @@ namespace DodoTheGame
 
         internal ManagementObjectCollection Get()
         {
-            throw new NotImplementedException();
+            //TODO
+            return default;
         }
     }
 }

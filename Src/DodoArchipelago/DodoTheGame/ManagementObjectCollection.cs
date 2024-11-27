@@ -11,12 +11,13 @@ namespace DodoTheGame
     {
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //
         }
 
         internal ManagementObjectEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            //TODO
+            return default;
         }
 
         internal class ManagementObjectEnumerator : IDisposable
@@ -25,12 +26,13 @@ namespace DodoTheGame
 
             public void Dispose()
             {
-                throw new NotImplementedException();
+                //
             }
 
             internal bool MoveNext()
             {
-                throw new NotImplementedException();
+                //TODO
+                return true;
             }
         }
     }

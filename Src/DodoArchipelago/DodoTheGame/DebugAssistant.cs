@@ -1,4 +1,8 @@
-﻿// Type: DodoTheGame.DebugAssistant
+﻿
+// Type: DodoTheGame.DebugAssistant
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using DodoTheGame.BackgroundEffects;
 using DodoTheGame.Cutscene;
@@ -16,12 +20,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 //using System.Web.Script.Serialization;
 
 
 namespace DodoTheGame
 {
-  internal static class DebugAssistant
+  /*internal*/public static class DebugAssistant
   {
     internal static bool waveEditor = false;
     public static Texture2D debugWindArrow;
@@ -31,21 +36,23 @@ namespace DodoTheGame
     internal static bool debugPanel;
     internal static List<IWorldObject> woModifiedInGameEditor;
 
-    private static Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu 
-            = new Microsoft.Xna.Framework.Input.Keys?();
-
-    private static readonly List<Microsoft.Xna.Framework.Input.Keys> DebugMenuKeys 
-            = new List<Microsoft.Xna.Framework.Input.Keys>()
+    /*private*/public static readonly List<Microsoft.Xna.Framework.Input.Keys> DebugMenuKeys
+        = new List<Microsoft.Xna.Framework.Input.Keys>()
     {
-      Microsoft.Xna.Framework.Input.Keys.A,
-      Microsoft.Xna.Framework.Input.Keys.Z,
-      Microsoft.Xna.Framework.Input.Keys.E,
-      Microsoft.Xna.Framework.Input.Keys.R,
-      Microsoft.Xna.Framework.Input.Keys.T,
-      Microsoft.Xna.Framework.Input.Keys.Q,
-      Microsoft.Xna.Framework.Input.Keys.S,
-      Microsoft.Xna.Framework.Input.Keys.D
+        Microsoft.Xna.Framework.Input.Keys.A,
+        Microsoft.Xna.Framework.Input.Keys.Z,
+        Microsoft.Xna.Framework.Input.Keys.E,
+        Microsoft.Xna.Framework.Input.Keys.R,
+        Microsoft.Xna.Framework.Input.Keys.T,
+        Microsoft.Xna.Framework.Input.Keys.Q,
+        Microsoft.Xna.Framework.Input.Keys.S,
+        Microsoft.Xna.Framework.Input.Keys.D
     };
+
+    /*private*/public static Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu
+        = new Microsoft.Xna.Framework.Input.Keys?(); 
+            
+ 
 
     private static void ExportStaticWorld(Game1 game)
     {
@@ -58,7 +65,9 @@ namespace DodoTheGame
         (JavaScriptConverter) new Vector2Converter(),
         (JavaScriptConverter) new IDodoInteractionConverter()
       });
-      int totalSeconds = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+
+      int totalSeconds = (int) DateTime.UtcNow.Subtract(
+          new DateTime(1970, 1, 1)).TotalSeconds;
       File.WriteAllText("gameedit-ser-" + totalSeconds.ToString() + ".txt", 
           scriptSerializer.Serialize((object) DebugAssistant.woModifiedInGameEditor));
       List<string> stringList = new List<string>();
@@ -94,9 +103,11 @@ namespace DodoTheGame
                     + Environment.NewLine + Environment.NewLine;
         str1 += str4;
       }
-      string str5 = str1 + Environment.NewLine 
-                + "Game1.Log(\"Generating buildpoints...\", BreadcrumbLevel.Debug, \"worldgen\");" 
+
+      string str5 = str1 + Environment.NewLine + 
+                "Game1.Log(\"Generating buildpoints...\", BreadcrumbLevel.Debug, \"worldgen\");" 
                 + Environment.NewLine;
+
       int num1 = 1;
       foreach (IWorldObject worldObject in Game1.world.objects.Where<IWorldObject>(
           (Func<IWorldObject, bool>) (p => p is BuildPoint)))
@@ -142,7 +153,7 @@ namespace DodoTheGame
         strArray[12] = location.Y.ToString();
         strArray[13] = " + 65))";
         strArray[14] = Environment.NewLine;
-        strArray[15] = 
+        strArray[15] =
                     "{ExtraReach = new Vector2{ Y = -8 }, ExtraFloorHeight = 20, Interactions = { [(int)Cardinal.Up] = new Build(new List<ItemStack> { ";
         strArray[16] = str6;
         strArray[17] = " }, presetList.First(p => p.name == \"";
@@ -171,34 +182,58 @@ namespace DodoTheGame
 
     public static void KeyInput(KeyboardState ks, Game1 game, GameTime gameTime)
     {
+      StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
       if (DebugAssistant.debugKeyCooldown > 0)
         --DebugAssistant.debugKeyCooldown;
+
       if (DebugAssistant.debugKeyCooldown < 0)
         DebugAssistant.debugKeyCooldown = 0;
-      if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt)
-                || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt))
+
+      //***************************************************************
+
+      /*if ( ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F5) && DebugAssistant.debugPanelActiveMenu.HasValue )
       {
-        if (DebugAssistant.debugPanelActiveMenu.HasValue)
+            // F4 handling
+            System.Diagnostics.Debug.WriteLine("[i] F5 pressed when debug panel active. Test Inventory AddItem !");
+
+            for (int itemId = 0; itemId < 17; ++itemId)
+                Game1.player.inventory.AddItem(new ItemStack(itemId, 99));
+      }*/
+      //***************************************************************
+
+        //if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt)
+        //          || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt))
+        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F4))
         {
-          Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu1
-                        = DebugAssistant.debugPanelActiveMenu;
-          Microsoft.Xna.Framework.Input.Keys keys1 =
-                        Microsoft.Xna.Framework.Input.Keys.A;
-          if (debugPanelActiveMenu1.GetValueOrDefault() == 
-                        keys1 & debugPanelActiveMenu1.HasValue)
+
+          if (1==1)//(DebugAssistant.debugPanelActiveMenu.HasValue)
           {
+          // F4 handling
+           System.Diagnostics.Debug.WriteLine("[i] F4 pressed when debug panel active");
+
+           Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu1
+                        = DebugAssistant.debugPanelActiveMenu;
+
+           Microsoft.Xna.Framework.Input.Keys keys1 =
+                        Microsoft.Xna.Framework.Input.Keys.A;
+           if (debugPanelActiveMenu1.GetValueOrDefault() == 
+                        keys1 & debugPanelActiveMenu1.HasValue)
+           {
+             System.Diagnostics.Debug.WriteLine("[i] F4 + A pressed when debug panel active");
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
-              DayCycle.dayTime += 4.5;
+            DayCycle.dayTime += 4.5;
             else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
               DayCycle.dayTime += 7.0;
             else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
-               && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
-              Wind.MainAngle = Wind.windDirections[Wind.windDirections.IndexOf(Wind.MainAngle) - 1 < 0 
+                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+              Wind.MainAngle = Wind.windDirections[Wind.windDirections.IndexOf(Wind.MainAngle) - 1 < 0
                   ? Wind.windDirections.Count - 1 : Wind.windDirections.IndexOf(Wind.MainAngle) - 1];
             else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z)
-                && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
-              Wind.MainAngle = Wind.windDirections[Wind.windDirections.IndexOf(Wind.MainAngle) + 1 
-                  >= Wind.windDirections.Count ? 0 : Wind.windDirections.IndexOf(Wind.MainAngle) + 1];
+                  && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
+              Wind.MainAngle = 
+                Wind.windDirections[Wind.windDirections.IndexOf(Wind.MainAngle) + 1 
+                    >= Wind.windDirections.Count ? 0 : Wind.windDirections.IndexOf(Wind.MainAngle) + 1];
           }
           else
           {
@@ -298,30 +333,28 @@ namespace DodoTheGame
               {
                 Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu4 
                                     = DebugAssistant.debugPanelActiveMenu;
-
                 Microsoft.Xna.Framework.Input.Keys keys4 = Microsoft.Xna.Framework.Input.Keys.R;
                 if (debugPanelActiveMenu4.GetValueOrDefault() == keys4 & debugPanelActiveMenu4.HasValue)
                 {
                   if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
-                                        && !DebugAssistant.previousks.IsKeyDown(
-                                            Microsoft.Xna.Framework.Input.Keys.A) 
-                                        && Game1.world.Level > 0)
+                       && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
+                       && Game1.world.Level > 0)
                     --Game1.world.Level;
                   else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) 
-                                        && !DebugAssistant.previousks.IsKeyDown(
-                                            Microsoft.Xna.Framework.Input.Keys.Z) 
-                                        && Game1.world.Level < 3)
+                          && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) 
+                          && Game1.world.Level < 3)
                     ++Game1.world.Level;
-                  else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E)
-                                        && !DebugAssistant.previousks.IsKeyDown(
-                                            Microsoft.Xna.Framework.Input.Keys.E))
+                  else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E) 
+                        && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
                     DebugAssistant.ExportStaticWorld(game);
                 }
                 else
                 {
-                  Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu5 = DebugAssistant.debugPanelActiveMenu;
+                  Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu5
+                                        = DebugAssistant.debugPanelActiveMenu;
                   Microsoft.Xna.Framework.Input.Keys keys5 = Microsoft.Xna.Framework.Input.Keys.T;
-                  if (debugPanelActiveMenu5.GetValueOrDefault() == keys5 & debugPanelActiveMenu5.HasValue)
+                  if (debugPanelActiveMenu5.GetValueOrDefault() == keys5
+                                        & debugPanelActiveMenu5.HasValue)
                   {
                     if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
                                             && !DebugAssistant.previousks.IsKeyDown(
@@ -331,11 +364,11 @@ namespace DodoTheGame
                                             && !DebugAssistant.previousks.IsKeyDown(
                                                 Microsoft.Xna.Framework.Input.Keys.Z))
                       game.userInput.inputMethod = 2;
-                    else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E) 
+                    else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E)
                                             && !DebugAssistant.previousks.IsKeyDown(
                                                 Microsoft.Xna.Framework.Input.Keys.E))
                       game.userInput.inputMethod = 3;
-                    else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R) 
+                    else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R)
                                             && !DebugAssistant.previousks.IsKeyDown(
                                                 Microsoft.Xna.Framework.Input.Keys.R))
                     {
@@ -346,53 +379,36 @@ namespace DodoTheGame
                   }
                   else
                   {
-                    Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu6 
-                                            = DebugAssistant.debugPanelActiveMenu;
-                    Microsoft.Xna.Framework.Input.Keys keys6 
-                                            = Microsoft.Xna.Framework.Input.Keys.Q;
-                    if (!(debugPanelActiveMenu6.GetValueOrDefault() 
-                                            == keys6 & debugPanelActiveMenu6.HasValue))
+                    Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu6 = DebugAssistant.debugPanelActiveMenu;
+                    Microsoft.Xna.Framework.Input.Keys keys6 = Microsoft.Xna.Framework.Input.Keys.Q;
+                    if (!(debugPanelActiveMenu6.GetValueOrDefault() == keys6 & debugPanelActiveMenu6.HasValue))
                     {
-                      Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu7 
-                                                = DebugAssistant.debugPanelActiveMenu;
+                      Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu7 = DebugAssistant.debugPanelActiveMenu;
                       Microsoft.Xna.Framework.Input.Keys keys7 = Microsoft.Xna.Framework.Input.Keys.S;
-
-                      if (debugPanelActiveMenu7.GetValueOrDefault() == keys7 
-                                                & debugPanelActiveMenu7.HasValue)
+                      if (debugPanelActiveMenu7.GetValueOrDefault() == keys7 & debugPanelActiveMenu7.HasValue)
                       {
-                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A)
-                                                    && !DebugAssistant.previousks.IsKeyDown(
-                                                        Microsoft.Xna.Framework.Input.Keys.A))
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
                         {
                           for (int itemId = 0; itemId < 17; ++itemId)
                             Game1.player.inventory.AddItem(new ItemStack(itemId, 99));
                         }
                         else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z)
-                                                    && !DebugAssistant.previousks.IsKeyDown(
-                                                        Microsoft.Xna.Framework.Input.Keys.Z))
-                          Game1.player.inventory.inventory = 
-                                new ItemStack[Game1.player.inventory.inventory.Length];
+                            && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
+                          Game1.player.inventory.inventory = new ItemStack[Game1.player.inventory.inventory.Length];
                       }
                       else
                       {
-                        Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu8 
-                                                    = DebugAssistant.debugPanelActiveMenu;
-                        Microsoft.Xna.Framework.Input.Keys keys8 
-                                                    = Microsoft.Xna.Framework.Input.Keys.D;
-                        if (debugPanelActiveMenu8.GetValueOrDefault() 
-                                                    == keys8 & debugPanelActiveMenu8.HasValue)
+                        /*
+                        Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu8 = DebugAssistant.debugPanelActiveMenu;
+                        Microsoft.Xna.Framework.Input.Keys keys8 = Microsoft.Xna.Framework.Input.Keys.D;
+                        if (debugPanelActiveMenu8.GetValueOrDefault() == keys8 & debugPanelActiveMenu8.HasValue)
                         {
-                          if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) 
-                                && !DebugAssistant.previousks.IsKeyDown(
-                                    Microsoft.Xna.Framework.Input.Keys.A))
-                            CutsceneManager.StartCutscene((ICutscene) new StoryIntroCutscene(),
-                                gameTime, Game1.player, Game1.world);
-                          else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) 
-                                        && !DebugAssistant.previousks.IsKeyDown(
-                                            Microsoft.Xna.Framework.Input.Keys.Z))
-                            CutsceneManager.StartCutscene((ICutscene) new ArchipelagoArrivalCutscene(),
-                                gameTime, Game1.player, Game1.world);
+                          if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.A))
+                            CutsceneManager.StartCutscene((ICutscene) new StoryIntroCutscene(), gameTime, Game1.player, Game1.world);
+                          else if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) && !DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z))
+                            CutsceneManager.StartCutscene((ICutscene) new ArchipelagoArrivalCutscene(), gameTime, Game1.player, Game1.world);
                         }
+                        */
                       }
                     }
                   }
@@ -403,13 +419,16 @@ namespace DodoTheGame
         }
         else
         {
-          foreach (Microsoft.Xna.Framework.Input.Keys debugMenuKey in DebugAssistant.DebugMenuKeys)
+         
+          foreach (Microsoft.Xna.Framework.Input.Keys debugMenuKey 
+                                                in DebugAssistant.DebugMenuKeys)
           {
+            System.Diagnostics.Debug.WriteLine("[i] Debug menu mode...");
+
             if (ks.IsKeyDown(debugMenuKey))
             {
-              DebugAssistant.debugPanelActiveMenu =
+              DebugAssistant.debugPanelActiveMenu = 
                                 new Microsoft.Xna.Framework.Input.Keys?(debugMenuKey);
-
               if (debugMenuKey == Microsoft.Xna.Framework.Input.Keys.Q)
                 DebugAssistant.waveEditor = !DebugAssistant.waveEditor;
             }
@@ -418,42 +437,43 @@ namespace DodoTheGame
       }
       else
       {
-        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F3) 
+        // F3 Handling
+
+        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F3)
                     && DebugAssistant.debugKeyCooldown == 0)
         {
           DebugAssistant.debugPanel = !DebugAssistant.debugPanel;
           DebugAssistant.debugKeyCooldown = 60;
         }
         DebugAssistant.debugPanelActiveMenu = new Microsoft.Xna.Framework.Input.Keys?();
+
+        
         if (DebugAssistant.debugPanel)
         {
+
+
+          // "mousing" :)
           MouseState state = Mouse.GetState();
-          Rectangle rectangle = 
-                        new Rectangle((int) Math.Round(((double) Game1.windowSize.X
-                        - (double) Game1.renderSizeUpscaled.X) / 2.0, 0),
-                        (int) Math.Round(((double) Game1.windowSize.Y 
-                        - (double) Game1.renderSizeUpscaled.Y) / 2.0, 0), 
-                        Convert.ToInt32(Game1.renderSizeUpscaled.X), 
-                        Convert.ToInt32(Game1.renderSizeUpscaled.Y));
-
-          if (state.RightButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed 
-                        && DebugAssistant.previousMouseState.RightButton
-                        == Microsoft.Xna.Framework.Input.ButtonState.Released
-                        && game.IsActive && state.X >= rectangle.X 
-                        && state.X < rectangle.Width + rectangle.X 
-                        && state.Y >= rectangle.Y && state.Y < rectangle.Height + rectangle.Y)
+          Rectangle rectangle =
+                        new Rectangle((int) Math.Round(((double) Game1.windowSize.X 
+                        - (double) Game1.renderSizeUpscaled.X) / 2.0, 0), 
+                        (int) Math.Round(((double) Game1.windowSize.Y - (double) Game1.renderSizeUpscaled.Y) / 2.0, 0), 
+                        Convert.ToInt32(Game1.renderSizeUpscaled.X), Convert.ToInt32(Game1.renderSizeUpscaled.Y));
+          if (state.RightButton 
+                        == Microsoft.Xna.Framework.Input.ButtonState.Pressed 
+                        && DebugAssistant.previousMouseState.RightButton 
+                        == Microsoft.Xna.Framework.Input.ButtonState.Released && game.IsActive
+                        && state.X >= rectangle.X && state.X 
+                        < rectangle.Width + rectangle.X && state.Y >= rectangle.Y && state.Y < rectangle.Height + rectangle.Y)
           {
-            Vector2 point = new Vector2(Convert.ToSingle(Math.Round((double) 
-                Convert.ToSingle(state.X - rectangle.X) / (double) rectangle.Width 
-                * (double) Game1.renderSize.X)), Convert.ToSingle(
-                    Math.Round((double) Convert.ToSingle(state.Y - rectangle.Y) 
-                    / (double) rectangle.Height * (double) Game1.renderSize.Y)));
-
-            if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>()
+            Vector2 point = new Vector2(Convert.ToSingle(
+                Math.Round((double) Convert.ToSingle(state.X - rectangle.X) / (double) rectangle.Width * (double) Game1.renderSize.X)),
+                Convert.ToSingle(Math.Round((double) Convert.ToSingle(state.Y - rectangle.Y) / (double) rectangle.Height * (double) Game1.renderSize.Y)));
+            if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>() 
                             && (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) 
                             || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)))
               GUIManager.editorHUD.AddPoint(point, game);
-            else if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>()
+            else if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>() 
                             && !ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)
                             && !ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt))
             {
@@ -465,7 +485,10 @@ namespace DodoTheGame
               GUIManager.ClearThenSet((IGUI) GUIManager.editorHUD);
             }
           }
+
           DebugAssistant.previousMouseState = state;
+
+          
           if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>())
           {
             if (DebugAssistant.woModifiedInGameEditor == null)
@@ -479,19 +502,42 @@ namespace DodoTheGame
             int num = 1;
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
               num = 6;
-            if ((ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)
-                            || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl))
-                            && ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) 
-                            && DebugAssistant.debugKeyCooldown == 0)
+
+
+            if (
+                (
+                 ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) 
+                 || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl)
+                )
+                && ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) && DebugAssistant.debugKeyCooldown == 0
+               )
             {
               DebugAssistant.debugKeyCooldown = 40;
-              //Clipboard.SetText(SaveHandler.SerializeSingleGameData(GUIManager.editorHUD.woInTarget));
+
+                System.Diagnostics.Debug.WriteLine("[i] CTRL + D activated !");
+
+                //Clipboard.SetText(SaveHandler.SerializeSingleGameData(GUIManager.editorHUD.woInTarget));
+                System.Diagnostics.Debug.WriteLine( "[i] SaveHandler.SerializeSingleGameData="
+                    + SaveHandler.SerializeSingleGameData(GUIManager.editorHUD.woInTarget).ToString() );
             }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right) 
-                            && !GUIManager.editorHUD.presetMenuOpen 
-                            && DebugAssistant.debugKeyCooldown == 0)
+
+
+
+            //if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right) 
+            //      && !GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
+            if (
+                (
+                    ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)
+                    || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl)
+                )
+                && ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && DebugAssistant.debugKeyCooldown == 0
+                )
             {
-              foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
+                DebugAssistant.debugKeyCooldown = 40;
+
+                System.Diagnostics.Debug.WriteLine("[i] CTRL + W activated ! Some World experiments...");
+
+                foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
               {
                 IWorldObject wo = worldObject;
                 if (!(wo is BuildPoint))
@@ -501,14 +547,16 @@ namespace DodoTheGame
                   Vector2 explicitEpicenter2 = wo.ExplicitEpicenter;
                   explicitEpicenter2.X += (float) num;
                   wo.ExplicitEpicenter = explicitEpicenter2;
+
                   if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
                       (Func<IWorldObject, bool>) (p => p.ObjectId != wo.ObjectId)))
                     DebugAssistant.woModifiedInGameEditor.Add(wo);
                 }
               }
             }
+
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left) 
-                            && !GUIManager.editorHUD.presetMenuOpen
+                            && !GUIManager.editorHUD.presetMenuOpen 
                             && DebugAssistant.debugKeyCooldown == 0)
             {
               foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
@@ -553,6 +601,7 @@ namespace DodoTheGame
                 }
               }
             }
+
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Down))
             {
               if (GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
@@ -566,7 +615,7 @@ namespace DodoTheGame
                 {
                   if (!(worldObject is BuildPoint))
                   {
-                    worldObject.Location = new Vector2(worldObject.Location.X, 
+                    worldObject.Location = new Vector2(worldObject.Location.X,
                         worldObject.Location.Y + (float) num);
                     Vector2 explicitEpicenter7 = worldObject.ExplicitEpicenter;
                     Vector2 explicitEpicenter8 = worldObject.ExplicitEpicenter;
@@ -578,34 +627,41 @@ namespace DodoTheGame
                 }
               }
             }
+
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Tab) 
                             && DebugAssistant.debugKeyCooldown == 0)
             {
               DebugAssistant.debugKeyCooldown = 30;
               GUIManager.editorHUD.presetMenuOpen = !GUIManager.editorHUD.presetMenuOpen;
             }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right) 
+            
+            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right)
                             && DebugAssistant.debugKeyCooldown == 0 
                             && GUIManager.editorHUD.presetMenuOpen)
             {
               DebugAssistant.debugKeyCooldown = 15;
-              int index = GUIManager.editorHUD.categoryList.FindIndex((Predicate<string>) (p => p == GUIManager.editorHUD.selectedPresetCategory)) + 1;
+              int index = GUIManager.editorHUD.categoryList.FindIndex(
+                  (Predicate<string>) (p => p == GUIManager.editorHUD.selectedPresetCategory)) + 1;
+
               if (index >= GUIManager.editorHUD.categoryList.Count)
                 index = GUIManager.editorHUD.categoryList.Count - 1;
+
               GUIManager.editorHUD.selectedPresetCategory = GUIManager.editorHUD.categoryList[index];
             }
+            
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left) 
                             && DebugAssistant.debugKeyCooldown == 0 
                             && GUIManager.editorHUD.presetMenuOpen)
             {
               DebugAssistant.debugKeyCooldown = 15;
-              int index = GUIManager.editorHUD.categoryList.FindIndex((Predicate<string>) 
-                  (p => p == GUIManager.editorHUD.selectedPresetCategory)) - 1;
+              int index = GUIManager.editorHUD.categoryList.FindIndex(
+                  (Predicate<string>) (p => p == GUIManager.editorHUD.selectedPresetCategory)) - 1;
               if (index < 0)
                 index = 0;
               GUIManager.editorHUD.selectedPresetCategory = GUIManager.editorHUD.categoryList[index];
             }
           }
+
           if (DebugAssistant.waveEditor)
           {
             if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad0))
@@ -656,206 +712,307 @@ namespace DodoTheGame
                             && DebugAssistant.debugKeyCooldown == 0)
             {
               Wave wave = (Wave) Game1.waves[0];
-              File.AppendAllText("waves.txt",
-                  "new Tuple<Vector2, float>(new Vector2(" + wave.startingPoint.X.ToString() 
-                  + ", " + wave.startingPoint.Y.ToString() + "), " + Math.Round(
-                      wave.waveAngle * (180.0 / Math.PI), 2).ToString(
-                      (IFormatProvider) CultureInfo.InvariantCulture) + ")"
-                      + Environment.NewLine);
+
+              File.AppendAllText("waves.txt", "new Tuple<Vector2, float>(" +
+                  "new Vector2(" + wave.startingPoint.X.ToString() + ", "
+                  + wave.startingPoint.Y.ToString() + "), "
+                  + Math.Round(wave.waveAngle * (180.0 / Math.PI), 2)
+                  .ToString((IFormatProvider) CultureInfo.InvariantCulture) + ")" 
+                  + Environment.NewLine);
 
               DebugAssistant.debugKeyCooldown = 60;
-              Game1.waves.Add((IBackgroundEffect) new Wave(wave.startingPoint, 
-                  wave.length, wave.waveAngle, true));
+              Game1.waves.Add((IBackgroundEffect) 
+                  new Wave(wave.startingPoint, wave.length, wave.waveAngle, true));
             }
             if (((Wave) Game1.waves[0]).waveAngle > 2.0 * Math.PI)
               ((Wave) Game1.waves[0]).waveAngle = 2.0 * Math.PI;
             if (((Wave) Game1.waves[0]).waveAngle < 0.0)
               ((Wave) Game1.waves[0]).waveAngle = 0.0;
           }
-          if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F12) 
+
+
+          if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F12)
                         && DebugAssistant.debugKeyCooldown == 0)
           {
             DebugAssistant.debugKeyCooldown = 60;
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)
-                            || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl))
+            if 
+            (     ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)
+                            || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl)
+            )
             {
+                System.Diagnostics.Debug.WriteLine("[ii] F12 + CTRL pressed when debug panel active. Test Scene switch !");
+
                 Recorder.StartReRender(/*Environment.GetFolderPath(
-                    Environment.SpecialFolder.ApplicationData)
-                    +*/ "\\DTGEXP\\", game);
+                    Environment.SpecialFolder.ApplicationData)*/
+                    localFolder.Path + "\\DTGEXP\\", game);
             }
             else
                 Recorder.StartRecording();
           }
-          if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F5) 
-                        && DebugAssistant.debugKeyCooldown == 0)
-          {
+
+
+         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F8) && DebugAssistant.debugKeyCooldown == 0)
+        {
             DebugAssistant.debugKeyCooldown = 60;
-            SaveHandler.LoadGame(1, Game1.commonSprites, game);
-          }
-          if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F4) 
-                        && DebugAssistant.debugKeyCooldown == 0
-                        && GUIManager.OpenHudBesideInteract() == 0)
-          {
-            DebugAssistant.debugKeyCooldown = 60;
-            SaveHandler.SaveGame(Game1.world, Game1.player, 
-                game.lastFrame);
-          }
+
+            System.Diagnostics.Debug.WriteLine("[ii] F8 pressed when debug panel active. Some World tune...");
+
+            int num = 1;
+            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+            {
+                System.Diagnostics.Debug.WriteLine("[ii] L.CTRL increases num to 6 :)");
+                num = 6;
+            }
+
+            foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
+            {
+                IWorldObject wo = worldObject;
+                if (!(wo is BuildPoint))
+                {
+                    wo.Location = new Vector2(wo.Location.X - (float)num, wo.Location.Y);
+                    Vector2 explicitEpicenter3 = wo.ExplicitEpicenter;
+                    Vector2 explicitEpicenter4 = wo.ExplicitEpicenter;
+                    explicitEpicenter4.X -= (float)num;
+                    wo.ExplicitEpicenter = explicitEpicenter4;
+                    if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
+                        (Func<IWorldObject, bool>)(p => p.ObjectId != wo.ObjectId)))
+                        DebugAssistant.woModifiedInGameEditor.Add(wo);
+                }
+            }
         }
+
+
+
+        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F7) && DebugAssistant.debugKeyCooldown == 0)
+        {
+            DebugAssistant.debugKeyCooldown = 60;
+
+            System.Diagnostics.Debug.WriteLine("[ii] F7 pressed when debug panel active. Test Scene switch !");
+
+            //CutsceneManager.StartCutscene((ICutscene)new ArchipelagoArrivalCutscene(), gameTime, Game1.player, Game1.world);
+            CutsceneManager.StartCutscene((ICutscene)new StoryIntroCutscene(), gameTime, Game1.player, Game1.world);
+
+        }
+
+
+        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F6) && DebugAssistant.debugKeyCooldown == 0)
+        {
+            DebugAssistant.debugKeyCooldown = 60;
+
+            System.Diagnostics.Debug.WriteLine("[ii] F6 pressed when debug panel active. Test Inventory AddItem !");
+
+            for (int itemId = 0; itemId < 17; ++itemId)
+            {
+                // itemId -- id of item; 99 - count
+                    Game1.player.inventory.AddItem(new ItemStack(itemId, 99));                
+            }
+
+        }
+
+                          
+             
+        if ( ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F5)   && DebugAssistant.debugKeyCooldown == 0  )
+        {
+            DebugAssistant.debugKeyCooldown = 60;
+
+            System.Diagnostics.Debug.WriteLine("[ii] F5 pressed when debug panel active. Test Load game !");
+
+            SaveHandler.LoadGame(1, Game1.commonSprites, game);
+        }
+     
+
+     
+        if ( ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F4)   && DebugAssistant.debugKeyCooldown == 0 
+                        && GUIManager.OpenHudBesideInteract() == 0)
+        {
+            DebugAssistant.debugKeyCooldown = 60;
+
+            System.Diagnostics.Debug.WriteLine("[ii] F4 pressed when debug panel active. Test Save game !");
+
+            SaveHandler.SaveGame(Game1.world, Game1.player, game.lastFrame);
+        }
+     
       }
-      DebugAssistant.previousks = ks;
     }
 
+    DebugAssistant.previousks = ks;
+  }//KeyInput
+
+
+    // DrawDebugPanel
     public static void DrawDebugPanel(SpriteBatch sb, Game1 game)
     {
       if (!DebugAssistant.debugPanel)
         return;
-      if ((DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt) 
-                || DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt))
-                && !GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>())
+
+      // DEBUG
+      if 
+      ( 
+       (DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt)
+        || DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)
+        ) 
+        && !GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>()
+       )
       {
         sb.Begin(SpriteSortMode.Immediate);
+
         if (DebugAssistant.debugPanelActiveMenu.HasValue)
         {
-          List<string> stringList = new List<string>();
-          Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-          Microsoft.Xna.Framework.Input.Keys keys1 = Microsoft.Xna.Framework.Input.Keys.A;
-          if (debugPanelActiveMenu.GetValueOrDefault() == keys1 & debugPanelActiveMenu.HasValue)
-          {
-            stringList.Add("[A] Previous wind step");
-            stringList.Add("[Z] Next wind step");
-            stringList.Add("[E] Fast forward");
-            stringList.Add("[R] Fast forward (faster)");
-            stringList.Add("");
-            stringList.Add("Time is " + Math.Round(DayCycle.dayTime, 0).ToString() + "(" + DayCycle.CyclePart + ")");
-          }
-          else
-          {
-            debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-            Microsoft.Xna.Framework.Input.Keys keys2 = Microsoft.Xna.Framework.Input.Keys.Z;
-            if (debugPanelActiveMenu.GetValueOrDefault() == keys2 & debugPanelActiveMenu.HasValue)
+            List<string> stringList = new List<string>();
+            Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu
+                        = DebugAssistant.debugPanelActiveMenu;
+            Microsoft.Xna.Framework.Input.Keys keys1 = Microsoft.Xna.Framework.Input.Keys.A;
+            if (debugPanelActiveMenu.GetValueOrDefault() == keys1 & debugPanelActiveMenu.HasValue)
             {
-              stringList.Add("[A] Save to current slot");
-              stringList.Add("[Z] Load from current slot");
-              stringList.Add("[E] Load dynamic savefile (slot 0)");
-              stringList.Add("[Q] Load from slot 1");
-              stringList.Add("[S] Load from slot 2");
-              stringList.Add("[D] Load from slot 3");
-              stringList.Add("[W] Save to slot 1");
-              stringList.Add("[X] Save to slot 2");
-              stringList.Add("[C] Save to slot 3");
-              stringList.Add("");
-              stringList.Add("Current slot: " + SaveHandler.slot.ToString());
-              stringList.Add("Next autosave in " + Math.Round(
-                  (300000.0 - (double) game.timeSinceLastAutosave) / 1000.0).ToString());
+                stringList.Add("[A] Previous wind step");
+                stringList.Add("[Z] Next wind step");
+                stringList.Add("[E] Fast forward");
+                stringList.Add("[R] Fast forward (faster)");
+                stringList.Add("");
+                stringList.Add("Time is " + Math.Round(DayCycle.dayTime, 0).ToString()
+                    + "(" + DayCycle.CyclePart + ")");
             }
             else
             {
-              debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-              Microsoft.Xna.Framework.Input.Keys keys3 = Microsoft.Xna.Framework.Input.Keys.E;
-              if (debugPanelActiveMenu.GetValueOrDefault() == keys3 & debugPanelActiveMenu.HasValue)
-              {
-                stringList.Add("[A] Unlock all");
-                stringList.Add("[Z] Lock all");
-                stringList.Add("[E] (Dis)Allow Superdodo");
-              }
-              else
-              {
                 debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-                Microsoft.Xna.Framework.Input.Keys keys4 = Microsoft.Xna.Framework.Input.Keys.R;
-                if (debugPanelActiveMenu.GetValueOrDefault() == keys4 & debugPanelActiveMenu.HasValue)
+                Microsoft.Xna.Framework.Input.Keys keys2 = Microsoft.Xna.Framework.Input.Keys.Z;
+                if (debugPanelActiveMenu.GetValueOrDefault() == keys2 & debugPanelActiveMenu.HasValue)
                 {
-                  stringList.Add("[A] Decrement level");
-                  stringList.Add("[Z] Increment level");
-                  stringList.Add("[E] Export static code definition");
-                  stringList.Add("");
-                  stringList.Add("Current level: " + Game1.world.Level.ToString());
+                    stringList.Add("[A] Save to current slot");
+                    stringList.Add("[Z] Load from current slot");
+                    stringList.Add("[E] Load dynamic savefile (slot 0)");
+                    stringList.Add("[Q] Load from slot 1");
+                    stringList.Add("[S] Load from slot 2");
+                    stringList.Add("[D] Load from slot 3");
+                    stringList.Add("[W] Save to slot 1");
+                    stringList.Add("[X] Save to slot 2");
+                    stringList.Add("[C] Save to slot 3");
+                    stringList.Add("");
+                    stringList.Add("Current slot: " + SaveHandler.slot.ToString());
+                    stringList.Add("Next autosave in "
+                        + Math.Round((300000.0 - (double)game.timeSinceLastAutosave) / 1000.0)
+                        .ToString());
                 }
                 else
                 {
-                  debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-                  Microsoft.Xna.Framework.Input.Keys keys5 = Microsoft.Xna.Framework.Input.Keys.T;
-                  if (debugPanelActiveMenu.GetValueOrDefault() == keys5 & debugPanelActiveMenu.HasValue)
-                  {
-                    stringList.Add("[A] Set input to Keyboard");
-                    stringList.Add("[Z] Set input to Joy-Con (requires external driver)");
-                    stringList.Add("[E] Set input to Wiimote");
-                    stringList.Add("[R] Cycle peripheral");
-                    stringList.Add("");
-                    stringList.Add(game.userInput.inputError ? "Input error" : "Input OK");
-                  }
-                  else
-                  {
                     debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-                    Microsoft.Xna.Framework.Input.Keys keys6 = Microsoft.Xna.Framework.Input.Keys.Q;
-                    if (!(debugPanelActiveMenu.GetValueOrDefault() == keys6 
-                                            & debugPanelActiveMenu.HasValue))
+                    Microsoft.Xna.Framework.Input.Keys keys3 
+                                = Microsoft.Xna.Framework.Input.Keys.E;
+                    if (debugPanelActiveMenu.GetValueOrDefault() == keys3 
+                                & debugPanelActiveMenu.HasValue)
                     {
-                      debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-                      Microsoft.Xna.Framework.Input.Keys keys7 = Microsoft.Xna.Framework.Input.Keys.S;
-                      if (debugPanelActiveMenu.GetValueOrDefault() == keys7
-                                                & debugPanelActiveMenu.HasValue)
-                      {
-                        stringList.Add("[A] Give 99 of each item");
-                        stringList.Add("[Z] Empty");
-                      }
-                      else
-                      {
-                        debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
-                        Microsoft.Xna.Framework.Input.Keys keys8 = Microsoft.Xna.Framework.Input.Keys.D;
-                        if (debugPanelActiveMenu.GetValueOrDefault() 
-                                                    == keys8 & debugPanelActiveMenu.HasValue)
-                        {
-                          stringList.Add("[A] StoryIntroCutscene");
-                          stringList.Add("[Z] ArchipelagoArrivalCutscene");
-                        }
-                      }
+                        stringList.Add("[A] Unlock all");
+                        stringList.Add("[Z] Lock all");
+                        stringList.Add("[E] (Dis)Allow Superdodo");
                     }
-                  }
+                    else
+                    {
+                        debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
+                        Microsoft.Xna.Framework.Input.Keys keys4 = Microsoft.Xna.Framework.Input.Keys.R;
+                        if (debugPanelActiveMenu.GetValueOrDefault() == keys4 & debugPanelActiveMenu.HasValue)
+                        {
+                            stringList.Add("[A] Decrement level");
+                            stringList.Add("[Z] Increment level");
+                            stringList.Add("[E] Export static code definition");
+                            stringList.Add("");
+                            stringList.Add("Current level: " + Game1.world.Level.ToString());
+                        }
+                        else
+                        {
+                            debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
+                            Microsoft.Xna.Framework.Input.Keys keys5 = Microsoft.Xna.Framework.Input.Keys.T;
+                            if (debugPanelActiveMenu.GetValueOrDefault() == keys5 & debugPanelActiveMenu.HasValue)
+                            {
+                                stringList.Add("[A] Set input to Keyboard");
+                                stringList.Add("[Z] Set input to Joy-Con (requires external driver)");
+                                stringList.Add("[E] Set input to Wiimote");
+                                stringList.Add("[R] Cycle peripheral");
+                                stringList.Add("");
+                                stringList.Add(game.userInput.inputError ? "Input error" : "Input OK");
+                            }
+                            else
+                            {
+                                debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
+                                Microsoft.Xna.Framework.Input.Keys keys6 
+                                            = Microsoft.Xna.Framework.Input.Keys.Q;
+                                if (!(debugPanelActiveMenu.GetValueOrDefault()
+                                            == keys6 & debugPanelActiveMenu.HasValue))
+                                {
+                                    debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
+                                    Microsoft.Xna.Framework.Input.Keys keys7 
+                                                = Microsoft.Xna.Framework.Input.Keys.S;
+                                    if (debugPanelActiveMenu.GetValueOrDefault() == keys7 
+                                                & debugPanelActiveMenu.HasValue)
+                                    {
+                                        stringList.Add("[A] Give 99 of each item");
+                                        stringList.Add("[Z] Empty");
+                                    }
+                                    else
+                                    {
+                                        debugPanelActiveMenu = DebugAssistant.debugPanelActiveMenu;
+                                        Microsoft.Xna.Framework.Input.Keys keys8 
+                                                    = Microsoft.Xna.Framework.Input.Keys.D;
+                                        if (debugPanelActiveMenu.GetValueOrDefault() 
+                                                    == keys8 & debugPanelActiveMenu.HasValue)
+                                        {
+                                            stringList.Add("[A] StoryIntroCutscene");
+                                            stringList.Add("[Z] ArchipelagoArrivalCutscene");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
-          float num = 0.0f;
-          foreach (string text in stringList)
-          {
-            float x = Game1.arialSpriteFont.MeasureString(text).X;
-            if ((double) num < (double) x)
-              num = x;
-          }
-          Recorder.RDraw(sb, Game1.GenerateBox(new Vector2(num + 2f, 
-              (float) (stringList.Count * 14 + 2)), Color.White), Vector2.Zero, Color.White * 0.8f);
-          int y = 1;
-          foreach (string text in stringList)
-          {
-            Recorder.RDrawString(sb, Game1.arialSpriteFont, text, 
-                new Vector2(1f, (float) y), Color.Black);
-            y += 14;
-          }
+            float num = 0.0f;
+            foreach (string text in stringList)
+            {
+                float x = Game1.arialSpriteFont.MeasureString(text).X;
+                if ((double)num < (double)x)
+                    num = x;
+            }
+
+            Recorder.RDraw(sb, Game1.GenerateBox(new Vector2(num + 2f,
+                (float)(stringList.Count * 14 + 2)), Color.White), Vector2.Zero, Color.White * 0.8f);
+            int y = 1;
+            foreach (string text in stringList)
+            {
+                Recorder.RDrawString(sb, Game1.arialSpriteFont, text, new Vector2(1f, (float)y),
+                    Color.Black);
+                y += 14;
+            }
         }
         else
         {
-          List<string> stringList = new List<string>();
-          stringList.Add("[A] Time & Wind");
-          stringList.Add("[Z] Saving");
-          stringList.Add("[E] Player");
-          stringList.Add("[R] World");
-          stringList.Add("[T] User input");
-          stringList.Add("[Q] Wave placement tool");
-          stringList.Add("[S] Inventory");
-          stringList.Add("[D] Cutscene");
-          float num = 0.0f;
-          foreach (string text in stringList)
-          {
-            float x = Game1.arialSpriteFont.MeasureString(text).X;
-            if ((double) num < (double) x)
-              num = x;
-          }
-          if (DebugAssistant.previousks.IsKeyDown(
-              Microsoft.Xna.Framework.Input.Keys.LeftAlt) 
-                        || DebugAssistant.previousks.IsKeyDown(
-                            Microsoft.Xna.Framework.Input.Keys.RightAlt))
-            Recorder.RDraw(sb, Game1.GenerateBox(new Vector2(num + 2f,
-                (float) (stringList.Count * 14 + 2)), Color.White), Vector2.Zero, Color.White * 0.8f);
+            List<string> stringList = new List<string>();
+            stringList.Add("[A] Time & Wind");
+            stringList.Add("[Z] Saving");
+            stringList.Add("[E] Player");
+            stringList.Add("[R] World");
+            stringList.Add("[T] User input");
+            stringList.Add("[Q] Wave placement tool");
+            stringList.Add("[S] Inventory");
+            stringList.Add("[D] Cutscene");
+            float num = 0.0f;
+            foreach (string text in stringList)
+            {
+                float x = Game1.arialSpriteFont.MeasureString(text).X;
+                if ((double)num < (double)x)
+                    num = x;
+            }
+
+            if (DebugAssistant.previousks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt)
+                            || DebugAssistant.previousks.IsKeyDown(
+                                Microsoft.Xna.Framework.Input.Keys.RightAlt))
+            { 
+                Recorder.RDraw(sb, Game1.GenerateBox(new Vector2(num + 2f,
+                    (float)(stringList.Count * 14 + 2)), Color.White),
+                    Vector2.Zero, Color.White * 0.8f);
+            }
           int y = 1;
           foreach (string text in stringList)
           {
@@ -876,13 +1033,11 @@ namespace DodoTheGame
         List<string> stringList1 = new List<string>();
         List<string> stringList2 = new List<string>();
         stringList1.Add("DodoTheGame/The Dodo Archipelago RELEASE 1.0");
-
         stringList1.Add(str1 + " ; " + Recorder.drawCallCount.ToString() 
             + " draw calls ; TPU: " + Game1.frameCounter.updateTicksAverage.ToString()
-            + "(" + Game1.frameCounter.maxUpdateTicks.ToString() +
-            ") ; TPD: " + Game1.frameCounter.drawTicksAverage.ToString()
-            + "(" + Game1.frameCounter.maxDrawTicks.ToString() + ")");
-
+            + "(" + Game1.frameCounter.maxUpdateTicks.ToString() + ") ; TPD: "
+            + Game1.frameCounter.drawTicksAverage.ToString() + "("
+            + Game1.frameCounter.maxDrawTicks.ToString() + ")");
         List<string> stringList3 = stringList1;
         string[] strArray1 = new string[10]
         {
@@ -929,8 +1084,7 @@ namespace DodoTheGame
           stringList1.Add("NUMPAD4/5/6/8 to move (CTRL to move faster)");
           stringList1.Add("NUMPAD7/9 to rotate (CTRL to rotate faster)");
           stringList1.Add("NUMPAD2 to write to world");
-          stringList1.Add("Location: " + startingPoint.X.ToString() + " ; " 
-              + startingPoint.Y.ToString());
+          stringList1.Add("Location: " + startingPoint.X.ToString() +" ; "+ startingPoint.Y.ToString());
           List<string> stringList5 = stringList1;
           num2 = Math.Round(((Wave) Game1.waves[0]).waveAngle * (180.0 / Math.PI), 2);
           string str4 = "Angle: " + num2.ToString();
@@ -943,32 +1097,35 @@ namespace DodoTheGame
           string str5 = "Swim pulse count: " + num1.ToString();
           stringList6.Add(str5);
         }
+
         if (game.WorldLoader == Game1.WorldLoaderType.staticDefinition)
-          stringList1.Add(
-              "World loaded from static definition. Saving may not be supported in this build.");
+          stringList1.Add("World loaded from static definition. " +
+              "Saving may not be supported in this build.");
+
         if (game.userInput.inputError)
           stringList2.Add("Input error! Check controller status.");
-
         if (CutsceneManager.CutsceneActive)
           stringList1.Add("Playing cutscene " + CutsceneManager.CurrentCutsceneType.ToString());
         int y = 1;
+
         foreach (string text in stringList1)
         {
           Recorder.RDrawString(sb, Game1.arialSpriteFont, text, new Vector2(1f, (float) y), color1);
           y += 14;
         }
+
         foreach (string text in stringList2)
         {
-          Recorder.RDrawString(sb, Game1.arialSpriteFont, text, new Vector2(1f,
-              (float) y), Color.Red);
+          Recorder.RDrawString(sb, Game1.arialSpriteFont, text, new Vector2(1f, (float) y), Color.Red);
           y += 14;
         }
         float getSpeed = (float) Wind.GetSpeed;
         Color color2 = new Color(1f, 1f - getSpeed, 1f - getSpeed);
-        Recorder.RDraw(sb, DebugAssistant.debugWindArrow, new Vector2(50f, 270f),
-            new Rectangle?(), color2, Convert.ToSingle(Wind.GetAngle - Math.PI / 2.0), 
-            new Vector2(30f, 15f), new Vector2(1f, 1f), SpriteEffects.None, 0.0f);
 
+        Recorder.RDraw(sb, DebugAssistant.debugWindArrow, 
+            new Vector2(50f, 270f), new Rectangle?(), 
+            color2, Convert.ToSingle(Wind.GetAngle - Math.PI / 2.0), 
+            new Vector2(30f, 15f), new Vector2(1f, 1f), SpriteEffects.None, 0.0f);
         sb.End();
       }
     }

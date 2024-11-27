@@ -30,15 +30,19 @@ namespace DodoTheGame
         this.InitializeComponent();
         this.Suspending += OnSuspending;
 
-        //API check to ensure the "RequiresPointerMode" property exists, ensuring project is running on build 14393 or later
-        if (Windows.Foundation.Metadata.ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Application", "RequiresPointerMode"))
-        {
+            //API check to ensure the "RequiresPointerMode" property exists, ensuring project is running on build 14393 or later
+            //if (Windows.Foundation.Metadata.ApiInformation.IsPropertyPresent(
+            //    "Windows.UI.Xaml.Application", "RequiresPointerMode"))
+            //{
             //If running on the Xbox, disable screen pointer
-            if (IsXbox())
-            {
-                Application.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
-            }
-        }
+            //    if (IsXbox())
+            //    {
+            //        Application.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
+            //    }
+            //}
+
+            //RnD
+            Application.Current.RequiresPointerMode = ApplicationRequiresPointerMode.Auto;
     }
 
     /// <summary>
@@ -56,9 +60,8 @@ namespace DodoTheGame
    
     protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
-        ApplicationView.GetForCurrentView().SetDesiredBoundsMode(
-            ApplicationViewBoundsMode.UseCoreWindow);
-
+        //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(
+        //    ApplicationViewBoundsMode.UseCoreWindow);
 
         Frame rootFrame = Window.Current.Content as Frame;
 

@@ -16,8 +16,6 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using SharpRaven;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,13 +26,15 @@ using System.Reflection;
 using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
+using Windows.Storage;
 //using System.Web.Script.Serialization;
+
 
 
 namespace DodoTheGame
 {
 
-  partial class Game1 : Game
+  public partial class Game1 : Game
   {
     public const string Manifest = "DodoTheGame/The Dodo Archipelago RELEASE 1.0";
     public readonly Game1.WorldLoaderType WorldLoader;
@@ -55,74 +55,74 @@ namespace DodoTheGame
     internal static SpriteFont rouliLSpriteFont;
     internal static SpriteFont rouliMSpriteFont;
     internal static SpriteFont rouliSSpriteFont;
-    private Sprite loadingFeatherSprite;
-    internal Sprite dodoSprite;
-    internal Sprite dodoSpriteMoving;
-    internal Sprite dodoTakeNotes;
-    internal Sprite dodoTakeSprite;
-    internal Sprite dodoSpriteSwimIdle;
-    internal Sprite dodoSpriteSwimPulse;
-    internal Sprite dodoSpriteBuilding;
-    internal Sprite dodoSpriteHarvesting;
-    internal Sprite dodoWalkToBikeSprite;
-    internal Sprite dodoBikeSprite;
+    private Sprite loadingFeatherSprite = new Sprite();
+    internal Sprite dodoSprite = new Sprite();
+    internal Sprite dodoSpriteMoving = new Sprite();
+    internal Sprite dodoTakeNotes = new Sprite();
+    internal Sprite dodoTakeSprite = new Sprite();
+    internal Sprite dodoSpriteSwimIdle = new Sprite();
+    internal Sprite dodoSpriteSwimPulse = new Sprite();
+    internal Sprite dodoSpriteBuilding = new Sprite();
+    internal Sprite dodoSpriteHarvesting = new Sprite();
+    internal Sprite dodoWalkToBikeSprite = new Sprite();
+    internal Sprite dodoBikeSprite = new Sprite();
     internal Sprite dodoBikeInWaterSprite;
-    internal Sprite dodoBikeBSprite;
-    internal Sprite dodoBikeInWaterBSprite;
-    internal Sprite dodoWalkToBicycleSprite;
-    internal Sprite dodoBicycle1Sprite;
-    internal Sprite dodoBicycle2Sprite;
-    internal Sprite dodoBicycle3Sprite;
-    internal Sprite dodoSpriteSwimSink;
-    internal Sprite dodoWakingUp;
-    internal Sprite dodoLaying;
+    internal Sprite dodoBikeBSprite = new Sprite();
+    internal Sprite dodoBikeInWaterBSprite = new Sprite();
+    internal Sprite dodoWalkToBicycleSprite = new Sprite();
+    internal Sprite dodoBicycle1Sprite = new Sprite();
+    internal Sprite dodoBicycle2Sprite = new Sprite();
+    internal Sprite dodoBicycle3Sprite = new Sprite();
+    internal Sprite dodoSpriteSwimSink = new Sprite();
+    internal Sprite dodoWakingUp = new Sprite();
+    internal Sprite dodoLaying = new Sprite();
     internal Sprite[] harvestShadows;
     internal Sprite[] buildShadows;
     internal Sprite[] drowningIcons;
-    internal Sprite timebar;
-    internal Sprite buildingCloudSprite;
+    internal Sprite timebar = new Sprite();
+    internal Sprite buildingCloudSprite = new Sprite();
     internal Sprite preBuildingCloudSprite;
-    internal Sprite harvestCloudSprite;
-    internal static Sprite buildBoxSprite;
-    internal static Sprite buildBox3Sprite;
-    internal static Sprite buildPointSprite;
-    internal static Sprite buildBoxPlusSprite;
-    internal static Sprite buildBox3PlusSprite;
-    internal Sprite BabyIdleSprite;
-    internal Sprite BabyWalkSprite;
-    internal Sprite AidleSprite;
-    internal Sprite AwalkSprite;
-    internal Sprite AtosleepSprite;
-    internal Sprite AsleepSprite;
-    internal Sprite AwakeSprite;
-    internal Sprite BidleSprite;
-    internal Sprite BwalkSprite;
-    internal Sprite BtosleepSprite;
-    internal Sprite BsleepSprite;
-    internal Sprite BwakeSprite;
-    internal Sprite CidleSprite;
-    internal Sprite CwalkSprite;
-    internal Sprite CtosleepSprite;
-    internal Sprite CsleepSprite;
-    internal Sprite CwakeSprite;
-    internal Sprite DidleSprite;
-    internal Sprite DwalkSprite;
-    internal Sprite DtosleepSprite;
-    internal Sprite DsleepSprite;
-    internal Sprite DwakeSprite;
-    internal Sprite EidleSprite;
-    internal Sprite EwalkSprite;
-    internal Sprite EtosleepSprite;
-    internal Sprite EsleepSprite;
-    internal Sprite EwakeSprite;
-    internal Sprite ShidleSprite;
-    internal Sprite ShwalkSprite;
-    internal UserInput userInput;
+    internal Sprite harvestCloudSprite = new Sprite();
+    internal static Sprite buildBoxSprite = new Sprite();
+    internal static Sprite buildBox3Sprite = new Sprite();
+    internal static Sprite buildPointSprite = new Sprite();
+    internal static Sprite buildBoxPlusSprite = new Sprite();
+    internal static Sprite buildBox3PlusSprite = new Sprite();
+    internal Sprite BabyIdleSprite = new Sprite();
+    internal Sprite BabyWalkSprite = new Sprite();
+    internal Sprite AidleSprite = new Sprite();
+    internal Sprite AwalkSprite = new Sprite();
+    internal Sprite AtosleepSprite = new Sprite();
+    internal Sprite AsleepSprite = new Sprite();
+    internal Sprite AwakeSprite = new Sprite();
+    internal Sprite BidleSprite = new Sprite();
+    internal Sprite BwalkSprite = new Sprite();
+    internal Sprite BtosleepSprite = new Sprite();
+    internal Sprite BsleepSprite = new Sprite();
+    internal Sprite BwakeSprite = new Sprite();
+    internal Sprite CidleSprite = new Sprite();
+    internal Sprite CwalkSprite = new Sprite();
+    internal Sprite CtosleepSprite = new Sprite();
+    internal Sprite CsleepSprite = new Sprite();
+    internal Sprite CwakeSprite = new Sprite();
+    internal Sprite DidleSprite = new Sprite();
+    internal Sprite DwalkSprite = new Sprite();
+    internal Sprite DtosleepSprite = new Sprite();
+    internal Sprite DsleepSprite = new Sprite();
+    internal Sprite DwakeSprite = new Sprite();
+    internal Sprite EidleSprite = new Sprite();
+    internal Sprite EwalkSprite = new Sprite();
+    internal Sprite EtosleepSprite = new Sprite();
+    internal Sprite EsleepSprite = new Sprite();
+    internal Sprite EwakeSprite = new Sprite();
+    internal Sprite ShidleSprite = new Sprite();
+    internal Sprite ShwalkSprite = new Sprite();
+    internal UserInput userInput = new UserInput(1);
     internal static Pathfinder pathfinder;
     internal static ScreenShake screenshake;
     internal static Player player;
-    private Player.DodoMovement movementModeInLastDraw;
-    private UserInputStatus lastUIS;
+    private Player.DodoMovement movementModeInLastDraw = new Player.DodoMovement();
+    private UserInputStatus lastUIS = new UserInputStatus();
     internal static List<Sprite> commonSprites;
     private Texture2D whiteBackground;
     private Texture2D savingTexture;
@@ -130,14 +130,17 @@ namespace DodoTheGame
     private RenderTarget2D renderTarget;
     private RenderTarget2D renderTarget2;
     internal Texture2D lastFrame;
-    private bool debugEnabled;
-    private DateTime compileDate;
+    
+    // DEBUG MODE
+    private bool debugEnabled = true;
+
+    private DateTime compileDate = new DateTime();
     public Texture2D[] itemTextures;
     public static Texture2D[] smallItemTextures;
     public Texture2D[] miniFlowersTextures;
     public static Texture2D[] staticMiniFlowersTextures;
-    public List<Texture2D> allTextures;
-    internal List<Preset> presetList;
+    public List<Texture2D> allTextures = new List<Texture2D>();
+    internal List<Preset> presetList = new List<Preset>();
     public static Texture2D debugCursor;
     public static Texture2D redline;
     public static Texture2D debugCursor2;
@@ -160,11 +163,11 @@ namespace DodoTheGame
     private bool startupIntroDone;
     public string playtestStoragePath;
     internal float timeSinceLastAutosave;
-    public static RavenClient ravenClient;
+    //public static RavenClient ravenClient;
     internal List<Sprite> knownSprites = new List<Sprite>();
     private float timeAwaitingForAuthorization;
     private MouseState previousMouseState;
-    internal List<IWorldObject> woModifiedInGameEditor;
+    internal List<IWorldObject> woModifiedInGameEditor = new List<IWorldObject>();
     public static int wavecounterdebug = 0;
     public Vector2 backgroundPosition;
     private int startupIntroTimer;
@@ -175,32 +178,37 @@ namespace DodoTheGame
 
     internal static event EventHandler StartupLogo;
 
+   
+
+    // constructor
     public Game1()
     {
-      int inputType = 1;
-      /*
-      bool debugTools = false;
-      float sfxVolume = 3;
-      float bgmVolume = 4;
-      int width = 640;
-      int height = 480;
-      */
-      int highcontrast = 0; // 1 - high contrast, 0 - normal mode
-      
-      bool errorReporting = false;
+        System.Diagnostics.Debug.WriteLine("[i] Game initalizing... (constructor starts...)");
+        int inputType = 1;
+        int highcontrast = 0; // 1 - high contrast, 0 - normal mode      
+        bool errorReporting = false;
 
-      this.Content.RootDirectory = /*Environment.CurrentDirectory + "\\" +*/ "Content";
-      System.Diagnostics.Debug.WriteLine(File.ReadAllText(this.Content.RootDirectory + "\\ascii.txt"));
-      System.Diagnostics.Debug.WriteLine("DodoTheGame/The Dodo Archipelago RELEASE 1.0");
-      System.Diagnostics.Debug.WriteLine("(c) 2017-2020 Dodo Team");
-      System.Diagnostics.Debug.WriteLine("====================================================");
-      Game1.renderSize = new Vector2(1280f, 720f);
-      Recorder.exportFolder = /*Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) 
-                +*/ "\\DTGEXP\\";
-      Save.saveFolder = /*Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-                + */ "\\DTG\\";
-      Game1.graphics = new GraphicsDeviceManager((Game) this);
-      GameSettings gameSettings = SaveHandler.LoadSettings();
+        this.Content.RootDirectory = /*Environment.CurrentDirectory + "\\" */
+        "Content";
+
+        System.Diagnostics.Debug.WriteLine("====================================================");
+        System.Diagnostics.Debug.WriteLine(File.ReadAllText(this.Content.RootDirectory+"\\ascii.txt"));
+        System.Diagnostics.Debug.WriteLine("DodoTheGame/The Dodo Archipelago RELEASE 1.0");
+        System.Diagnostics.Debug.WriteLine("(c) 2017-2020 Dodo Team");
+        System.Diagnostics.Debug.WriteLine("====================================================");
+        Game1.renderSize = new Vector2(1280f, 720f);
+
+        StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+        
+        Recorder.exportFolder =
+        /*Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)*/
+           localFolder.Path + "\\DTGEXP\\";
+        Save.saveFolder = /*Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)*/
+           localFolder.Path  +  "\\DTG\\";
+
+        Game1.graphics = new GraphicsDeviceManager((Game) this);
+
+        GameSettings gameSettings = SaveHandler.LoadSettings();
        
         try
         {
@@ -212,9 +220,9 @@ namespace DodoTheGame
            System.Diagnostics.Debug.WriteLine("[ex] Set sfxVolume error: " + ex.Message);
         }
 
-      Game1.SetFullscreen(gameSettings.fullscreenSelected);
-
-      Game1.windowSize = gameSettings.resolution;
+        Game1.SetFullscreen(gameSettings.fullscreenSelected);
+        this.IsMouseVisible = true;//false;
+        Game1.windowSize = gameSettings.resolution;
 
         if ((double)Game1.windowSize.X / 16.0 > (double)Game1.windowSize.Y / 9.0)
         {
@@ -248,7 +256,9 @@ namespace DodoTheGame
       num = DateTime.Now.Second;
       strArray[4] = num.ToString();
       Recorder.sessionStartcode = string.Concat(strArray);
-      this.debugEnabled = false;
+
+      // DEBUG: show/hide debug panel
+      this.debugEnabled = true;//false;
 
       this.userInput = new UserInput(inputType);
 
@@ -256,14 +266,18 @@ namespace DodoTheGame
 
       Game1.graphics.PreferredBackBufferWidth = (int) Game1.windowSize.X;
       Game1.graphics.PreferredBackBufferHeight = (int) Game1.windowSize.Y;
+
+      //RnD
       Game1.graphics.HardwareModeSwitch = false;
+      
+      Game1.graphics.IsFullScreen = false;
+
       if (errorReporting)
       {
-        //Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-        //Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-        Game1.ravenClient = new RavenClient("https://5f63951fac564d55903f61afc20615e6@sentry.io/279323");
-        AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
-            this.UnhandledException);
+        //Game1.ravenClient = new RavenClient(
+        //                    "https://5f63951fac564d55903f61afc20615e6@sentry.io/279323");
+        //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(
+        //    this.UnhandledException);
       }
 
      if (!Directory.Exists(Save.saveFolder))
@@ -279,17 +293,19 @@ namespace DodoTheGame
         }
      }
 
-      Game1.Log("Initalised game", BreadcrumbLevel.Info);
-    }
+     System.Diagnostics.Debug.WriteLine("[i] Game initalized ok (constructor ends)");
+    }//Game1()
 
+
+    // SetFullscreen
     internal static void SetFullscreen(bool fullscreen)
     {
       if (fullscreen && !Game1.isFullscreen)
       {
-        Game1.isFullscreen = true;
-        Game1.graphics.IsFullScreen = true;
+        Game1.isFullscreen = false;//true;
+        Game1.graphics.IsFullScreen = false;//true;
         Game1.graphics.ApplyChanges();
-        Console.WriteLine(fullscreen.ToString());
+        System.Diagnostics.Debug.WriteLine("[i] Is full screen? Result: " + fullscreen.ToString());
       }
       else
       {
@@ -298,7 +314,7 @@ namespace DodoTheGame
         Game1.isFullscreen = false;
         Game1.graphics.IsFullScreen = false;
         Game1.graphics.ApplyChanges();
-        Console.WriteLine(fullscreen.ToString());
+        System.Diagnostics.Debug.WriteLine("[i] Is full screen? Result: " + fullscreen.ToString());
       }
     }
 
@@ -308,29 +324,46 @@ namespace DodoTheGame
       Game1.graphics.PreferredBackBufferWidth = (int) Game1.windowSize.X;
       Game1.graphics.PreferredBackBufferHeight = (int) Game1.windowSize.Y;
       Game1.graphics.ApplyChanges();
-      if ((double) Game1.windowSize.X / 16.0 > (double) Game1.windowSize.Y / 9.0)
-        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32((float) (16.0 * (double) Game1.windowSize.Y / 9.0)), (float) Convert.ToInt32(Game1.windowSize.Y));
-      else if ((double) Game1.windowSize.X / 16.0 < (double) Game1.windowSize.Y / 9.0)
+
+      if ((double)Game1.windowSize.X / 16.0 > (double)Game1.windowSize.Y / 9.0)
       {
-        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32(Game1.windowSize.X), (float) Convert.ToInt32((float) (9.0 * (double) Game1.windowSize.X / 16.0)));
+        Game1.renderSizeUpscaled =
+                    new Vector2((float)Convert.ToInt32((float)(16.0
+                    * (double)Game1.windowSize.Y / 9.0)),
+                    (float)Convert.ToInt32(Game1.windowSize.Y));
+      }
+      else if ((double)Game1.windowSize.X / 16.0 < (double)Game1.windowSize.Y / 9.0)
+      {
+        Game1.renderSizeUpscaled = new Vector2((float)Convert.ToInt32(Game1.windowSize.X),
+            (float)Convert.ToInt32((float)(9.0 * (double)Game1.windowSize.X / 16.0)));
       }
       else
       {
-        if ((double) Game1.windowSize.X / 16.0 != (double) Game1.windowSize.Y / 9.0)
-          throw new Exception("Unmanaged case");
+        if ((double)Game1.windowSize.X / 16.0 != (double)Game1.windowSize.Y / 9.0)
+            throw new Exception("Unmanaged case");
         Game1.renderSizeUpscaled = Game1.windowSize;
       }
-      Game1.Log("Window resized to (" + Game1.windowSize.X.ToString() + "; " + Game1.windowSize.Y.ToString() + "). Game resized to (" + Game1.renderSizeUpscaled.X.ToString() + "; " + Game1.renderSizeUpscaled.Y.ToString() + ")", BreadcrumbLevel.Debug);
+
+      System.Diagnostics.Debug.WriteLine("[i] Window resized to (" 
+          + Game1.windowSize.X.ToString() + "; "
+          + Game1.windowSize.Y.ToString() + "). Game resized to (" 
+          + Game1.renderSizeUpscaled.X.ToString() + "; " 
+          + Game1.renderSizeUpscaled.Y.ToString() + ")");
     }
 
     public void OnResize(object sender, EventArgs e)
     {
-      Game1.windowSize = new Vector2((float) this.Window.ClientBounds.Width, (float) this.Window.ClientBounds.Height);
+      Game1.windowSize = new Vector2((float) this.Window.ClientBounds.Width, 
+          (float) this.Window.ClientBounds.Height);
+
       if ((double) Game1.windowSize.X / 16.0 > (double) Game1.windowSize.Y / 9.0)
-        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32((float) (16.0 * (double) Game1.windowSize.Y / 9.0)), (float) Convert.ToInt32(Game1.windowSize.Y));
+        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32(
+            (float) (16.0 * (double) Game1.windowSize.Y / 9.0)), 
+            (float) Convert.ToInt32(Game1.windowSize.Y));
       else if ((double) Game1.windowSize.X / 16.0 < (double) Game1.windowSize.Y / 9.0)
       {
-        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32(Game1.windowSize.X), (float) Convert.ToInt32((float) (9.0 * (double) Game1.windowSize.X / 16.0)));
+        Game1.renderSizeUpscaled = new Vector2((float) Convert.ToInt32(Game1.windowSize.X), 
+            (float) Convert.ToInt32((float) (9.0 * (double) Game1.windowSize.X / 16.0)));
       }
       else
       {
@@ -338,12 +371,18 @@ namespace DodoTheGame
           throw new Exception("Unmanaged case");
         Game1.renderSizeUpscaled = Game1.windowSize;
       }
-      Game1.Log("Window resized to (" + Game1.windowSize.X.ToString() + "; " + Game1.windowSize.Y.ToString() + "). Game resized to (" + Game1.renderSizeUpscaled.X.ToString() + "; " + Game1.renderSizeUpscaled.Y.ToString() + ")", BreadcrumbLevel.Debug);
+      System.Diagnostics.Debug.WriteLine("[i] Window resized to (" 
+          + Game1.windowSize.X.ToString() + "; " 
+          + Game1.windowSize.Y.ToString() + "). Game resized to (" 
+          + Game1.renderSizeUpscaled.X.ToString() + "; "
+          + Game1.renderSizeUpscaled.Y.ToString() + ")");
     }
 
+
+    // Initialize
     protected override void Initialize()
     {
-      Game1.Log("Starting Monogame initialization", BreadcrumbLevel.Info);
+      System.Diagnostics.Debug.WriteLine("[i] Starting Monogame initialization");
       Game1.RNG = new Random();
       GUIManager.Setup();
       Game1.player = new Player()
@@ -352,11 +391,11 @@ namespace DodoTheGame
         {
           {
             PlayerUnlockables.PlayerUnlockable.Bike,
-            false
+            true/*false*/
           },
           {
             PlayerUnlockables.PlayerUnlockable.Bicycle,
-            false
+            true/*false*/
           }
         },
         location = new Vector2(8950f, 8000f)
@@ -364,12 +403,25 @@ namespace DodoTheGame
       Game1.NPCs = new List<INPC>();
       Game1.screenshake = new ScreenShake();
       Game1.frameCounter = new PerformanceCounter();
+
+      // last user interface state ?
       this.lastUIS = this.userInput.GetInput();
+      
       Game1.affectedTexturesCache = new List<Texture2D>();
-      this.IsMouseVisible = this.debugEnabled;
+      
+      this.IsMouseVisible = true;//this.debugEnabled;
       DebugAssistant.debugPanel = this.debugEnabled;
-      this.renderTarget = new RenderTarget2D(Game1.graphics.GraphicsDevice, (int) Game1.renderSize.X, (int) Game1.renderSize.Y, false, this.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-      this.renderTarget2 = new RenderTarget2D(Game1.graphics.GraphicsDevice, (int) Game1.renderSize.X, (int) Game1.renderSize.Y, false, this.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+
+      this.renderTarget = new RenderTarget2D(
+          Game1.graphics.GraphicsDevice, (int) Game1.renderSize.X, 
+          (int) Game1.renderSize.Y, false, 
+          this.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+
+      this.renderTarget2 = new RenderTarget2D(
+          Game1.graphics.GraphicsDevice, (int) Game1.renderSize.X, 
+          (int) Game1.renderSize.Y, false, 
+          this.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+
       Recorder.Player = Game1.player;
 
   
@@ -388,9 +440,10 @@ namespace DodoTheGame
       MediaPlayer.Volume = Sound.bgmVolume;
       this.IsFixedTimeStep = false;
       base.Initialize();
-      Game1.Log("Monogame initialization finished", BreadcrumbLevel.Info);
-    }
+      System.Diagnostics.Debug.WriteLine("[i] Monogame initialization finished");
+    }//
 
+    /*
     public static void Log(string message, BreadcrumbLevel level, string category = "global")
     {
       string str = "";
@@ -433,6 +486,7 @@ namespace DodoTheGame
       strArray[9] = message;
       string.Concat(strArray);
     }
+    */
 
     protected override void LoadContent()
     {
@@ -447,16 +501,23 @@ namespace DodoTheGame
 
     private void LoadAllContent(object stateInfo)
     {
-      Game1.Log("Starting asset loading (LoadAllContent)", BreadcrumbLevel.Info);
+      System.Diagnostics.Debug.WriteLine("[i] Starting asset loading (LoadAllContent)");
       this.ressourceLoadingBackground720 = ContentLoadingWrapper.Load<Texture2D>("startup");
+      
       GameSettings gs = SaveHandler.LoadSettings();
+
       LocalizationManager.Init();
-      LocalizationManager.SetLanguage(LocalizationManager.Languages.First<Language>((Func<Language, bool>) (p => p.LanguageCode == gs.languageCode)));
+
+      LocalizationManager.SetLanguage(LocalizationManager.Languages.First<Language>(
+          (Func<Language, bool>) (p => p.LanguageCode == gs.languageCode/*"en_US"*/)));
+
       Game1.rouliXLSpriteFont = ContentLoadingWrapper.Load<SpriteFont>("RouliXL");
       Game1.rouliLSpriteFont = ContentLoadingWrapper.Load<SpriteFont>("Rouli");
       Game1.rouliMSpriteFont = ContentLoadingWrapper.Load<SpriteFont>("RouliMedium");
       Game1.rouliSSpriteFont = ContentLoadingWrapper.Load<SpriteFont>("RouliSmaller");
-      this.loadingFeatherSprite = new Sprite("loading_feather", ContentLoadingWrapper.Load<Texture2D>("loading_feather"))
+
+      this.loadingFeatherSprite = new Sprite("loading_feather",
+          ContentLoadingWrapper.Load<Texture2D>("loading_feather"))
       {
         autoUpdate = false,
         animated = true,
@@ -464,6 +525,7 @@ namespace DodoTheGame
         height = 138,
         MillisecondsPerFrame = 65
       };
+
       Game1.startupLogoSoundEffect = ContentLoadingWrapper.Load<SoundEffect>("soundeffects/logo");
       Game1.dodoteamlogo = ContentLoadingWrapper.Load<Texture2D>("dodoteam_black_small");
       Game1.monogamelogo = ContentLoadingWrapper.Load<Texture2D>("MonogameLogo");
@@ -600,7 +662,8 @@ namespace DodoTheGame
         autoUpdate = false
       };
       BirdShadowManager.BirdShadowList = new List<BirdShadow>();
-      ButterflyManager.sprite = new Sprite("butterfly", ContentLoadingWrapper.Load<Texture2D>("beurrevole"))
+      ButterflyManager.sprite = new Sprite("butterfly", 
+          ContentLoadingWrapper.Load<Texture2D>("beurrevole"))
       {
         animated = true,
         Width = 38,
@@ -608,53 +671,29 @@ namespace DodoTheGame
         autoUpdate = false
       };
       ButterflyManager.butterflyList = new List<Butterfly>();
-      Game1.Log("Loading all textures...", BreadcrumbLevel.Info);
+      System.Diagnostics.Debug.WriteLine("[i] Loading all textures...");
       this.allTextures = new List<Texture2D>();
       List<Texture2D> texture2DList = new List<Texture2D>();
+
       foreach (string texture2 in TextureList.textureList)
       {
         Texture2D texture2D = ContentLoadingWrapper.Load<Texture2D>(texture2);
         this.allTextures.Add(texture2D);
         texture2DList.Add(texture2D);
       }
-      Game1.Log("Loading background tiles...", BreadcrumbLevel.Info);
+
+      System.Diagnostics.Debug.WriteLine("[i] Loading background tiles...");
       string[] strArray = new string[35]
       {
-        "Z1",
-        "Z2",
-        "Z3",
-        "Z4",
-        "Z5",
-        "Z6",
-        "Z7",
-        "A1",
-        "A2",
-        "A3",
-        "A4",
-        "A5",
-        "A6",
-        "A7",
-        "B1",
-        "B2",
-        "B3",
-        "B4",
-        "B5",
-        "B6",
-        "B7",
-        "C1",
-        "C2",
-        "C3",
-        "C4",
-        "C5",
-        "C6",
-        "C7",
-        "D1",
-        "D2",
-        "D3",
-        "D4",
-        "D5",
-        "D6",
-        "D7"
+        "Z1", "Z2", "Z3", "Z4",
+        "Z5", "Z6", "Z7", "A1",
+        "A2", "A3", "A4", "A5",
+        "A6", "A7", "B1", "B2",
+        "B3", "B4", "B5", "B6",
+        "B7", "C1", "C2", "C3",
+        "C4", "C5", "C6", "C7",
+        "D1", "D2", "D3", "D4",
+        "D5", "D6", "D7"
       };
       string[] source = new string[4]
       {
@@ -687,7 +726,8 @@ namespace DodoTheGame
             ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_2"),
             ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_3")
           };
-          terrainBackgroundPart1 = new TerrainBackgroundPart(texture2DArray, new Vector2((float) x, (float) y));
+          terrainBackgroundPart1 = new TerrainBackgroundPart(texture2DArray, 
+              new Vector2((float) x, (float) y));
           texture2DList.AddRange((IEnumerable<Texture2D>) texture2DArray);
         }
         else
@@ -708,50 +748,68 @@ namespace DodoTheGame
         background.partList.Add(terrainBackgroundPart1);
         texture1.partList.Add(terrainBackgroundPart2);
       }
+
       Game1.world = new World(background)
       {
         name = "mainworld",
         objects = new List<IWorldObject>(),
-        behaviorMap = new TerrainBehaviorMap(texture1)
+        behaviorMap = new TerrainBehaviorMap(texture1),
+        background = background // !
       };
-      Game1.buildBoxSprite = new Sprite("buildbox2", ContentLoadingWrapper.Load<Texture2D>("ui/buildbox2"))
+
+      Game1.buildBoxSprite = new Sprite("buildbox2",
+          ContentLoadingWrapper.Load<Texture2D>("ui/buildbox2"))
       {
         animated = true,
         Width = 363,
         MillisecondsPerFrame = 12,
         loopAnimation = false
       };
-      Game1.buildBoxPlusSprite = new Sprite("buildbox2+", ContentLoadingWrapper.Load<Texture2D>("ui/buildbox2+"))
+
+      Game1.buildBoxPlusSprite = new Sprite("buildbox2+",
+          ContentLoadingWrapper.Load<Texture2D>("ui/buildbox2+"))
       {
         animated = true,
         Width = 507,
         MillisecondsPerFrame = 12,
         loopAnimation = false
       };
-      Game1.buildBox3Sprite = new Sprite("buildbox3", ContentLoadingWrapper.Load<Texture2D>("ui/buildbox3"))
+
+      Game1.buildBox3Sprite = new Sprite("buildbox3", 
+          ContentLoadingWrapper.Load<Texture2D>("ui/buildbox3"))
       {
         animated = true,
         Width = 363,
         MillisecondsPerFrame = 12,
         loopAnimation = false
       };
-      Game1.buildBox3PlusSprite = new Sprite("buildbox3+", ContentLoadingWrapper.Load<Texture2D>("ui/buildbox3+"))
+
+      Game1.buildBox3PlusSprite = new Sprite("buildbox3+", 
+          ContentLoadingWrapper.Load<Texture2D>("ui/buildbox3+"))
       {
         animated = true,
         Width = 507,
         MillisecondsPerFrame = 12,
         loopAnimation = false
       };
+
       this.presetList = PresetGenerator.GeneratePresets();
-      Game1.buildPointSprite = new Sprite("buildpoint1", ContentLoadingWrapper.Load<Texture2D>("ui/buildpoint1"), new List<SubSprite>()
+     
+      Game1.buildPointSprite = new Sprite("buildpoint1", 
+          ContentLoadingWrapper.Load<Texture2D>("ui/buildpoint1"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("ombrebuild"), new Vector2(2f, 58f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("ombrebuild"),
+        new Vector2(2f, 58f), opacity: 0.4f)
       });
+      
       Game1.itemsok = ContentLoadingWrapper.Load<Texture2D>("ui/itemsok");
       Game1.itemsnok = ContentLoadingWrapper.Load<Texture2D>("ui/itemsnok");
-      this.dodoSprite = new Sprite("dodo/walk_idle2", ContentLoadingWrapper.Load<Texture2D>("dodo/walk_idle2"), new List<SubSprite>()
+
+      this.dodoSprite = new Sprite("dodo/walk_idle2", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/walk_idle2"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -763,9 +821,11 @@ namespace DodoTheGame
         height = 110,
         autoUpdate = false
       };
-      this.dodoSpriteMoving = new Sprite("dodo/walk_moving_new2", ContentLoadingWrapper.Load<Texture2D>("dodo/walk_moving_new2"), new List<SubSprite>()
+      this.dodoSpriteMoving = new Sprite("dodo/walk_moving_new2",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/walk_moving_new2"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -777,9 +837,11 @@ namespace DodoTheGame
         height = 110,
         autoUpdate = false
       };
-      this.dodoTakeNotes = new Sprite("dodo/takenotes", ContentLoadingWrapper.Load<Texture2D>("dodo/takenotes"), new List<SubSprite>()
+      this.dodoTakeNotes = new Sprite("dodo/takenotes", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/takenotes"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -791,7 +853,8 @@ namespace DodoTheGame
         height = 110,
         autoUpdate = false
       };
-      this.dodoSpriteSwimIdle = new Sprite("dodo/new_swim_idle", ContentLoadingWrapper.Load<Texture2D>("dodo/new_swim_idle"))
+      this.dodoSpriteSwimIdle = new Sprite("dodo/new_swim_idle", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/new_swim_idle"))
       {
         animated = true,
         Width = 120,
@@ -799,7 +862,8 @@ namespace DodoTheGame
         MillisecondsPerFrame = 120,
         autoUpdate = false
       };
-      this.dodoSpriteSwimPulse = new Sprite("dodo/swim_pulse2", ContentLoadingWrapper.Load<Texture2D>("dodo/swim_pulse2"))
+      this.dodoSpriteSwimPulse = new Sprite("dodo/swim_pulse2", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/swim_pulse2"))
       {
         animated = true,
         Width = 120,
@@ -807,7 +871,8 @@ namespace DodoTheGame
         loopAnimation = false,
         autoUpdate = false
       };
-      this.dodoSpriteSwimSink = new Sprite("dodo/sink", ContentLoadingWrapper.Load<Texture2D>("dodo/sink"))
+      this.dodoSpriteSwimSink = new Sprite("dodo/sink", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/sink"))
       {
         animated = true,
         Width = 280,
@@ -816,9 +881,12 @@ namespace DodoTheGame
         loopAnimation = false,
         autoUpdate = false
       };
-      this.dodoWalkToBikeSprite = new Sprite("dodo/walktobike", ContentLoadingWrapper.Load<Texture2D>("dodo/walktobike"), new List<SubSprite>()
+      
+      this.dodoWalkToBikeSprite = new Sprite("dodo/walktobike", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/walktobike"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/walktobike_shadow"), new Vector2(0.0f, 267f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/walktobike_shadow"),
+        new Vector2(0.0f, 267f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false,
           animated = true,
@@ -836,9 +904,11 @@ namespace DodoTheGame
         autoUpdate = true,
         loopAnimation = false
       };
-      this.dodoBikeSprite = new Sprite("dodo/bike/bikeA", ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeA"), new List<SubSprite>()
+      this.dodoBikeSprite = new Sprite("dodo/bike/bikeA", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeA"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"), new Vector2(5f, 189f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"), 
+        new Vector2(5f, 189f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -850,9 +920,11 @@ namespace DodoTheGame
         Width = 193,
         height = 210
       };
-      this.dodoBikeInWaterSprite = new Sprite("dodo/bike/bikeA_inwater", ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeA_inwater"), new List<SubSprite>()
+      this.dodoBikeInWaterSprite = new Sprite("dodo/bike/bikeA_inwater",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeA_inwater"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"), new Vector2(5f, 189f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"),
+        new Vector2(5f, 189f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -864,9 +936,11 @@ namespace DodoTheGame
         Width = 193,
         height = 210
       };
-      this.dodoBikeBSprite = new Sprite("dodo/bike/bikeB", ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeB"), new List<SubSprite>()
+      this.dodoBikeBSprite = new Sprite("dodo/bike/bikeB", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeB"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"), new Vector2(5f, 189f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"),
+        new Vector2(5f, 189f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -878,9 +952,11 @@ namespace DodoTheGame
         height = 210,
         autoUpdate = false
       };
-      this.dodoBikeInWaterBSprite = new Sprite("dodo/bike/bikeB_inwaterb", ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeB_inwater"), new List<SubSprite>()
+      this.dodoBikeInWaterBSprite = new Sprite("dodo/bike/bikeB_inwaterb",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeB_inwater"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"), new Vector2(5f, 189f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bike/bikeshadow"),
+        new Vector2(5f, 189f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -892,9 +968,11 @@ namespace DodoTheGame
         Width = 193,
         height = 210
       };
-      this.dodoWalkToBicycleSprite = new Sprite("dodo/intobicycle", ContentLoadingWrapper.Load<Texture2D>("dodo/intobicycle"), new List<SubSprite>()
+      this.dodoWalkToBicycleSprite = new Sprite("dodo/intobicycle", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/intobicycle"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/intobicycle_shadow"), new Vector2(0.0f, 172f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/intobicycle_shadow"),
+        new Vector2(0.0f, 172f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false,
           animated = true,
@@ -912,9 +990,11 @@ namespace DodoTheGame
         autoUpdate = true,
         loopAnimation = false
       };
-      this.dodoBicycle1Sprite = new Sprite("dodo/bicycle1", ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle1"), new List<SubSprite>()
+      this.dodoBicycle1Sprite = new Sprite("dodo/bicycle1", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle1"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle_shadow"), new Vector2(0.0f, 124f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle_shadow"),
+        new Vector2(0.0f, 124f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -927,9 +1007,11 @@ namespace DodoTheGame
         loopAnimation = false,
         autoUpdate = false
       };
-      this.dodoBicycle2Sprite = new Sprite("dodo/bicycle2", ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle2"), new List<SubSprite>()
+      this.dodoBicycle2Sprite = new Sprite("dodo/bicycle2", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle2"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle_shadow"), new Vector2(0.0f, 124f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle_shadow"), 
+        new Vector2(0.0f, 124f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -942,9 +1024,11 @@ namespace DodoTheGame
         loopAnimation = false,
         autoUpdate = false
       };
-      this.dodoBicycle3Sprite = new Sprite("dodo/bicycle3new", ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle3new"), new List<SubSprite>()
+      this.dodoBicycle3Sprite = new Sprite("dodo/bicycle3new",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle3new"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle_shadow"), new Vector2(0.0f, 124f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/bicycle_shadow"),
+        new Vector2(0.0f, 124f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -957,9 +1041,11 @@ namespace DodoTheGame
         loopAnimation = true,
         autoUpdate = false
       };
-      this.dodoTakeSprite = new Sprite("dodo/get", ContentLoadingWrapper.Load<Texture2D>("dodo/get"), new List<SubSprite>()
+      this.dodoTakeSprite = new Sprite("dodo/get",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/get"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/get_shadow"), new Vector2(0.0f, 124f), opacity: 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo/get_shadow"), 
+        new Vector2(0.0f, 124f), opacity: 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -971,48 +1057,56 @@ namespace DodoTheGame
         loopAnimation = false,
         autoUpdate = false
       };
-      this.dodoSpriteBuilding = new Sprite("dodo/build", ContentLoadingWrapper.Load<Texture2D>("dodo/build"))
+      this.dodoSpriteBuilding = new Sprite("dodo/build", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/build"))
       {
         animated = true,
         MillisecondsPerFrame = 90,
         Width = 250,
         autoUpdate = false
       };
-      this.buildingCloudSprite = new Sprite("buildnuage", ContentLoadingWrapper.Load<Texture2D>("buildnuage"))
+      this.buildingCloudSprite = new Sprite("buildnuage", 
+          ContentLoadingWrapper.Load<Texture2D>("buildnuage"))
       {
         animated = true,
         MillisecondsPerFrame = 100,
         Width = 180,
         autoUpdate = false
       };
-      this.preBuildingCloudSprite = new Sprite("prebuildnuage2", ContentLoadingWrapper.Load<Texture2D>("prebuildnuage2"))
+      this.preBuildingCloudSprite = new Sprite("prebuildnuage2",
+          ContentLoadingWrapper.Load<Texture2D>("prebuildnuage2"))
       {
         animated = true,
         MillisecondsPerFrame = 100,
         Width = 180
       };
-      this.dodoSpriteHarvesting = new Sprite("dodo/harvest", ContentLoadingWrapper.Load<Texture2D>("dodo/harvest"))
+      this.dodoSpriteHarvesting = new Sprite("dodo/harvest",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/harvest"))
       {
         animated = true,
         Width = 300,
         MillisecondsPerFrame = 60,
         autoUpdate = false
       };
-      this.harvestCloudSprite = new Sprite("harvestcloud", ContentLoadingWrapper.Load<Texture2D>("harvestcloud"))
+
+      this.harvestCloudSprite = new Sprite("harvestcloud", 
+          ContentLoadingWrapper.Load<Texture2D>("harvestcloud"))
       {
         animated = true,
         Width = 350,
         MillisecondsPerFrame = 85,
         autoUpdate = false
       };
-      this.dodoWakingUp = new Sprite("dodo/waking", ContentLoadingWrapper.Load<Texture2D>("dodo/waking_up_v3_120"))
+      this.dodoWakingUp = new Sprite("dodo/waking",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/waking_up_v3_120"))
       {
         animated = true,
         Width = 120,
         MillisecondsPerFrame = 130,
         loopAnimation = false
       };
-      this.dodoLaying = new Sprite("dodo/laying", ContentLoadingWrapper.Load<Texture2D>("dodo/laying"))
+      this.dodoLaying = new Sprite("dodo/laying", 
+          ContentLoadingWrapper.Load<Texture2D>("dodo/laying"))
       {
         animated = false
       };
@@ -1066,9 +1160,11 @@ namespace DodoTheGame
         new Sprite("dodo/buildshadow2", ContentLoadingWrapper.Load<Texture2D>("dodo/buildshadow2")),
         new Sprite("dodo/buildshadow3", ContentLoadingWrapper.Load<Texture2D>("dodo/buildshadow3"))
       };
-      this.AidleSprite = new Sprite("npc/Aidle", ContentLoadingWrapper.Load<Texture2D>("npc/Aidle"), new List<SubSprite>()
+      this.AidleSprite = new Sprite("npc/Aidle", ContentLoadingWrapper.Load<Texture2D>("npc/Aidle"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f),
+        new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1079,9 +1175,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 300
       };
-      this.BabyIdleSprite = new Sprite("npc/BabyIdle", ContentLoadingWrapper.Load<Texture2D>("npc/BabyIdle"), new List<SubSprite>()
+      this.BabyIdleSprite = new Sprite("npc/BabyIdle", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/BabyIdle"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("npc/BabyShadow"), new Vector2(0.0f, 28f), new Vector2?(new Vector2(0.0f, 28f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("npc/BabyShadow"),
+        new Vector2(0.0f, 28f), new Vector2?(new Vector2(0.0f, 28f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1091,9 +1189,11 @@ namespace DodoTheGame
         Width = 55,
         MillisecondsPerFrame = 320
       };
-      this.BabyWalkSprite = new Sprite("npc/BabyWalk", ContentLoadingWrapper.Load<Texture2D>("npc/BabyWalk"), new List<SubSprite>()
+      this.BabyWalkSprite = new Sprite("npc/BabyWalk", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/BabyWalk"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("npc/BabyShadow"), new Vector2(0.0f, 28f), new Vector2?(new Vector2(0.0f, 28f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("npc/BabyShadow"),
+        new Vector2(0.0f, 28f), new Vector2?(new Vector2(0.0f, 28f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1103,9 +1203,11 @@ namespace DodoTheGame
         Width = 55,
         MillisecondsPerFrame = 150
       };
-      this.AwalkSprite = new Sprite("npc/Arun", ContentLoadingWrapper.Load<Texture2D>("npc/Arun"), new List<SubSprite>()
+      this.AwalkSprite = new Sprite("npc/Arun", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Arun"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow")
+        , new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1116,9 +1218,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 115
       };
-      this.AtosleepSprite = new Sprite("npc/Atosleep", ContentLoadingWrapper.Load<Texture2D>("npc/Atosleep"), new List<SubSprite>()
+      this.AtosleepSprite = new Sprite("npc/Atosleep", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Atosleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1130,9 +1234,11 @@ namespace DodoTheGame
         MillisecondsPerFrame = 90,
         loopAnimation = false
       };
-      this.AsleepSprite = new Sprite("npc/Asleep", ContentLoadingWrapper.Load<Texture2D>("npc/Asleep"), new List<SubSprite>()
+      this.AsleepSprite = new Sprite("npc/Asleep", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Asleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1146,9 +1252,11 @@ namespace DodoTheGame
       };
       this.AwakeSprite = this.AsleepSprite;
       this.AwakeSprite.backwardAnimation = true;
-      this.BidleSprite = new Sprite("npc/Bidle", ContentLoadingWrapper.Load<Texture2D>("npc/Bidle"), new List<SubSprite>()
+      this.BidleSprite = new Sprite("npc/Bidle",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Bidle"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1159,9 +1267,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 300
       };
-      this.BwalkSprite = new Sprite("npc/Brun", ContentLoadingWrapper.Load<Texture2D>("npc/Brun"), new List<SubSprite>()
+      this.BwalkSprite = new Sprite("npc/Brun", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Brun"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1172,9 +1282,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 115
       };
-      this.BtosleepSprite = new Sprite("npc/Btosleep", ContentLoadingWrapper.Load<Texture2D>("npc/Btosleep"), new List<SubSprite>()
+      this.BtosleepSprite = new Sprite("npc/Btosleep", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Btosleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1186,9 +1298,12 @@ namespace DodoTheGame
         MillisecondsPerFrame = 105,
         loopAnimation = false
       };
-      this.BtosleepSprite = new Sprite("npc/Bsleep", ContentLoadingWrapper.Load<Texture2D>("npc/Bsleep"), new List<SubSprite>()
+
+      this.BtosleepSprite = new Sprite("npc/Bsleep", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Bsleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1199,9 +1314,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 300
       };
-      this.BwakeSprite = new Sprite("npc/Bwake", ContentLoadingWrapper.Load<Texture2D>("npc/Bwake"), new List<SubSprite>()
+      this.BwakeSprite = new Sprite("npc/Bwake", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Bwake"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1213,9 +1330,11 @@ namespace DodoTheGame
         MillisecondsPerFrame = 105,
         loopAnimation = false
       };
-      this.CidleSprite = new Sprite("npc/Cidle", ContentLoadingWrapper.Load<Texture2D>("npc/Cidle"), new List<SubSprite>()
+      this.CidleSprite = new Sprite("npc/Cidle",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Cidle"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1226,9 +1345,12 @@ namespace DodoTheGame
         height = 110,
         MillisecondsPerFrame = 300
       };
-      this.CwalkSprite = new Sprite("npc/Crun", ContentLoadingWrapper.Load<Texture2D>("npc/Crun"), new List<SubSprite>()
+
+      this.CwalkSprite = new Sprite("npc/Crun", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Crun"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1239,9 +1361,12 @@ namespace DodoTheGame
         height = 110,
         MillisecondsPerFrame = 100
       };
-      this.CtosleepSprite = new Sprite("npc/Ctosleep", ContentLoadingWrapper.Load<Texture2D>("npc/Ctosleep"), new List<SubSprite>()
+
+      this.CtosleepSprite = new Sprite("npc/Ctosleep",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Ctosleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1253,9 +1378,12 @@ namespace DodoTheGame
         MillisecondsPerFrame = 95,
         loopAnimation = false
       };
-      this.CsleepSprite = new Sprite("npc/Csleep", ContentLoadingWrapper.Load<Texture2D>("npc/Csleep"), new List<SubSprite>()
+
+      this.CsleepSprite = new Sprite("npc/Csleep",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Csleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1267,11 +1395,14 @@ namespace DodoTheGame
         MillisecondsPerFrame = 350,
         loopAnimation = true
       };
+
       this.CwakeSprite = this.CsleepSprite;
       this.CwakeSprite.backwardAnimation = true;
-      this.DidleSprite = new Sprite("npc/Didle", ContentLoadingWrapper.Load<Texture2D>("npc/Didle"), new List<SubSprite>()
+      this.DidleSprite = new Sprite("npc/Didle", 
+          ContentLoadingWrapper.Load<Texture2D>("npc/Didle"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1282,9 +1413,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 350
       };
-      this.DwalkSprite = new Sprite("npc/Drun", ContentLoadingWrapper.Load<Texture2D>("npc/Drun"), new List<SubSprite>()
+      this.DwalkSprite = new Sprite("npc/Drun",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Drun"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1295,9 +1428,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 130
       };
-      this.EidleSprite = new Sprite("npc/Eidle", ContentLoadingWrapper.Load<Texture2D>("npc/Eidle"), new List<SubSprite>()
+      this.EidleSprite = new Sprite("npc/Eidle",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Eidle"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1308,9 +1443,11 @@ namespace DodoTheGame
         height = 110,
         MillisecondsPerFrame = 300
       };
-      this.EwalkSprite = new Sprite("npc/Ewalk", ContentLoadingWrapper.Load<Texture2D>("npc/Ewalk"), new List<SubSprite>()
+      this.EwalkSprite = new Sprite("npc/Ewalk",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Ewalk"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1321,9 +1458,11 @@ namespace DodoTheGame
         height = 110,
         MillisecondsPerFrame = 100
       };
-      this.EtosleepSprite = new Sprite("npc/Etosleep", ContentLoadingWrapper.Load<Texture2D>("npc/Etosleep"), new List<SubSprite>()
+      this.EtosleepSprite = new Sprite("npc/Etosleep",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Etosleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), 
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1335,9 +1474,11 @@ namespace DodoTheGame
         MillisecondsPerFrame = 95,
         loopAnimation = false
       };
-      this.EsleepSprite = new Sprite("npc/Esleep", ContentLoadingWrapper.Load<Texture2D>("npc/Esleep"), new List<SubSprite>()
+      this.EsleepSprite = new Sprite("npc/Esleep",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Esleep"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1349,9 +1490,11 @@ namespace DodoTheGame
         MillisecondsPerFrame = 350,
         loopAnimation = true
       };
-      this.ShidleSprite = new Sprite("npc/Shidle", ContentLoadingWrapper.Load<Texture2D>("npc/Shidle"), new List<SubSprite>()
+      this.ShidleSprite = new Sprite("npc/Shidle",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Shidle"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1362,9 +1505,11 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 300
       };
-      this.ShwalkSprite = new Sprite("npc/Shrun", ContentLoadingWrapper.Load<Texture2D>("npc/Shrun"), new List<SubSprite>()
+      this.ShwalkSprite = new Sprite("npc/Shrun",
+          ContentLoadingWrapper.Load<Texture2D>("npc/Shrun"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1377,7 +1522,9 @@ namespace DodoTheGame
       };
       Game1.debugCursor = ContentLoadingWrapper.Load<Texture2D>("debugcursor");
       Game1.debugCursor2 = ContentLoadingWrapper.Load<Texture2D>("debugcursor2");
+
       DebugAssistant.debugWindArrow = ContentLoadingWrapper.Load<Texture2D>("ui/windarrow");
+      
       Game1.redline = ContentLoadingWrapper.Load<Texture2D>("bline");
       BuildBox.requirementIconList = new Texture2D[5]
       {
@@ -1555,20 +1702,23 @@ namespace DodoTheGame
         Game1.waves.Add((IBackgroundEffect) new Wave(tuple.Item1, 150, (double) tuple.Item2));
       StoryIntroCutscene.bg = ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/bg");
       StoryIntroCutscene.lum = ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/lum");
-      StoryIntroCutscene.fire = new Sprite("cutscene/intro/fire", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/fire"))
+      StoryIntroCutscene.fire = new Sprite("cutscene/intro/fire",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/fire"))
       {
         animated = true,
         Width = 100,
         MillisecondsPerFrame = 60
       };
-      StoryIntroCutscene.dood1sleep = new Sprite("cutscene/intro/dood1SLEEP", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood1SLEEP"))
+      StoryIntroCutscene.dood1sleep = new Sprite("cutscene/intro/dood1SLEEP",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood1SLEEP"))
       {
         animated = true,
         Width = 129,
         height = 129,
         MillisecondsPerFrame = 350
       };
-      StoryIntroCutscene.dood1wake = new Sprite("cutscene/intro/dood1WAKE", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood1WAKE"))
+      StoryIntroCutscene.dood1wake = new Sprite("cutscene/intro/dood1WAKE", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood1WAKE"))
       {
         animated = true,
         Width = 140,
@@ -1576,21 +1726,24 @@ namespace DodoTheGame
         MillisecondsPerFrame = 110,
         loopAnimation = false
       };
-      StoryIntroCutscene.dood2sleep = new Sprite("cutscene/intro/dood2SLEEP", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood2SLEEP"))
+      StoryIntroCutscene.dood2sleep = new Sprite("cutscene/intro/dood2SLEEP",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood2SLEEP"))
       {
         animated = true,
         Width = 149,
         height = 183,
         MillisecondsPerFrame = 350
       };
-      StoryIntroCutscene.dood2_shadow = new Sprite("cutscene/intro/dood2SLEEP_shadow", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood2SLEEP_shadow"))
+      StoryIntroCutscene.dood2_shadow = new Sprite("cutscene/intro/dood2SLEEP_shadow",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood2SLEEP_shadow"))
       {
         animated = true,
         Width = 237,
         height = 93,
         MillisecondsPerFrame = 120
       };
-      StoryIntroCutscene.dood2wake = new Sprite("cutscene/intro/dood2WAKE", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood2WAKE"))
+      StoryIntroCutscene.dood2wake = new Sprite("cutscene/intro/dood2WAKE",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood2WAKE"))
       {
         animated = true,
         Width = 141,
@@ -1598,21 +1751,24 @@ namespace DodoTheGame
         MillisecondsPerFrame = 75,
         loopAnimation = false
       };
-      StoryIntroCutscene.dood3sleep = new Sprite("cutscene/intro/dood3SLEEP", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood3SLEEP"))
+      StoryIntroCutscene.dood3sleep = new Sprite("cutscene/intro/dood3SLEEP", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood3SLEEP"))
       {
         animated = true,
         Width = 133,
         height = 164,
         MillisecondsPerFrame = 350
       };
-      StoryIntroCutscene.dood3_shadow = new Sprite("cutscene/intro/dood3SLEEP_shadow", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood3SLEEP_shadow"))
+      StoryIntroCutscene.dood3_shadow = new Sprite("cutscene/intro/dood3SLEEP_shadow",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood3SLEEP_shadow"))
       {
         animated = true,
         Width = 227,
         height = 122,
         MillisecondsPerFrame = 120
       };
-      StoryIntroCutscene.dood3wake = new Sprite("cutscene/intro/dood3WAKE", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood3WAKE"))
+      StoryIntroCutscene.dood3wake = new Sprite("cutscene/intro/dood3WAKE",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood3WAKE"))
       {
         animated = true,
         Width = 133,
@@ -1620,14 +1776,16 @@ namespace DodoTheGame
         MillisecondsPerFrame = 80,
         loopAnimation = false
       };
-      StoryIntroCutscene.dood4sleep = new Sprite("cutscene/intro/dood4SLEEP", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood4SLEEP"))
+      StoryIntroCutscene.dood4sleep = new Sprite("cutscene/intro/dood4SLEEP", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood4SLEEP"))
       {
         animated = true,
         Width = 125,
         height = 155,
         MillisecondsPerFrame = 350
       };
-      StoryIntroCutscene.dood4wake = new Sprite("cutscene/intro/dood4WAKE", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood4WAKE"))
+      StoryIntroCutscene.dood4wake = new Sprite("cutscene/intro/dood4WAKE",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood4WAKE"))
       {
         animated = true,
         Width = 135,
@@ -1635,16 +1793,19 @@ namespace DodoTheGame
         MillisecondsPerFrame = 90,
         loopAnimation = false
       };
-      StoryIntroCutscene.dood4_shadow = new Sprite("cutscene/intro/dood4SLEEP_shadow", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood4SLEEP_shadow"))
+      StoryIntroCutscene.dood4_shadow = new Sprite("cutscene/intro/dood4SLEEP_shadow", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/dood4SLEEP_shadow"))
       {
         animated = true,
         Width = 246,
         height = 133,
         MillisecondsPerFrame = 120
       };
-      StoryIntroCutscene.walk = new Sprite("dodo/walk_moving_new2", ContentLoadingWrapper.Load<Texture2D>("dodo/walk_moving_new2"), new List<SubSprite>()
+      StoryIntroCutscene.walk = new Sprite("dodo/walk_moving_new2",
+          ContentLoadingWrapper.Load<Texture2D>("dodo/walk_moving_new2"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"), new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
+        new Vector2(25f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
         {
           renderOnCommonShadowBatch = false
         }
@@ -1656,13 +1817,15 @@ namespace DodoTheGame
         height = 110,
         horizontalMirroring = true
       };
-      StoryIntroCutscene.objshadow1100 = new Sprite("cutscene/intro/objshadow1100", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/objshadow1100"))
+      StoryIntroCutscene.objshadow1100 = new Sprite("cutscene/intro/objshadow1100", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/objshadow1100"))
       {
         animated = true,
         Width = 1100,
         MillisecondsPerFrame = 120
       };
-      StoryIntroCutscene.shocked = new Sprite("cutscene/intro/shocked", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/shocked"))
+      StoryIntroCutscene.shocked = new Sprite("cutscene/intro/shocked", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/shocked"))
       {
         animated = true,
         Width = 160,
@@ -1670,28 +1833,32 @@ namespace DodoTheGame
         MillisecondsPerFrame = 85,
         loopAnimation = false
       };
-      StoryIntroCutscene.idle = new Sprite("cutscene/intro/walk_idle2", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/walk_idle2"))
+      StoryIntroCutscene.idle = new Sprite("cutscene/intro/walk_idle2",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/walk_idle2"))
       {
         animated = true,
         Width = 120,
         height = 110,
         MillisecondsPerFrame = 80
       };
-      StoryIntroCutscene.run = new Sprite("cutscene/intro/runnoeggs2", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/runnoeggs2"))
+      StoryIntroCutscene.run = new Sprite("cutscene/intro/runnoeggs2", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/runnoeggs2"))
       {
         animated = true,
         Width = 140,
         height = 110,
         MillisecondsPerFrame = 45
       };
-      StoryIntroCutscene.runeggs = new Sprite("cutscene/intro/runeggs2", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/runeggs2"))
+      StoryIntroCutscene.runeggs = new Sprite("cutscene/intro/runeggs2",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/runeggs2"))
       {
         animated = true,
         Width = 140,
         height = 110,
         MillisecondsPerFrame = 45
       };
-      StoryIntroCutscene.jumpeggs = new Sprite("cutscene/intro/jumpeggs", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/jumpeggs"))
+      StoryIntroCutscene.jumpeggs = new Sprite("cutscene/intro/jumpeggs",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/jumpeggs"))
       {
         animated = true,
         Width = 140,
@@ -1699,7 +1866,8 @@ namespace DodoTheGame
         MillisecondsPerFrame = 70,
         loopAnimation = false
       };
-      StoryIntroCutscene.runtransition = new Sprite("cutscene/intro/runtransition", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/runtransition"))
+      StoryIntroCutscene.runtransition = new Sprite("cutscene/intro/runtransition",
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/runtransition"))
       {
         animated = true,
         Width = 140,
@@ -1707,7 +1875,8 @@ namespace DodoTheGame
         MillisecondsPerFrame = 45,
         loopAnimation = false
       };
-      StoryIntroCutscene.bato = new Sprite("cutscene/intro/batoanimated", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/batoanimated"))
+      StoryIntroCutscene.bato = new Sprite("cutscene/intro/batoanimated", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/batoanimated"))
       {
         animated = true,
         Width = 824,
@@ -1715,22 +1884,28 @@ namespace DodoTheGame
         MillisecondsPerFrame = 100,
         loopAnimation = false
       };
-      StoryIntroCutscene.eggs = new Sprite("cutscene/intro/eggs", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/eggs"));
-      StoryIntroCutscene.rado = new Sprite("cutscene/intro/rado", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/rado"));
-      StoryIntroCutscene.badwavehead = new Sprite("cutscene/intro/badwavehead", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/badwavehead"))
+      StoryIntroCutscene.eggs = new Sprite("cutscene/intro/eggs", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/eggs"));
+
+      StoryIntroCutscene.rado = new Sprite("cutscene/intro/rado", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/rado"));
+
+      StoryIntroCutscene.badwavehead = new Sprite("cutscene/intro/badwavehead", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/badwavehead"))
       {
         animated = true,
         Width = 80,
         MillisecondsPerFrame = 80
       };
-      StoryIntroCutscene.badwave = new Sprite("cutscene/intro/badwaveanimated", ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/badwaveanimated"))
+      StoryIntroCutscene.badwave = new Sprite("cutscene/intro/badwaveanimated", 
+          ContentLoadingWrapper.Load<Texture2D>("cutscene/intro/badwaveanimated"))
       {
         animated = true,
         Width = 1280,
         height = 720,
         MillisecondsPerFrame = 80
       };
-      Game1.Log("Loading sounds...", BreadcrumbLevel.Info);
+      System.Diagnostics.Debug.WriteLine("[i] Loading sounds...");
       Sound.soundEffectList = new List<SoundEffect>()
       {
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/collision"),
@@ -1799,10 +1974,18 @@ namespace DodoTheGame
       {
         mainPart = ContentLoadingWrapper.Load<Song>("bgm/Dodo_Day_theme_4")
       };
-      this.dodoCenteredScreenLocation = new Vector2((float) ((int) Game1.renderSize.X / 2 - this.dodoSprite.Width / 2), (float) ((int) Game1.renderSize.Y / 2 - this.dodoSprite.height / 2));
-      this.dodoScreenLocation = new Vector2((float) ((int) Game1.renderSize.X / 2 - this.dodoSprite.Width / 2), (float) ((int) Game1.renderSize.Y / 2 - this.dodoSprite.height / 2));
-      Game1.Log("Initializing HUDs...", BreadcrumbLevel.Info);
+
+      this.dodoCenteredScreenLocation = new Vector2((float) ((int) Game1.renderSize.X / 2
+          - this.dodoSprite.Width / 2), (float) ((int) Game1.renderSize.Y / 2 
+          - this.dodoSprite.height / 2));
+
+      this.dodoScreenLocation = new Vector2((float) ((int) Game1.renderSize.X / 2 
+          - this.dodoSprite.Width / 2), (float) ((int) Game1.renderSize.Y / 2 
+          - this.dodoSprite.height / 2));
+
+      System.Diagnostics.Debug.WriteLine("[i] Initializing HUDs...");
       GUIManager.LoadAssets(this);
+
       this.blackbar = ContentLoadingWrapper.Load<Texture2D>("blackbar");
       this.savingTexture = ContentLoadingWrapper.Load<Texture2D>("ui/saving1");
       this.whiteBackground = ContentLoadingWrapper.Load<Texture2D>("white");
@@ -1852,8 +2035,12 @@ namespace DodoTheGame
         {
           inventory = new ItemStack[24]
         };
-        Game1.Log("Static world generation enabled. Generating world now.", BreadcrumbLevel.Warning);
+
+        System.Diagnostics.Debug.WriteLine(
+            "[!] Static world generation enabled. Generating world now.");
+
         WorldGenerator.GenerateWorld(Game1.world, this.presetList);
+
         Game1.player.inventory.inventory[0] = new ItemStack(10, 6);
         Game1.NPCs = new List<INPC>();
 
@@ -1862,12 +2049,12 @@ namespace DodoTheGame
       }
       else if (SaveHandler.IsSlotRegistered(SaveHandler.LastSavedSlot))
       {
-        Game1.Log("Loading save (not default).", BreadcrumbLevel.Info);
+        System.Diagnostics.Debug.WriteLine("[i] Loading save (not default).");
         SaveHandler.LoadGame(SaveHandler.LastSavedSlot, Game1.commonSprites, this);
       }
       else
       {
-        Game1.Log("Loading save (default).", BreadcrumbLevel.Info);
+        System.Diagnostics.Debug.WriteLine("[i] Loading save (default).");
         SaveHandler.LoadDefault(Game1.commonSprites, this);
       }
     }
@@ -1901,13 +2088,19 @@ namespace DodoTheGame
       
       if (!this.startupIntroDone)
       {
-        if (this.spriteBatch != null && Game1.rouliLSpriteFont != null && this.ressourceLoadingBackground720 != null && Game1.dodoteamlogo != null && Game1.monogamelogo != null && Game1.fmodlogo != null)
+        if (this.spriteBatch != null && Game1.rouliLSpriteFont != null
+            && this.ressourceLoadingBackground720 != null 
+            && Game1.dodoteamlogo != null && Game1.monogamelogo != null && Game1.fmodlogo != null)
           this.startupIntroTimer += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds);
+
         if (!this.contentReady)
           return;
+        
         this.startupFadeOutTimer += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds);
+        
         if (this.startupFadeOutTimer <= 1100)
           return;
+        
         this.startupIntroDone = true;
         GUIManager.currentHUDs.Add((IGUI) GUIManager.interactGUI);
       }
@@ -1928,22 +2121,38 @@ namespace DodoTheGame
         {
           if (!GUIManager.IsGameObstructed && !CutsceneManager.CutsceneActive)
             this.timeSinceLastAutosave += Convert.ToSingle(gameTime.ElapsedGameTime.TotalMilliseconds);
+          
           if ((double) this.timeSinceLastAutosave > 300000.0)
           {
             this.timeSinceLastAutosave = 0.0f;
             SaveHandler.SaveGame(Game1.world, Game1.player, this.lastFrame);
           }
           CutsceneManager.Update(gameTime, Game1.player, Game1.world);
+
           UserInputStatus userInputStatus = CutsceneManager.CutsceneActive ? CutsceneManager.InputStatus : this.userInput.GetInput();
           if (!GUIManager.IsInputLocked)
           {
-            if ((double) userInputStatus.moveLeft > 0.0 || (double) userInputStatus.moveRight > 0.0 || (double) userInputStatus.moveDown > 0.0 || (double) userInputStatus.moveUp > 0.0)
-              Game1.player.HandleMovementRequest(gameTime, userInputStatus.moveLeft, userInputStatus.moveRight, userInputStatus.moveUp, userInputStatus.moveDown, Game1.world);
-            else if ((double) this.lastUIS.moveLeft > 0.0 || (double) this.lastUIS.moveRight > 0.0 || (double) this.lastUIS.moveUp > 0.0 || (double) this.lastUIS.moveDown > 0.0)
-              this.dodoSpriteMoving.ResetAnimation();
+            if ((double)userInputStatus.moveLeft > 0.0
+                            || (double)userInputStatus.moveRight > 0.0
+                            || (double)userInputStatus.moveDown > 0.0
+                            || (double)userInputStatus.moveUp > 0.0)
+            {
+                Game1.player.HandleMovementRequest(gameTime, userInputStatus.moveLeft,
+                    userInputStatus.moveRight, userInputStatus.moveUp,
+                    userInputStatus.moveDown, Game1.world);
+            }
+            else if ((double)this.lastUIS.moveLeft > 0.0
+                            || (double)this.lastUIS.moveRight > 0.0
+                            || (double)this.lastUIS.moveUp > 0.0
+                            || (double)this.lastUIS.moveDown > 0.0)
+            {
+                this.dodoSpriteMoving.ResetAnimation();
+            }
           }
+
           if (Game1.player.currentMovementType != Player.DodoMovement.Drown)
             this.dodoSpriteSwimSink.ResetAnimation();
+
           if (userInputStatus.escape == UserInputStatus.InputState.Pressed)
           {
             if (GUIManager.OpenHudBesideInteract() == 0)
@@ -1951,6 +2160,7 @@ namespace DodoTheGame
             else
               GUIManager.Clear();
           }
+
           if (userInputStatus.inventory == UserInputStatus.InputState.Pressed)
           {
             if (GUIManager.OpenHudBesideInteract() == 0)
@@ -1961,6 +2171,7 @@ namespace DodoTheGame
             else
               GUIManager.Clear();
           }
+
           if (GUIManager.pendingExit && !SaveHandler.CurrentlySaving)
           {
             GUIManager.pendingExit = false;
@@ -1979,6 +2190,7 @@ namespace DodoTheGame
             
             CoreApplication.Exit();
           }
+
           GUIManager.GUIInput(userInputStatus, this);
           GUIManager.Update(gameTime);
 
@@ -2090,9 +2302,11 @@ namespace DodoTheGame
       }
     }
 
+    // Draw
     protected override void Draw(GameTime gameTime)
     {
       Game1.wavecounterdebug = 0;
+
       if (this.startupIntroDone && !Recorder.rerendering)
       {
         Stopwatch stopwatch = Stopwatch.StartNew();
@@ -2101,13 +2315,24 @@ namespace DodoTheGame
         this.GraphicsDevice.SetRenderTarget(this.renderTarget);
         this.GraphicsDevice.Clear(Color.Black);
         this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-        this.backgroundPosition = new Vector2(this.dodoCenteredScreenLocation.X - Game1.player.location.X, this.dodoCenteredScreenLocation.Y - Game1.player.location.Y) + ScreenShake.CameraOffset;
+        this.backgroundPosition = 
+                    new Vector2(this.dodoCenteredScreenLocation.X - Game1.player.location.X,
+                    this.dodoCenteredScreenLocation.Y - Game1.player.location.Y) 
+                    + ScreenShake.CameraOffset;
+
         this.dodoScreenLocation = this.dodoCenteredScreenLocation;
         if (Game1.player.currentMovementType != Player.DodoMovement.Bicycle)
           this.dodoScreenLocation += ScreenShake.CameraOffset;
+
         if (!GUIManager.IsGameObstructed)
         {
-          GameTime gameTime1 = GUIManager.currentHUDs.Contains((IGUI) GUIManager.inventoryGUI) || GUIManager.currentHUDs.Contains((IGUI) GUIManager.escapeGUI) || SaveHandler.CurrentlySaving ? new GameTime(gameTime.TotalGameTime, new TimeSpan(0L)) : gameTime;
+          GameTime gameTime1 = 
+                        GUIManager.currentHUDs.Contains((IGUI) GUIManager.inventoryGUI)
+                        || GUIManager.currentHUDs.Contains((IGUI) GUIManager.escapeGUI)
+                        || SaveHandler.CurrentlySaving 
+                        ? new GameTime(gameTime.TotalGameTime, new TimeSpan(0L))
+                        : gameTime;
+
           this.harvestCloudSprite.Update(gameTime1);
           this.dodoSpriteHarvesting.Update(gameTime1);
           this.dodoTakeSprite.Update(gameTime1);
@@ -2129,11 +2354,14 @@ namespace DodoTheGame
           if (!CutsceneManager.IsOverrideInEffect(RenderOverride.Terrain))
           {
             this.spriteBatch.Begin(SpriteSortMode.Immediate);
-            Game1.world.background.DrawInRange(this.spriteBatch, Game1.player.location, this.backgroundPosition, Game1.world.Level);
+            Game1.world.background.DrawInRange(this.spriteBatch, 
+                Game1.player.location, this.backgroundPosition, Game1.world.Level);
             this.spriteBatch.End();
           }
           else
-            CutsceneManager.DrawOverride(RenderOverride.Terrain, this.spriteBatch, gameTime, this, this.backgroundPosition);
+            CutsceneManager.DrawOverride(RenderOverride.Terrain, this.spriteBatch,
+                gameTime, this, this.backgroundPosition);
+
           if (!CutsceneManager.IsOverrideInEffect(RenderOverride.Waves))
           {
             this.spriteBatch.Begin(SpriteSortMode.Immediate);
@@ -2148,7 +2376,9 @@ namespace DodoTheGame
             this.spriteBatch.End();
           }
           else
-            CutsceneManager.DrawOverride(RenderOverride.Waves, this.spriteBatch, gameTime, this, Vector2.Zero);
+            CutsceneManager.DrawOverride(RenderOverride.Waves, this.spriteBatch, gameTime,
+                this, Vector2.Zero);
+
           if (!CutsceneManager.IsOverrideInEffect(RenderOverride.LowestSubSprites))
           {
             this.spriteBatch.Begin(SpriteSortMode.Immediate);
@@ -2157,15 +2387,23 @@ namespace DodoTheGame
               if (worldObject.CurrentDrawSprite.groundSubsprite != null)
               {
                 foreach (SubSprite sub in worldObject.CurrentDrawSprite.groundSubsprite)
-                  worldObject.CurrentDrawSprite.DrawSubsprite(this.backgroundPosition, this.spriteBatch, sub, Convert.ToSingle(DayCycle.NightFactor), worldObject.Location);
+                  worldObject.CurrentDrawSprite.DrawSubsprite(this.backgroundPosition,
+                      this.spriteBatch, sub, Convert.ToSingle(DayCycle.NightFactor), worldObject.Location);
               }
             }
             this.spriteBatch.End();
           }
           else
-            CutsceneManager.DrawOverride(RenderOverride.LowestSubSprites, this.spriteBatch, gameTime, this, Vector2.Zero);
+            CutsceneManager.DrawOverride(RenderOverride.LowestSubSprites, this.spriteBatch,
+                gameTime, this, Vector2.Zero);
+
           this.spriteBatch.Begin(SpriteSortMode.Immediate);
-          Game1.world.objects.ForEach((Action<IWorldObject>) (wo => wo.DrawShadow(this.spriteBatch, new Vector2(this.backgroundPosition.X + wo.Location.X, this.backgroundPosition.Y + wo.Location.Y), gameTime, this)));
+
+          Game1.world.objects.ForEach((Action<IWorldObject>) 
+              (wo => wo.DrawShadow(this.spriteBatch, 
+              new Vector2(this.backgroundPosition.X + wo.Location.X,
+              this.backgroundPosition.Y + wo.Location.Y), gameTime, this)));
+
           this.spriteBatch.End();
           if (!CutsceneManager.IsOverrideInEffect(RenderOverride.BirdShadows))
           {
@@ -2174,7 +2412,9 @@ namespace DodoTheGame
             this.spriteBatch.End();
           }
           else
-            CutsceneManager.DrawOverride(RenderOverride.BirdShadows, this.spriteBatch, gameTime, this, Vector2.Zero);
+            CutsceneManager.DrawOverride(RenderOverride.BirdShadows, 
+                this.spriteBatch, gameTime, this, Vector2.Zero);
+
           List<object> source = new List<object>();
           source.Add((object) Game1.player);
           source.AddRange((IEnumerable<object>) Game1.world.objects);
@@ -2211,19 +2451,43 @@ namespace DodoTheGame
                 if (CutsceneManager.IsOverrideInEffect(RenderOverride.Dodo))
                 {
                   this.spriteBatch.End();
-                  CutsceneManager.DrawOverride(RenderOverride.Dodo, this.spriteBatch, gameTime, this, this.dodoScreenLocation);
+                  CutsceneManager.DrawOverride(RenderOverride.Dodo, 
+                      this.spriteBatch, gameTime, this, this.dodoScreenLocation);
+
                   this.spriteBatch.Begin(SpriteSortMode.Immediate);
                   continue;
                 }
-                SpriteEffects globaleffect = player.facing == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                UserInputStatus userInputStatus = CutsceneManager.CutsceneActive ? CutsceneManager.InputStatus : this.userInput.GetInput();
+                SpriteEffects globaleffect = player.facing == 1 
+                                    ? SpriteEffects.None
+                                    : SpriteEffects.FlipHorizontally;
+
+                UserInputStatus userInputStatus = CutsceneManager.CutsceneActive
+                                    ? CutsceneManager.InputStatus
+                                    : this.userInput.GetInput();
+
+
                 switch (player.currentMovementType)
                 {
+
                   case Player.DodoMovement.Walk:
-                    if (GUIManager.OpenHudBesideInteract() == 0 && ((double) userInputStatus.moveLeft > 0.0 || (double) userInputStatus.moveRight > 0.0 || (double) userInputStatus.moveDown > 0.0 || (double) userInputStatus.moveUp > 0.0) && ((double) userInputStatus.moveLeft != (double) userInputStatus.moveRight || (double) userInputStatus.moveUp != (double) userInputStatus.moveDown))
-                      this.dodoSpriteMoving.Draw(this.spriteBatch, new Vector2(this.dodoScreenLocation.X, this.dodoScreenLocation.Y - 10f), gameTime, globaleffect, nightFactor: DayCycle.NightFactor);
+                    if 
+                    (
+                      GUIManager.OpenHudBesideInteract() == 0
+                            && ((double) userInputStatus.moveLeft > 0.0
+                            || (double) userInputStatus.moveRight > 0.0
+                            || (double) userInputStatus.moveDown > 0.0 
+                            || (double) userInputStatus.moveUp > 0.0)
+                            && ((double) userInputStatus.moveLeft != (double) userInputStatus.moveRight 
+                            || (double) userInputStatus.moveUp != (double) userInputStatus.moveDown)
+                    )
+                      this.dodoSpriteMoving.Draw(this.spriteBatch,
+                          new Vector2(this.dodoScreenLocation.X, this.dodoScreenLocation.Y - 10f),
+                          gameTime, globaleffect, nightFactor: DayCycle.NightFactor);
                     else
-                      this.dodoSprite.Draw(this.spriteBatch, new Vector2(this.dodoScreenLocation.X, this.dodoScreenLocation.Y - 10f), gameTime, globaleffect, nightFactor: DayCycle.NightFactor);
+                      this.dodoSprite.Draw(this.spriteBatch, new Vector2(this.dodoScreenLocation.X,
+                          this.dodoScreenLocation.Y - 10f), gameTime, globaleffect,
+                          nightFactor: DayCycle.NightFactor);
+
                     if (this.movementModeInLastDraw == Player.DodoMovement.Swim)
                     {
                       this.dodoSpriteSwimIdle.ResetAnimation();
@@ -2231,49 +2495,78 @@ namespace DodoTheGame
                       continue;
                     }
                     continue;
+
                   case Player.DodoMovement.Swim:
                     if (player.IsInSwimmingPulse && !player.IsSwimmingLocked)
                     {
                       this.dodoSpriteSwimIdle.ResetAnimation();
-                      this.dodoSpriteSwimPulse.Draw(this.spriteBatch, this.dodoScreenLocation, gameTime, globaleffect, nightFactor: DayCycle.NightFactor);
+                      this.dodoSpriteSwimPulse.Draw(this.spriteBatch, 
+                          this.dodoScreenLocation, gameTime, globaleffect, 
+                          nightFactor: DayCycle.NightFactor);
                       continue;
                     }
                     this.dodoSpriteSwimPulse.ResetAnimation();
-                    this.dodoSpriteSwimIdle.Draw(this.spriteBatch, this.dodoScreenLocation, gameTime, globaleffect, nightFactor: DayCycle.NightFactor);
+                    this.dodoSpriteSwimIdle.Draw(this.spriteBatch, 
+                        this.dodoScreenLocation, gameTime, globaleffect,
+                        nightFactor: DayCycle.NightFactor);
                     continue;
+
                   case Player.DodoMovement.Build:
-                    Vector2 location1 = new Vector2((float) ((double) this.backgroundPosition.X + (double) player.buildingObject.Epicenter.X - 95.0), (float) ((double) this.backgroundPosition.Y + (double) player.buildingObject.Epicenter.Y - 163.0));
+                    Vector2 location1 = new Vector2((float) (
+                        (double) this.backgroundPosition.X +
+                        (double) player.buildingObject.Epicenter.X - 95.0),
+                        (float) ((double) this.backgroundPosition.Y + 
+                        (double) player.buildingObject.Epicenter.Y - 163.0));
+
                     float num1 = Convert.ToSingle(DayCycle.NightFactor) + 0.18f;
                     if ((double) num1 > 1.0)
                       num1 = 1f;
                     float num2 = 0.5f * num1;
                     if (this.dodoSpriteBuilding.CurrentFrame < 7)
-                      this.buildShadows[0].Draw(this.spriteBatch, new Vector2(location1.X - 13f, location1.Y + 140f), gameTime, colorn: new Color?(Color.White * num2));
+                      this.buildShadows[0].Draw(this.spriteBatch, new Vector2(location1.X - 13f, 
+                          location1.Y + 140f), gameTime, colorn: new Color?(Color.White * num2));
                     else if (this.dodoSpriteBuilding.CurrentFrame < 16)
-                      this.buildShadows[1].Draw(this.spriteBatch, new Vector2(location1.X - 13f, location1.Y + 140f), gameTime, colorn: new Color?(Color.White * num2));
+                      this.buildShadows[1].Draw(this.spriteBatch, new Vector2(location1.X - 13f,
+                          location1.Y + 140f), gameTime, colorn: new Color?(Color.White * num2));
                     else
-                      this.buildShadows[2].Draw(this.spriteBatch, new Vector2(location1.X - 13f, location1.Y + 140f), gameTime, colorn: new Color?(Color.White * num2));
-                    if (player.actionTime < 200)
+                      this.buildShadows[2].Draw(this.spriteBatch, new Vector2(location1.X - 13f, 
+                          location1.Y + 140f), gameTime, colorn: new Color?(Color.White * num2));
+                   
+                                        if (player.actionTime < 200)
                     {
                       this.preBuildingCloudSprite.Draw(this.spriteBatch, location1, gameTime);
                       continue;
                     }
-                    this.dodoSpriteBuilding.Draw(this.spriteBatch, new Vector2(location1.X - 10f, location1.Y - 32f), gameTime);
+
+                    this.dodoSpriteBuilding.Draw(this.spriteBatch, new Vector2(location1.X - 10f, 
+                        location1.Y - 32f), gameTime);
                     this.buildingCloudSprite.Draw(this.spriteBatch, location1, gameTime);
                     continue;
                   case Player.DodoMovement.Harvest:
-                    Vector2 location2 = new Vector2((float) ((double) this.backgroundPosition.X + (double) player.buildingObject.Epicenter.X - 120.0), (float) ((double) this.backgroundPosition.Y + (double) player.buildingObject.Epicenter.Y - 160.0));
+                    Vector2 location2 = new Vector2((float) ((double) this.backgroundPosition.X 
+                        + (double) player.buildingObject.Epicenter.X - 120.0), 
+                        (float) ((double) this.backgroundPosition.Y
+                        + (double) player.buildingObject.Epicenter.Y - 160.0));
+
                     float num3 = Convert.ToSingle(DayCycle.NightFactor) + 0.18f;
                     if ((double) num3 > 1.0)
                       num3 = 1f;
                     float num4 = 0.5f * num3;
+
                     if (this.dodoSpriteHarvesting.CurrentFrame <= 11)
-                      this.harvestShadows[0].Draw(this.spriteBatch, new Vector2(location2.X - 10f, location2.Y - 32f), gameTime, colorn: new Color?(Color.White * num4));
+                      this.harvestShadows[0].Draw(this.spriteBatch,
+                          new Vector2(location2.X - 10f, location2.Y - 32f),
+                          gameTime, colorn: new Color?(Color.White * num4));
                     else
-                      this.harvestShadows[1].Draw(this.spriteBatch, new Vector2(location2.X - 10f, location2.Y - 32f), gameTime, colorn: new Color?(Color.White * num4));
-                    this.dodoSpriteHarvesting.Draw(this.spriteBatch, new Vector2(location2.X - 10f, location2.Y - 32f), gameTime);
+                      this.harvestShadows[1].Draw(this.spriteBatch, 
+                          new Vector2(location2.X - 10f, location2.Y - 32f), 
+                          gameTime, colorn: new Color?(Color.White * num4));
+
+                    this.dodoSpriteHarvesting.Draw(this.spriteBatch,
+                        new Vector2(location2.X - 10f, location2.Y - 32f), gameTime);
                     this.harvestCloudSprite.Draw(this.spriteBatch, location2, gameTime);
                     continue;
+
                   case Player.DodoMovement.Bike:
                     if (player.IsBikeInWater)
                     {
@@ -2404,19 +2697,42 @@ namespace DodoTheGame
         this.spriteBatch.Begin(SpriteSortMode.Immediate);
         this.spriteBatch.Draw(renderTarget, new Vector2(0.0f, 0.0f), DayCycle.ColorFilter);
         this.spriteBatch.End();
+
+
         if (!CutsceneManager.IsOverrideInEffect(RenderOverride.HUD))
         {
-          this.spriteBatch.Begin(SpriteSortMode.Immediate);
-          GUIManager.DrawGUI(this.spriteBatch, this, gameTime);
-          this.spriteBatch.End();
+            this.spriteBatch.Begin(SpriteSortMode.Immediate);
+            GUIManager.DrawGUI(this.spriteBatch, this, gameTime);
+            this.spriteBatch.End();
         }
         else
-          CutsceneManager.DrawOverride(RenderOverride.HUD, this.spriteBatch, gameTime, this, Vector2.Zero);
+        {
+            //try
+            //{
+                //CutsceneManager.DrawOverride(RenderOverride.HUD, this.spriteBatch, gameTime, this, Vector2.Zero);
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("[ex] Game1 - CutsceneManager.DrawOverride bug: " + ex.Message);
+            //}
+            this.spriteBatch.Begin(SpriteSortMode.Immediate);
+            GUIManager.DrawGUI(this.spriteBatch, this, gameTime);
+            this.spriteBatch.End();
+        }
+        
         this.spriteBatch.Begin(SpriteSortMode.Immediate);
+
         if (Game1.player.timeSinceDrowning > 2200 && Game1.player.timeSinceDrowning < 2500)
-          Recorder.RDraw(this.spriteBatch, this.whiteBackground, Vector2.Zero, Color.Black * Convert.ToSingle(Convert.ToDouble(Game1.player.timeSinceDrowning - 2200) / 300.0));
+        {
+            Recorder.RDraw(this.spriteBatch, this.whiteBackground, Vector2.Zero, 
+                Color.Black * Convert.ToSingle(Convert.ToDouble(Game1.player.timeSinceDrowning - 2200) / 300.0));
+        }
         else if (Game1.player.timeSinceDrowning >= 2500 && Game1.player.timeSinceDrowning < 2900)
-          Recorder.RDraw(this.spriteBatch, this.whiteBackground, Vector2.Zero, Color.Black);
+        { 
+            Recorder.RDraw(this.spriteBatch, this.whiteBackground, Vector2.Zero, Color.Black); 
+        }
+
+
         this.spriteBatch.End();
         if ((double) CutsceneManager.CurrentBlackFade > 0.0)
         {
@@ -2463,12 +2779,20 @@ namespace DodoTheGame
         this.GraphicsDevice.SetRenderTarget((RenderTarget2D) null);
         this.GraphicsDevice.Clear(Color.Black);
         this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-        Vector2 vector2 = new Vector2((float) Math.Round(((double) Game1.windowSize.X - (double) Game1.renderSizeUpscaled.X) / 2.0, 0), (float) Math.Round(((double) Game1.windowSize.Y - (double) Game1.renderSizeUpscaled.Y) / 2.0, 0));
+        Vector2 vector2 = new Vector2((float) Math.Round(((double) Game1.windowSize.X 
+            - (double) Game1.renderSizeUpscaled.X) / 2.0, 0), 
+            (float) Math.Round(((double) Game1.windowSize.Y - (double) Game1.renderSizeUpscaled.Y) / 2.0,
+            0));
         this.spriteBatch.Begin(SpriteSortMode.Immediate);
-        this.spriteBatch.Draw(renderTarget2, new Rectangle(Convert.ToInt32(vector2.X), Convert.ToInt32(vector2.Y), Convert.ToInt32(Game1.renderSizeUpscaled.X), Convert.ToInt32(Game1.renderSizeUpscaled.Y)), new Rectangle?(), Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+        this.spriteBatch.Draw(renderTarget2, 
+            new Rectangle(Convert.ToInt32(vector2.X), Convert.ToInt32(vector2.Y),
+            Convert.ToInt32(Game1.renderSizeUpscaled.X), Convert.ToInt32(Game1.renderSizeUpscaled.Y)), new Rectangle?(), Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
         this.spriteBatch.End();
+
         base.Draw(gameTime);
+
         stopwatch.Stop();
+
         Game1.frameCounter.RegisterDrawTicks((float) stopwatch.ElapsedTicks);
       }
       else if (this.startupIntroDone && Recorder.rerendering)
@@ -2542,35 +2866,79 @@ namespace DodoTheGame
           else if (this.startupIntroTimer < 9200)
             num7 = (float) (1.0 - ((double) Convert.ToSingle(this.startupIntroTimer) - 8500.0) / 700.0);
           else
-            num8 = this.startupIntroTimer >= 9900 ? 1f : (float) (((double) Convert.ToSingle(this.startupIntroTimer) - 9200.0) / 700.0);
+            num8 = this.startupIntroTimer >= 9900 
+                            ? 1f
+                            : (float) (((double) Convert.ToSingle(
+                                this.startupIntroTimer) - 9200.0) / 700.0);
+
           if ((double) num5 > 0.699999988079071 && !this.startupLogoEventPassed)
           {
             this.startupLogoEventPassed = true;
-            EventHandler startupLogo = Game1.StartupLogo;
-            if (startupLogo != null)
-              startupLogo((object) this, EventArgs.Empty);
+            Game1.StartupLogo?.Invoke(this, EventArgs.Empty);
           }
           this.spriteBatch.Begin(SpriteSortMode.Immediate);
-          Recorder.RDraw(this.spriteBatch, Game1.dodoteamlogo, new Vector2(position.X + Game1.renderSize.X / 2f - (float) (Game1.dodoteamlogo.Width / 2), position.Y + Game1.renderSize.Y / 2f - (float) (Game1.dodoteamlogo.Height / 2)), Color.White * num5);
-          Vector2 location3 = new Vector2(position.X + Game1.renderSize.X / 2f - (float) (Game1.monogamelogo.Width / 2), position.Y + Game1.renderSize.Y / 2f - (float) (Game1.monogamelogo.Height / 2));
-          Recorder.RDraw(this.spriteBatch, Game1.monogamelogo, location3, Color.White * num6);
-          Vector2 location4 = new Vector2(position.X + Game1.renderSize.X / 2f - (float) (Game1.fmodlogo.Width / 2), position.Y + Game1.renderSize.Y / 2f - (float) (Game1.fmodlogo.Height / 2));
+
+          Recorder.RDraw(this.spriteBatch, Game1.dodoteamlogo, 
+              new Vector2(position.X + Game1.renderSize.X / 2f
+              - (float) (Game1.dodoteamlogo.Width / 2), 
+              position.Y + Game1.renderSize.Y / 2f - 
+              (float) (Game1.dodoteamlogo.Height / 2)), 
+              Color.White * num5);
+
+          Vector2 location3 = new Vector2(
+              position.X + Game1.renderSize.X / 2f 
+              - (float) (Game1.monogamelogo.Width / 2), position.Y + Game1.renderSize.Y / 2f 
+              - (float) (Game1.monogamelogo.Height / 2));
+
+          Recorder.RDraw(this.spriteBatch, Game1.monogamelogo, location3, 
+              Color.White * num6);
+          Vector2 location4 = new Vector2(position.X 
+              + Game1.renderSize.X / 2f - (float) (Game1.fmodlogo.Width / 2), 
+              position.Y + Game1.renderSize.Y / 2f - (float) (Game1.fmodlogo.Height / 2));
+
           Recorder.RDraw(this.spriteBatch, Game1.fmodlogo, location4, Color.White * num7);
+
           this.spriteBatch.End();
           this.spriteBatch.Begin(SpriteSortMode.Immediate);
-          Recorder.RDrawString(this.spriteBatch, Game1.rouliLSpriteFont, LocalizationManager.GetString("StartupLoadMsg"), new Vector2(577f + position.X, 350f + position.Y), Color.Black * num8);
-          this.loadingFeatherSprite.Draw(this.spriteBatch, new Vector2(position.X + 553f, position.Y + 150f), gameTime, colorn: new Color?(Color.White * num8));
+          Recorder.RDrawString(this.spriteBatch, Game1.rouliLSpriteFont, 
+              LocalizationManager.GetString("StartupLoadMsg"), 
+              new Vector2(577f + position.X, 350f + position.Y), Color.Black * num8);
+          this.loadingFeatherSprite.Draw(this.spriteBatch, 
+              new Vector2(position.X + 553f, position.Y + 150f), 
+              gameTime, colorn: new Color?(Color.White * num8));
+
           this.loadingFeatherSprite.Update(gameTime);
-          this.spriteBatch.Draw(Game1.GenerateBox(new Vector2(500f, 3f), Color.White), new Vector2((float) ((double) position.X + (double) Game1.renderSize.X / 2.0 - 250.0), 420f + position.Y), Color.White * (0.4f * num8));
-          this.spriteBatch.Draw(Game1.GenerateBox(new Vector2((float) ((double) Convert.ToSingle(ContentLoadingWrapper.loadedAssetCount) / (double) Convert.ToSingle(ContentLoadingWrapper.expectedAssetCount) * 500.0), 3f), Color.White), new Vector2((float) ((double) position.X + (double) Game1.renderSize.X / 2.0 - 250.0), 420f + position.Y), Color.White * num8);
+
+          this.spriteBatch.Draw(Game1.GenerateBox(new Vector2(500f, 3f), 
+              Color.White), new Vector2((float) ((double) position.X 
+              + (double) Game1.renderSize.X / 2.0 - 250.0), 420f + position.Y),
+              Color.White * (0.4f * num8));
+
+          this.spriteBatch.Draw(Game1.GenerateBox(new Vector2((float) (
+              (double) Convert.ToSingle(ContentLoadingWrapper.loadedAssetCount) 
+              / (double) Convert.ToSingle(ContentLoadingWrapper.expectedAssetCount) * 500.0), 3f),
+              Color.White), new Vector2((float) ((double) position.X
+              + (double) Game1.renderSize.X / 2.0 - 250.0), 420f + position.Y), 
+              Color.White * num8);
+
           this.spriteBatch.End();
+
           this.spriteBatch.Begin();
-          this.spriteBatch.Draw(Game1.GenerateBox(Vector2.One, Color.White), new Rectangle(Convert.ToInt32(position.X), Convert.ToInt32(position.Y), Convert.ToInt32(Game1.renderSize.X), Convert.ToInt32(Game1.renderSize.Y)), new Rectangle?(), Color.White * ((float) this.startupFadeOutTimer / 1100f));
+          this.spriteBatch.Draw(Game1.GenerateBox(Vector2.One, Color.White), 
+              new Rectangle(Convert.ToInt32(position.X), Convert.ToInt32(position.Y), 
+              Convert.ToInt32(Game1.renderSize.X), 
+              Convert.ToInt32(Game1.renderSize.Y)),
+              new Rectangle?(), 
+              Color.White * ((float) this.startupFadeOutTimer / 1100f));
           this.spriteBatch.End();
         }
         base.Draw(gameTime);
       }
-    }
+
+      //RnD
+      DebugAssistant.DrawDebugPanel(this.spriteBatch, this);
+
+    }//Draw
 
     public static void SpawnDodo(Vector2 SpawnPosition)
     {
@@ -2580,10 +2948,12 @@ namespace DodoTheGame
     public void UnhandledException(object obj, UnhandledExceptionEventArgs args)
     {
       Exception exceptionObject = (Exception)args.Exception;//.ExceptionObject;
-      exceptionObject.Data.Add((object) "Manifest", (object) "DodoTheGame/The Dodo Archipelago RELEASE 1.0");
+      exceptionObject.Data.Add((object) "Manifest", 
+          (object) "DodoTheGame/The Dodo Archipelago RELEASE 1.0");
             int fileLineNumber = 0;// new StackTrace(exceptionObject, true).GetFrame(0).GetFileLineNumber();
-      exceptionObject.Data.Add((object) "ErrorLine", (object) fileLineNumber);
-      Game1.ravenClient.Capture(new SentryEvent(exceptionObject));
+      exceptionObject.Data.Add((object) "ErrorLine",
+          (object) fileLineNumber);
+      //Game1.ravenClient.Capture(new SentryEvent(exceptionObject));
     }
 
     public static Texture2D GenerateBox(Vector2 size, Color color)
@@ -2604,7 +2974,10 @@ namespace DodoTheGame
       using (FileStream fileStream = new FileStream(location, FileMode.Open, FileAccess.Read))
         fileStream.Read(buffer, 0, 2048);
       int int32 = BitConverter.ToInt32(buffer, 60);
-      return default;//TimeZoneInfo.ConvertTimeFromUtc(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds((double) BitConverter.ToInt32(buffer, int32 + 8)), target ?? TimeZoneInfo.Local);
+            return  //TimeZoneInfo.ConvertTimeFromUtc()
+                  new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                  .AddSeconds((double)BitConverter.ToInt32(buffer, int32 + 8));//, target 
+            //?? TimeZoneInfo.Local;
     }
 
     public static Texture2D TextureBrightnessEffect(Texture2D texture, float strength)

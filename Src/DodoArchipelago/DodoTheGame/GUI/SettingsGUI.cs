@@ -1,16 +1,12 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.GUI.SettingsGUI
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.GUI.SettingsGUI
 
 using DodoTheGame.Localization;
 using DodoTheGame.Saving;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -119,20 +115,42 @@ namespace DodoTheGame.GUI
           break;
       }
       double num = 231.0 * (double) Game1.renderSize.Y / 720.0;
-      Recorder.RDraw(spriteBatch, this.bande1, new Vector2((float) ((double) GUIManager.GUITimer / 5.0 % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
-      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 450.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
-      Recorder.RDraw(spriteBatch, this.bande3, new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 900.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
-      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 1350.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
+      Recorder.RDraw(spriteBatch, this.bande1, new Vector2((float) (
+          (double) GUIManager.GUITimer / 5.0 % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), 
+          Color.White * 1f);
+
+      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float) (
+          ((double) GUIManager.GUITimer / 5.0 + 450.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 
+          0.0f), Color.White * 1f);
+
+      Recorder.RDraw(spriteBatch, this.bande3, new Vector2((float) (
+          ((double) GUIManager.GUITimer / 5.0 + 900.0) % ((double) Game1.renderSize.X + 500.0) - 300.0),
+          0.0f), Color.White * 1f);
+
+      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float) (
+          ((double) GUIManager.GUITimer / 5.0 + 1350.0) % ((double) Game1.renderSize.X + 500.0) - 300.0),
+          0.0f), Color.White * 1f);
+
       for (int index = -2; index < 3; ++index)
       {
-        if (0 <= index + this.SelectedResolutionID & index + this.SelectedResolutionID < this.Resolutions.Count)
+        if (0 <= index + this.SelectedResolutionID 
+                    & index + this.SelectedResolutionID < this.Resolutions.Count)
         {
           if (index == 0)
-            Recorder.RDrawString(spriteBatch, Game1.rouliXLSpriteFont, Convert.ToString(this.Resolutions[index + this.SelectedResolutionID].X) + "x" + this.Resolutions[index + this.SelectedResolutionID].Y.ToString(), new Vector2((float) (index * 110 + 830), 506f), Color.Black);
+            Recorder.RDrawString(spriteBatch, Game1.rouliXLSpriteFont, 
+                Convert.ToString(this.Resolutions[index + this.SelectedResolutionID].X)
+                + "x" + this.Resolutions[index + this.SelectedResolutionID].Y.ToString(),
+                new Vector2((float) (index * 110 + 830), 506f), Color.Black);
           else if (index < 0 && !this.fullscreenSelected)
-            Recorder.RDrawString(spriteBatch, Game1.rouliLSpriteFont, Convert.ToString(this.Resolutions[index + this.SelectedResolutionID].X) + "x" + this.Resolutions[index + this.SelectedResolutionID].Y.ToString(), new Vector2((float) (index * 110 + 830), 516f), new Color(40, 40, 40));
+            Recorder.RDrawString(spriteBatch, Game1.rouliLSpriteFont, 
+                Convert.ToString(this.Resolutions[index + this.SelectedResolutionID].X) 
+                + "x" + this.Resolutions[index + this.SelectedResolutionID].Y.ToString(),
+                new Vector2((float) (index * 110 + 830), 516f), new Color(40, 40, 40));
           else if (!this.fullscreenSelected)
-            Recorder.RDrawString(spriteBatch, Game1.rouliLSpriteFont, Convert.ToString(this.Resolutions[index + this.SelectedResolutionID].X) + "x" + this.Resolutions[index + this.SelectedResolutionID].Y.ToString(), new Vector2((float) (index * 110 + 870), 516f), new Color(40, 40, 40));
+            Recorder.RDrawString(spriteBatch, Game1.rouliLSpriteFont, 
+                Convert.ToString(this.Resolutions[index + this.SelectedResolutionID].X) 
+                + "x" + this.Resolutions[index + this.SelectedResolutionID].Y.ToString(), 
+                new Vector2((float) (index * 110 + 870), 516f), new Color(40, 40, 40));
         }
       }
       if (!this.fullscreenSelected)
@@ -140,9 +158,18 @@ namespace DodoTheGame.GUI
         if (this.selectedButton == 2)
         {
           if (this.SelectedResolutionID > 0)
-            Recorder.RDraw(spriteBatch, this.more_s, new Vector2((float) (570.0 - 10.0 * (double) Convert.ToSingle(Math.Cos(Math.PI * Math.Cos(Math.PI * Math.Cos((double) Convert.ToSingle((float) this.ResolutionsArrowsTimer / 220f)))))), 486f), Color.White * 1f);
+            Recorder.RDraw(spriteBatch, this.more_s, new Vector2(
+                (float) (570.0 - 10.0 * (double) Convert.ToSingle(
+                    Math.Cos(Math.PI * Math.Cos(Math.PI * Math.Cos(
+                        (double) Convert.ToSingle((float) this.ResolutionsArrowsTimer / 220f)))))), 
+                486f), Color.White * 1f);
+
           if (this.SelectedResolutionID < this.Resolutions.Count - 1)
-            Recorder.RDraw(spriteBatch, this.more_mirror_s, new Vector2((float) (1190.0 + 10.0 * (double) Convert.ToSingle(Math.Cos(Math.PI * Math.Cos(Math.PI * Math.Cos((double) Convert.ToSingle((float) this.ResolutionsArrowsTimer / 220f)))))), 486f), Color.White * 1f);
+            Recorder.RDraw(spriteBatch, this.more_mirror_s, new Vector2(
+                (float) (1190.0 + 10.0 * (double) Convert.ToSingle(
+                    Math.Cos(Math.PI * Math.Cos(Math.PI * Math.Cos(
+                        (double) Convert.ToSingle((float) this.ResolutionsArrowsTimer / 220f)))))),
+                486f), Color.White * 1f);
         }
         else
         {
@@ -154,39 +181,52 @@ namespace DodoTheGame.GUI
       }
       Recorder.RDraw(spriteBatch, this.settingsbackground, new Vector2(0.0f, 0.0f), Color.White * 1f);
       if (texture1 == this.retour_selected)
-        Recorder.RDraw(spriteBatch, texture1, new Vector2(100f, Game1.renderSize.Y - 65f), Color.White * 1f, 1.06f);
+        Recorder.RDraw(spriteBatch, texture1, new Vector2(100f, Game1.renderSize.Y - 65f),
+            Color.White * 1f, 1.06f);
       else
-        Recorder.RDraw(spriteBatch, texture1, new Vector2(100f, Game1.renderSize.Y - 65f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, texture1, new Vector2(100f, Game1.renderSize.Y - 65f), 
+            Color.White * 1f, 1f);
       if (texture3 == this.cursor_selected)
-        Recorder.RDraw(spriteBatch, texture3, new Vector2((float) (615.0 + (double) Sound.sfxVolume * 450.0), 138f), Color.White * 1f, 1.2f);
+        Recorder.RDraw(spriteBatch, texture3, new Vector2((float) (615.0 +
+            (double) Sound.sfxVolume * 450.0), 138f), Color.White * 1f, 1.2f);
       else
-        Recorder.RDraw(spriteBatch, texture3, new Vector2((float) (615.0 + (double) Sound.sfxVolume * 450.0), 138f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, texture3, new Vector2((float) (615.0 +
+            (double) Sound.sfxVolume * 450.0), 138f), Color.White * 1f, 1f);
       if (texture2 == this.cursor_selected)
-        Recorder.RDraw(spriteBatch, texture2, new Vector2((float) (615.0 + (double) Sound.bgmVolume * 450.0), 230f), Color.White * 1f, 1.2f);
+        Recorder.RDraw(spriteBatch, texture2, new Vector2((float) (615.0 + 
+            (double) Sound.bgmVolume * 450.0), 230f), Color.White * 1f, 1.2f);
       else
-        Recorder.RDraw(spriteBatch, texture2, new Vector2((float) (615.0 + (double) Sound.bgmVolume * 450.0), 230f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, texture2, new Vector2((float) (615.0 + 
+            (double) Sound.bgmVolume * 450.0), 230f), Color.White * 1f, 1f);
       if (this.selectedButton == 3)
       {
         if (this.fullscreenSelected)
-          Recorder.RDraw(spriteBatch, this.fullscreen_s, new Vector2(703f, 422f), Color.White * 1f, 1.05f);
+          Recorder.RDraw(spriteBatch, this.fullscreen_s, new Vector2(703f, 422f), 
+              Color.White * 1f, 1.05f);
         else
-          Recorder.RDraw(spriteBatch, this.windowed_s, new Vector2(872f, 422f), Color.White * 1f, 1.1f);
+          Recorder.RDraw(spriteBatch, this.windowed_s, new Vector2(872f, 422f),
+              Color.White * 1f, 1.1f);
       }
       else if (this.fullscreenSelected)
-        Recorder.RDraw(spriteBatch, this.fullscreen, new Vector2(703f, 422f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, this.fullscreen, new Vector2(703f, 422f),
+            Color.White * 1f, 1f);
       else
         Recorder.RDraw(spriteBatch, this.windowed, new Vector2(872f, 422f), Color.White * 1f, 1f);
       if (this.selectedButton == 4)
       {
         if (this.gameLanguage == "fr_FR")
-          Recorder.RDraw(spriteBatch, this.francais_s, new Vector2(675f, 323f), Color.White * 1f, 1.05f);
+          Recorder.RDraw(spriteBatch, this.francais_s, new Vector2(675f, 323f), 
+              Color.White * 1f, 1.05f);
         else
-          Recorder.RDraw(spriteBatch, this.english_s, new Vector2(842f, 324f), Color.White * 1f, 1.1f);
+          Recorder.RDraw(spriteBatch, this.english_s, new Vector2(842f, 324f), 
+              Color.White * 1f, 1.1f);
       }
       else if (this.gameLanguage == "fr_FR")
-        Recorder.RDraw(spriteBatch, this.francais, new Vector2(675f, 323f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, this.francais, new Vector2(675f, 323f),
+            Color.White * 1f, 1f);
       else
-        Recorder.RDraw(spriteBatch, this.english, new Vector2(842f, 324f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, this.english, new Vector2(842f, 324f), 
+            Color.White * 1f, 1f);
     }
 
     public void Input(
@@ -213,7 +253,7 @@ namespace DodoTheGame.GUI
         if (GUIManager.SettingsOpenFromEscape)
         {
           GUIManager.ClearThenSet((IGUI) GUIManager.escapeGUI);
-          Game1.Log("Escape menu open from Settings menu.", BreadcrumbLevel.Debug);
+          Debug.WriteLine("[i] Escape menu open from Settings menu.");
         }
         else
           GUIManager.ClearThenSet((IGUI) GUIManager.mainmenu);

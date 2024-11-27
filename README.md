@@ -1,14 +1,45 @@
-# DodoArchipelago (1.0.1-pre-pre-alpha)
+# DodoArchipelago
 ![](Images/logo.png)
 
 ## About
-This is my *veeery quuuick* W10M port of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) project. :)
+This is my *veeery quuuick* W10M port of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... 
 
-Main goal: do some testing/exploration of my own custom Universal MonoGame Framework behaviour/game interaction. 
+Main goal: do more exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... 
 
 
 ## Screenshot(s)
 ![](Images/shot01.png)
+![](Images/shot02.png)
+![](Images/shot03.png)
+![](Images/shot43.png)
+
+## Words from the author(s)
+
+"
+
+The Dodo Archipelago is a chill exploration game about a lone dodo on a mysterious archipelago. Build a village from scratch using the multiple ressources on the islands.
+
+Here's what you can expect:
+
+- Walk, swim and bike to travel through various landscapes
+- 1-2h of gameplay
+- Music by Jananass and meliméa
+- Unique art style
+
+
+"
+
+- Rouli & meliméa
+
+
+## Tech. details / more info
+- Janre:	Adventure
+- Game "engine":	MonoGame
+- Labels:	2D, chill, Cute, Exploration, Singleplayer
+- Languages:	English, French
+- Type of control:	Keyboard (mouse and touchpanel planned)
+- Original game focused (targeted) to Windows classic (desktop) , my project is UWP (Hello, Xbox, and Windows 10 Mobile!) 
+
 
 ## How to create this UWP XNA game?
 Follow the Something Random youtube channel for development updates: 
@@ -22,14 +53,25 @@ https://www.youtube.com/channel/UCdbQJRNyC7JdgvsxZLNhCzw
 - Game content - "sounds, textures: connection/incorporation" in progress
 - Original kbd control still presend for desktop mode 
 - No Screen scaling mode yet.
-- No sound (fmod not realized yet)
+- Experimentation (debugging) with special "Debug panel" :)
+- You can change the language in the settings of the game (requires a restart).
+- Use WASD (or ZQSD on a french keyboard) and Space to move and select in the menus.
+- Use Left-Right-Up-Down for build/take a note etc. (BUT world generator *damaged*/not reversed by JetBrains DotPeek, so no world items such a house, etc.! holly shit, heh!!)
 
 ## GameDev: How-to
 https://gamedevelopment.tutsplus.com/tutorials/make-a-neon-vector-shooter-in-xna-basic-gameplay--gamedev-9859
 
 ## ToDo
-- Explore Assets folder
-- See Content: maybe, double resources (sounds, images and fx effects!)
+- Fix Assets (some xnb bugs detected)
+- Fix no sound problem
+- Fix some graphics and fx effects!
+- Fix another 100500 bugs :)
+
+## References
+- https://rouli.itch.io/the-dodo-archipelago Original DoDo Archipelago game (x86, desktop)
+- https://rouli.itch.io DoDo Archipelago's itch.io home page
+- https://github.com/Rouli-M One of Original DoDo's programmers/devs
+- https://github.com/Rouli-M/ReturnOfTheFrogarians (Additional project to research)
 
 ## .
 As is. Learn purposes only. DIY.

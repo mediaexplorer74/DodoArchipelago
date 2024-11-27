@@ -1,4 +1,8 @@
-﻿// Type: DodoTheGame.Localization.LocalizationManager
+﻿
+// Type: DodoTheGame.Localization.LocalizationManager
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using System;
 using System.Collections.Generic;
@@ -58,13 +62,23 @@ namespace DodoTheGame.Localization
 
     public static string GetAssetName(string id, bool required = true)
     {
+      
       if (LocalizationManager.CurrentLanguage == null)
         return (string) null;
-      if (LocalizationManager.CurrentLanguage.AssetTable.ContainsKey(id))
-        return LocalizationManager.CurrentLanguage.AssetTable[id];
+
+        if (LocalizationManager.CurrentLanguage.AssetTable.ContainsKey(id))
+        {
+            return LocalizationManager.CurrentLanguage.AssetTable[id];
+        }
+
       if (!required)
         return (string) null;
-      throw new Exception("Could not find localization for asset id: " + id);
+
+      //throw new Exception("Could not find localization for asset id: " + id);
+      System.Diagnostics.Debug.WriteLine("[warn] Could not find localization for asset id: " + id);
+
+      // Plan B: return input value "as is" (output value)
+      return id;
     }
   }
 }

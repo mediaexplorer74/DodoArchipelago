@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: DodoTheGame.BGM.LoopingBGM
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
@@ -60,7 +60,9 @@ namespace DodoTheGame.BGM
         }
         else if (this.currentPart == this.loopingParts.Length && this.Status == BGMStatus.Playing)
           this.currentPart = 0;
-        this.currentSong = this.currentPart != -1 ? (this.currentPart != this.loopingParts.Length ? this.loopingParts[this.currentPart] : this.outroPart) : this.introPart;
+        this.currentSong = this.currentPart != -1 
+                    ? (this.currentPart != this.loopingParts.Length
+                    ? this.loopingParts[this.currentPart] : this.outroPart) : this.introPart;
         MediaPlayer.Play(this.currentSong);
       }
     }

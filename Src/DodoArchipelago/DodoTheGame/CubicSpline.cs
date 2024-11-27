@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: DodoTheGame.CubicSpline
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using System;
 
@@ -48,7 +48,7 @@ namespace DodoTheGame
       double num3 = (1.0 - (double) num2) * (double) this.yOrig[j] + (double) num2 * (double) this.yOrig[j + 1] + (double) num2 * (1.0 - (double) num2) * ((double) this.a[j] * (1.0 - (double) num2) + (double) this.b[j] * (double) num2);
       if (!debug)
         return (float) num3;
-      Console.WriteLine("xs = {0}, j = {1}, t = {2}", (object) x, (object) j, (object) num2);
+      System.Diagnostics.Debug.WriteLine("xs = {0}, j = {1}, t = {2}", (object) x, (object) j, (object) num2);
       return (float) num3;
     }
 
@@ -111,7 +111,7 @@ namespace DodoTheGame
       }
       float[] array = triDiagonalMatrixF.Solve(d);
       if (debug)
-        Console.WriteLine("k = {0}", (object) ArrayUtil.ToString<float>(array));
+        System.Diagnostics.Debug.WriteLine("k = {0}", (object) ArrayUtil.ToString<float>(array));
       this.a = new float[length - 1];
       this.b = new float[length - 1];
       for (int index = 1; index < length; ++index)
@@ -122,10 +122,10 @@ namespace DodoTheGame
         this.b[index - 1] = -array[index] * num7 + num8;
       }
       if (debug)
-        Console.WriteLine("a: {0}", (object) ArrayUtil.ToString<float>(this.a));
+        System.Diagnostics.Debug.WriteLine("a: {0}", (object) ArrayUtil.ToString<float>(this.a));
       if (!debug)
         return;
-      Console.WriteLine("b: {0}", (object) ArrayUtil.ToString<float>(this.b));
+      System.Diagnostics.Debug.WriteLine("b: {0}", (object) ArrayUtil.ToString<float>(this.b));
     }
 
     public float[] Eval(float[] x, bool debug = false)
@@ -156,7 +156,7 @@ namespace DodoTheGame
         float num3 = (x[index] - this.xOrig[nextXindex]) / num1;
         numArray[index] = (float) ((double) num2 / (double) num1 + (1.0 - 2.0 * (double) num3) * ((double) this.a[nextXindex] * (1.0 - (double) num3) + (double) this.b[nextXindex] * (double) num3) / (double) num1 + (double) num3 * (1.0 - (double) num3) * ((double) this.b[nextXindex] - (double) this.a[nextXindex]) / (double) num1);
         if (debug)
-          Console.WriteLine("[{0}]: xs = {1}, j = {2}, t = {3}", new object[4]
+          System.Diagnostics.Debug.WriteLine("[{0}]: xs = {1}, j = {2}, t = {3}", new object[4]
           {
             (object) index,
             (object) x[index],

@@ -1,4 +1,8 @@
-﻿// Type: DodoTheGame.Saving.IDodoInteractionConverter
+﻿
+// Type: DodoTheGame.Saving.IDodoInteractionConverter
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using DodoTheGame.Interactions;
 using DodoTheGame.Localization;
@@ -97,7 +101,7 @@ namespace DodoTheGame.Saving
         return (object) new Upgrade()
         {
           requiredLevelToUpgrade = Convert.ToInt32(dictionary["requiredLevelToUpgrade"]),
-          upgradeItems = (List<ItemStack>) serializer.ConvertToType(dictionary["upgradeItems"], typeof (List<ItemStack>)),
+          upgradeItems = default,//(List<ItemStack>) serializer.ConvertToType(dictionary["upgradeItems"], typeof (List<ItemStack>)),
           upgradePreset = (Preset) serializer.ConvertToType(dictionary["upgradePreset"], typeof (Preset))
         };
       if ((string) dictionary["Type"] == "Inspect")

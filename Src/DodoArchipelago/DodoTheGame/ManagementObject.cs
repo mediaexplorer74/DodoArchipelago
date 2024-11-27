@@ -1,4 +1,4 @@
-﻿// Type: DodoTheGame.HardwareInfo
+﻿// Type: DodoTheGame.ManagementObject
 
 
 using System;
@@ -16,7 +16,7 @@ namespace DodoTheGame
 
         internal void Get()
         {
-            throw new NotImplementedException();
+            //
         }
     }
 }

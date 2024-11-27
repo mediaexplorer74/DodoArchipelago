@@ -1,17 +1,12 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.TerrainBehaviorMap
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.TerrainBehaviorMap
 
 using Microsoft.Xna.Framework;
-using SharpRaven.Data;
 using System;
-
+using System.Diagnostics;
 
 namespace DodoTheGame
 {
-  internal class TerrainBehaviorMap
+  public class TerrainBehaviorMap
   {
     private TerrainBackground ts;
 
@@ -38,7 +33,8 @@ namespace DodoTheGame
         ++num1;
         Color? pixelAt = this.ts.GetPixelAt(location, 0);
         Color color1 = color;
-        if ((pixelAt.HasValue ? (pixelAt.HasValue ? (pixelAt.GetValueOrDefault() == color1 ? 1 : 0) : 1) : 0) != 0)
+        if ((pixelAt.HasValue ? (pixelAt.HasValue ? (pixelAt.GetValueOrDefault() == color1 
+                    ? 1 : 0) : 1) : 0) != 0)
           ++num2;
         ++location.X;
         if ((double) location.X - (double) hitbox.X > (double) hitbox.Width)
@@ -63,7 +59,8 @@ namespace DodoTheGame
         ++num1;
         Color? pixelAt = this.ts.GetPixelAt(location, 0);
         Color color1 = color;
-        if ((pixelAt.HasValue ? (pixelAt.HasValue ? (pixelAt.GetValueOrDefault() == color1 ? 1 : 0) : 1) : 0) != 0)
+        if ((pixelAt.HasValue ? (pixelAt.HasValue
+                    ? (pixelAt.GetValueOrDefault() == color1 ? 1 : 0) : 1) : 0) != 0)
           ++num2;
         location.X += 3f;
         if ((double) location.X - (double) hitbox.X > (double) hitbox.Width)
@@ -87,11 +84,13 @@ namespace DodoTheGame
         Color? nullable = pixelAt;
         Color color1 = new Color((int) byte.MaxValue, 0, 0);
         bool collision;
-        if ((nullable.HasValue ? (nullable.HasValue ? (nullable.GetValueOrDefault() == color1 ? 1 : 0) : 1) : 0) == 0)
+        if ((nullable.HasValue ? (nullable.HasValue 
+                    ? (nullable.GetValueOrDefault() == color1 ? 1 : 0) : 1) : 0) == 0)
         {
           nullable = pixelAt;
           Color color2 = new Color(170, 0, (int) byte.MaxValue);
-          if ((nullable.HasValue ? (nullable.HasValue ? (nullable.GetValueOrDefault() == color2 ? 1 : 0) : 1) : 0) == 0)
+          if ((nullable.HasValue ? (nullable.HasValue
+                        ? (nullable.GetValueOrDefault() == color2 ? 1 : 0) : 1) : 0) == 0)
           {
             collision = false;
             goto label_6;
@@ -103,16 +102,19 @@ label_6:
         Color color3 = new Color(0, 0, (int) byte.MaxValue);
         Player.DodoMovement movementType;
         TerrainType terrainType;
-        if ((nullable.HasValue ? (nullable.HasValue ? (nullable.GetValueOrDefault() == color3 ? 1 : 0) : 1) : 0) == 0)
+        if ((nullable.HasValue ? (nullable.HasValue 
+                    ? (nullable.GetValueOrDefault() == color3 ? 1 : 0) : 1) : 0) == 0)
         {
           nullable = pixelAt;
           Color color4 = new Color(170, 0, (int) byte.MaxValue);
-          if ((nullable.HasValue ? (nullable.HasValue ? (nullable.GetValueOrDefault() == color4 ? 1 : 0) : 1) : 0) == 0)
+          if ((nullable.HasValue ? (nullable.HasValue
+                        ? (nullable.GetValueOrDefault() == color4 ? 1 : 0) : 1) : 0) == 0)
           {
             movementType = Player.DodoMovement.Walk;
             nullable = pixelAt;
             Color color5 = new Color(104, 104, 104);
-            if ((nullable.HasValue ? (nullable.HasValue ? (nullable.GetValueOrDefault() == color5 ? 1 : 0) : 1) : 0) != 0)
+            if ((nullable.HasValue ? (nullable.HasValue 
+                            ? (nullable.GetValueOrDefault() == color5 ? 1 : 0) : 1) : 0) != 0)
             {
               terrainType = TerrainType.Rock;
               goto label_16;
@@ -121,7 +123,8 @@ label_6:
             {
               nullable = pixelAt;
               Color color6 = new Color((int) byte.MaxValue, (int) byte.MaxValue, 0);
-              if ((nullable.HasValue ? (nullable.HasValue ? (nullable.GetValueOrDefault() == color6 ? 1 : 0) : 1) : 0) != 0)
+              if ((nullable.HasValue ? (nullable.HasValue
+                                ? (nullable.GetValueOrDefault() == color6 ? 1 : 0) : 1) : 0) != 0)
               {
                 terrainType = TerrainType.Sand;
                 goto label_16;
@@ -130,7 +133,8 @@ label_6:
               {
                 nullable = pixelAt;
                 Color color7 = new Color(0, 180, 0);
-                if ((nullable.HasValue ? (nullable.HasValue ? (nullable.GetValueOrDefault() == color7 ? 1 : 0) : 1) : 0) != 0)
+                if ((nullable.HasValue ? (nullable.HasValue
+                                    ? (nullable.GetValueOrDefault() == color7 ? 1 : 0) : 1) : 0) != 0)
                 {
                   terrainType = TerrainType.Leaves;
                   goto label_16;
@@ -138,7 +142,9 @@ label_6:
                 else
                 {
                   terrainType = TerrainType.Void;
-                  Game1.Log("Terrain type for (" + location.X.ToString() + ";" + location.Y.ToString() + ") is invalid, or is the player in space?", BreadcrumbLevel.Warning);
+                  Debug.WriteLine("[!] Terrain type for (" 
+                      + location.X.ToString() + ";" + location.Y.ToString() 
+                      + ") is invalid, or is the player in space?");
                   goto label_16;
                 }
               }

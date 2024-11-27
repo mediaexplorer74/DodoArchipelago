@@ -1,12 +1,13 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: DodoTheGame.Saving.SaveHandler
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using DodoTheGame.WorldObject;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -69,14 +70,34 @@ namespace DodoTheGame.Saving
       object[] objArray = Save.serializer.Deserialize<object[]>(
           File.ReadAllText(Save.saveFolder + "settings.dodointernal"));
 
-      return 1 == (int) objArray[2] 
-         ? new GameSettings((bool) objArray[5], 
-          new Vector2(Convert.ToSingle(objArray[6]), 
-          Convert.ToSingle(objArray[7])), 
-          Convert.ToSingle(objArray[8]), 
-          Convert.ToSingle(objArray[9]), (string) objArray[10])
-         : throw new Exception("This setting save is not supported by this version.");
-    }
+            /*
+             return (1 == (int) objArray[2]) 
+               ? new GameSettings((bool) objArray[5], 
+                new Vector2(Convert.ToSingle(objArray[6]), 
+                Convert.ToSingle(objArray[7])), 
+                Convert.ToSingle(objArray[8]), 
+                Convert.ToSingle(objArray[9]), (string) objArray[10])
+               : throw new Exception("This setting save is not supported by this version.");
+            */
+            GameSettings Result = GameSettings.Default; 
+            if ((Int64)1 == (Int64)objArray[2])
+            {
+                Result = new GameSettings((bool)objArray[5],
+                new Vector2
+                (
+                   (float)Convert.ToSingle(objArray[6]),
+                   (float)Convert.ToSingle(objArray[7]) 
+                ),
+                (float)Convert.ToSingle(objArray[8]),
+                (float)Convert.ToSingle(objArray[9]),
+                (string)objArray[10]);
+             }
+            else
+            {
+                throw new Exception("This setting save is not supported by this version.");
+            }
+            return Result;
+        }
 
     public static Save LoadDefault(List<Sprite> commonSprites, Game1 game)
     {
@@ -111,8 +132,19 @@ namespace DodoTheGame.Saving
         lastFrame = lastFrame
       };
       MemoryStream memoryStream = new MemoryStream();
-      lastFrame.SaveAsPng((Stream) memoryStream, Convert.ToInt32(Game1.renderSize.X), 
-          Convert.ToInt32(Game1.renderSize.Y));
+            try
+            {
+              if (lastFrame != null)
+                lastFrame.SaveAsPng((Stream)memoryStream,
+                     Convert.ToInt32(Game1.renderSize.X),
+                     Convert.ToInt32(Game1.renderSize.Y));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[ex] SaveHandler error: " 
+                    + ex.Message);
+            }
+
       //new Thread((ParameterizedThreadStart) (pngScreenData =>
       //{
         sav.SaveToFile(lastFramePngBytes: (byte[]) /*pngScreenData*/memoryStream.ToArray());

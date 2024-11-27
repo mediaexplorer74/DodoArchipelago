@@ -1,16 +1,12 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Preset
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿// Type: DodoTheGame.Preset
+
 
 using DodoTheGame.Interactions;
 using DodoTheGame.WorldObject;
 using Microsoft.Xna.Framework;
-using SharpRaven.Data;
 using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 
 namespace DodoTheGame
 {
@@ -89,7 +85,8 @@ namespace DodoTheGame
       bool regrowOverTime = true)
     {
       if (type != Preset.WOType.Growable && type != Preset.WOType.LinkingGrowable)
-        Game1.Log("Second preset constructor expects Growable or LinkingGrowable. There may be an error in this Preset declaration.", BreadcrumbLevel.Critical);
+        Debug.WriteLine("[!!!] Second preset constructor expects Growable or LinkingGrowable. " +
+            "There may be an error in this Preset declaration.");
       this.growtime = growtime;
       this.name = name;
       this.type = type;
@@ -124,7 +121,8 @@ namespace DodoTheGame
       bool regrowOverTime = true)
     {
       if (type != Preset.WOType.Growable && type != Preset.WOType.LinkingGrowable)
-        Game1.Log("Second preset constructor expects Growable or LinkingGrowable. There may be an error in this Preset declaration.", BreadcrumbLevel.Critical);
+        Debug.WriteLine("[!!!] Second preset constructor expects Growable or LinkingGrowable." +
+            " There may be an error in this Preset declaration.");
       this.growtime = growtime;
       this.name = name;
       this.type = type;

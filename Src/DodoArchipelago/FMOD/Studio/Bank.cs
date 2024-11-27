@@ -1,4 +1,8 @@
-﻿// Type: FMOD.Studio.Bank
+﻿
+// Type: FMOD.Studio.Bank
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using System;
 using System.Runtime.InteropServices;
@@ -62,14 +66,12 @@ namespace FMOD.Studio
       {
         IntPtr num = Marshal.AllocHGlobal(256);
         int retrieved = 0;
-        RESULT stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(
-            this.handle, index, out id, num, 256, out retrieved);
+        RESULT stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(this.handle, index, out id, num, 256, out retrieved);
         if (stringInfo == RESULT.ERR_TRUNCATED)
         {
           Marshal.FreeHGlobal(num);
           num = Marshal.AllocHGlobal(retrieved);
-          stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(
-              this.handle, index, out id, num, retrieved, out retrieved);
+          stringInfo = Bank.FMOD_Studio_Bank_GetStringInfo(this.handle, index, out id, num, retrieved, out retrieved);
         }
         if (stringInfo == RESULT.OK)
           path = freeHelper.stringFromNative(num);

@@ -1,4 +1,8 @@
-﻿// Type: DodoTheGame.GUI.MainMenuGUI
+﻿
+// Type: DodoTheGame.GUI.MainMenuGUI
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -68,25 +72,40 @@ namespace DodoTheGame.GUI
           break;
       }
       double num = 231.0 * (double) Game1.renderSize.Y / 720.0;
-      Recorder.RDraw(spriteBatch, this.bande1, new Vector2((float) ((double) GUIManager.GUITimer / 5.0 % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
-      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 450.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
-      Recorder.RDraw(spriteBatch, this.bande3, new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 900.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
-      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 1350.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
+      Recorder.RDraw(spriteBatch, this.bande1, new Vector2((float) 
+          ((double) GUIManager.GUITimer / 5.0 % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
+      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float)
+          (((double) GUIManager.GUITimer / 5.0 + 450.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
+      Recorder.RDraw(spriteBatch, this.bande3, new Vector2((float) 
+          (((double) GUIManager.GUITimer / 5.0 + 900.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
+      Recorder.RDraw(spriteBatch, this.bande2, new Vector2((float)
+          (((double) GUIManager.GUITimer / 5.0 + 1350.0) % ((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
       if (texture1 == this.jouer_selected)
-        Recorder.RDraw(spriteBatch, texture1, new Vector2(Game1.renderSize.X / 2f, Game1.renderSize.Y - 200f), Color.White * 1f, (float) (1.0 + 0.059999998658895493 * (double) Convert.ToSingle(Math.Sin((double) this.playButtonTimer / 125.0))));
+        Recorder.RDraw(spriteBatch, texture1, new Vector2(Game1.renderSize.X / 2f,
+            Game1.renderSize.Y - 200f), Color.White * 1f, 
+            (float) (1.0 + 0.059999998658895493 * (double) Convert.ToSingle(
+                Math.Sin((double) this.playButtonTimer / 125.0))));
       else
-        Recorder.RDraw(spriteBatch, texture1, new Vector2(Game1.renderSize.X / 2f, Game1.renderSize.Y - 200f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, texture1, new Vector2(Game1.renderSize.X / 2f, 
+            Game1.renderSize.Y - 200f), Color.White * 1f, 1f);
       if (texture2 == this.parameters_selected)
-        Recorder.RDraw(spriteBatch, texture2, new Vector2(Game1.renderSize.X - 50f, Game1.renderSize.Y - 50f), Color.White * 1f, 1.2f);
+        Recorder.RDraw(spriteBatch, texture2, new Vector2(Game1.renderSize.X - 50f,
+            Game1.renderSize.Y - 50f), Color.White * 1f, 1.2f);
       else
-        Recorder.RDraw(spriteBatch, texture2, new Vector2(Game1.renderSize.X - 50f, Game1.renderSize.Y - 50f), Color.White * 1f, 1f);
+        Recorder.RDraw(spriteBatch, texture2, new Vector2(Game1.renderSize.X - 50f, 
+            Game1.renderSize.Y - 50f), Color.White * 1f, 1f);
       if (texture3 == this.exit_selected)
-        Recorder.RDraw(spriteBatch, texture3, new Vector2(50f, Game1.renderSize.Y - 50f), Color.White * 1f, 1.2f);
+        Recorder.RDraw(spriteBatch, texture3, new Vector2(50f, Game1.renderSize.Y - 50f),
+            Color.White * 1f, 1.2f);
       else
-        Recorder.RDraw(spriteBatch, texture3, new Vector2(50f, Game1.renderSize.Y - 50f), Color.White * 1f, 1f);
-      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "Crédits", new Vector2(1215f, 2f), this.selectedButton == 4 ? Color.White : Color.Black * 0.5f);
-      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "V1.0", new Vector2(3f, 1f), Color.Black * 0.5f);
-      Recorder.RDraw(spriteBatch, this.mainlogo, new Vector2((float) ((double) Game1.renderSize.X / 2.0 - 430.0), 0.0f), Color.White * 1f);
+        Recorder.RDraw(spriteBatch, texture3, new Vector2(50f, Game1.renderSize.Y - 50f),
+            Color.White * 1f, 1f);
+      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "Crédits", 
+          new Vector2(1215f, 2f), this.selectedButton == 4 ? Color.White : Color.Black * 0.5f);
+      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "V1.0",
+          new Vector2(3f, 1f), Color.Black * 0.5f);
+      Recorder.RDraw(spriteBatch, this.mainlogo, new Vector2((float)
+          ((double) Game1.renderSize.X / 2.0 - 430.0), 0.0f), Color.White * 1f);
     }
 
     public void Input(
@@ -99,7 +118,8 @@ namespace DodoTheGame.GUI
       UserInputStatus.InputState alt,
       Game1 game)
     {
-      if (action1 && this.selectedButton == 1 && game.WorldLoader == Game1.WorldLoaderType.dynamicSaves)
+      if (action1 && this.selectedButton == 1 && 
+                game.WorldLoader == Game1.WorldLoaderType.dynamicSaves)
         GUIManager.ClearThenSet((IGUI) GUIManager.loadGUI);
       else if (action1 && this.selectedButton == 1)
       {

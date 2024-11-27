@@ -1,4 +1,8 @@
-﻿// Type: DodoTheGame.Saving.Texture2DConverter
+﻿
+// Type: DodoTheGame.Saving.Texture2DConverter
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using DodoTheGame.Localization;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,8 +23,7 @@ namespace DodoTheGame.Saving
     {
       get
       {
-        return (IEnumerable<Type>) new ReadOnlyCollection<Type>((IList<Type>) 
-            new List<Type>((IEnumerable<Type>) new Type[1]
+        return (IEnumerable<Type>) new ReadOnlyCollection<Type>((IList<Type>) new List<Type>((IEnumerable<Type>) new Type[1]
         {
           typeof (Texture2D)
         }));
@@ -47,21 +50,14 @@ namespace DodoTheGame.Saving
     {
       if (dictionary == null)
         throw new ArgumentNullException(nameof (dictionary));
-
       if (dictionary["Name"] == null)
         throw new ArgumentNullException(nameof (dictionary));
-
-      List<Texture2D> list = Texture2DConverter.commonTextures.Where<Texture2D>(
-          (Func<Texture2D, bool>) (p => p.Name == (string) dictionary["Name"])).ToList<Texture2D>();
-    
+      List<Texture2D> list = Texture2DConverter.commonTextures.Where<Texture2D>((Func<Texture2D, bool>) (p => p.Name == (string) dictionary["Name"])).ToList<Texture2D>();
       if (list.Count < 1)
-        throw new Exception("Missing texture in Texture2DConverter.commonTextures: " 
-            + (string) dictionary["Name"]);
+        throw new Exception("Missing texture in Texture2DConverter.commonTextures: " + (string) dictionary["Name"]);
       if (list.Count > 1)
         throw new Exception("Multiple textures have the same name in Texture2DConverter.commonTextures");
-      return list[0] != null 
-                ? (object) list[0] 
-                : throw new Exception("Null texture Texture2DConverter.commonTextures");
+      return list[0] != null ? (object) list[0] : throw new Exception("Null texture Texture2DConverter.commonTextures");
     }
   }
 }

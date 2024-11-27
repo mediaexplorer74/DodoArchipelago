@@ -24,7 +24,7 @@ namespace DodoTheGame.Localization
         internal void RegisterConverters(
             System.Collections.Generic.IEnumerable<JavaScriptConverter> enumerable)
         {
-            //TODO
+            //
         }
 
         internal string Serialize(object o)

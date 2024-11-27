@@ -1,14 +1,10 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: DodoTheGame.Cutscene.CutsceneManager
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+﻿//Type: DodoTheGame.Cutscene.CutsceneManager
+
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpRaven.Data;
 using System;
-
+using System.Diagnostics;
 
 namespace DodoTheGame.Cutscene
 {
@@ -24,7 +20,8 @@ namespace DodoTheGame.Cutscene
 
     internal static bool IsOverrideInEffect(RenderOverride ro)
     {
-      return CutsceneManager.currentCutscene != null && CutsceneManager.currentCutscene.Overrides.Contains(ro);
+      return CutsceneManager.currentCutscene != null 
+                && CutsceneManager.currentCutscene.Overrides.Contains(ro);
     }
 
     internal static float CurrentBlackFade { get; private set; }
@@ -49,10 +46,12 @@ namespace DodoTheGame.Cutscene
       Game1 game,
       Vector2 layerLocation)
     {
-      if (CutsceneManager.currentCutscene != null && CutsceneManager.currentCutscene.Overrides.Contains(@override))
-        CutsceneManager.currentCutscene.DrawOverride(@override, spriteBatch, gameTime, game, layerLocation);
+      if (CutsceneManager.currentCutscene != null 
+                && CutsceneManager.currentCutscene.Overrides.Contains(@override))
+        CutsceneManager.currentCutscene.DrawOverride(@override, spriteBatch, 
+            gameTime, game, layerLocation);
       else
-        Game1.Log("Cutscene.DrawOverride was called when it shouldn't have been", BreadcrumbLevel.Warning);
+        Debug.WriteLine("[!] Cutscene.DrawOverride was called when it shouldn't have been");
     }
 
     internal static void Update(GameTime gameTime, Player player, World world)

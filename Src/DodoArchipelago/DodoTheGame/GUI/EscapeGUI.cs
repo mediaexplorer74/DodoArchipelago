@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: DodoTheGame.GUI.EscapeGUI
-// Assembly: TheDodoArchipelago, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 4C2A9301-38B7-4D1C-ADF1-1FDC2897A3B5
-// Assembly location: C:\Users\Admin\Desktop\Portable\Dodo\TheDodoArchipelago.exe
+
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using DodoTheGame.Saving;
 using Microsoft.Xna.Framework;
@@ -123,7 +123,7 @@ namespace DodoTheGame.GUI
       }
       else if (action1 && this.selectedButton == 2)
       {
-        Console.WriteLine("Settings menu open from escape menu.");
+        System.Diagnostics.Debug.WriteLine("Settings menu open from escape menu.");
         GUIManager.ClearThenSet((IGUI) GUIManager.settings);
       }
       else if (action1 && this.selectedButton == 5)

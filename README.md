@@ -5,7 +5,7 @@
 
 It's only PoC (Proove-of-Concept). 
 
-This is my *veeery quuuick* W10M port of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" via empty world with empty inventary! :))))
+This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" via empty world with empty inventary! :))))
 
 Main goal: do more exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... 
 

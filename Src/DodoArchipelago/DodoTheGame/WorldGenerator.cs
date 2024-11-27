@@ -20,10 +20,10 @@ namespace DodoTheGame
     {
             // ISSUE: unable to decompile the method.
 
-            /*World*/ world = new World()
+             world = new World()
             {
                 name = "mainWorld",//(string)objArray[21],
-                Level = 1,//(int)objArray[22],
+                Level = 1, //(int)objArray[22],
                 objects = new List<IWorldObject>() 
                 { 
                     Capacity = 1000,

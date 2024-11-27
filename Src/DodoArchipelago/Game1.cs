@@ -36,7 +36,7 @@ namespace DodoTheGame
 
   public partial class Game1 : Game
   {
-    public const string Manifest = "DodoTheGame/The Dodo Archipelago RELEASE 1.0";
+    public const string Manifest = "DodoTheGame/The Dodo Archipelago RELEASE 1.0.1 (remake 2024)";
     public readonly Game1.WorldLoaderType WorldLoader;
     internal static GraphicsDeviceManager graphics;
     public SpriteBatch spriteBatch;
@@ -132,7 +132,7 @@ namespace DodoTheGame
     internal Texture2D lastFrame;
     
     // DEBUG MODE
-    private bool debugEnabled = true;
+    private bool debugEnabled;
 
     private DateTime compileDate = new DateTime();
     public Texture2D[] itemTextures;
@@ -188,23 +188,19 @@ namespace DodoTheGame
         int highcontrast = 0; // 1 - high contrast, 0 - normal mode      
         bool errorReporting = false;
 
-        this.Content.RootDirectory = /*Environment.CurrentDirectory + "\\" */
-        "Content";
+        this.Content.RootDirectory = "Content";
 
         System.Diagnostics.Debug.WriteLine("====================================================");
         System.Diagnostics.Debug.WriteLine(File.ReadAllText(this.Content.RootDirectory+"\\ascii.txt"));
-        System.Diagnostics.Debug.WriteLine("DodoTheGame/The Dodo Archipelago RELEASE 1.0");
+        System.Diagnostics.Debug.WriteLine("DodoTheGame/The Dodo Archipelago RELEASE 1.0.1");
         System.Diagnostics.Debug.WriteLine("(c) 2017-2020 Dodo Team");
         System.Diagnostics.Debug.WriteLine("====================================================");
         Game1.renderSize = new Vector2(1280f, 720f);
 
         StorageFolder localFolder = ApplicationData.Current.LocalFolder;
         
-        Recorder.exportFolder =
-        /*Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)*/
-           localFolder.Path + "\\DTGEXP\\";
-        Save.saveFolder = /*Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)*/
-           localFolder.Path  +  "\\DTG\\";
+        Recorder.exportFolder = localFolder.Path + "\\DTGEXP\\";
+        Save.saveFolder = localFolder.Path  +  "\\DTG\\";
 
         Game1.graphics = new GraphicsDeviceManager((Game) this);
 
@@ -258,7 +254,7 @@ namespace DodoTheGame
       Recorder.sessionStartcode = string.Concat(strArray);
 
       // DEBUG: show/hide debug panel
-      this.debugEnabled = true;//false;
+      this.debugEnabled = false;
 
       this.userInput = new UserInput(inputType);
 
@@ -272,6 +268,7 @@ namespace DodoTheGame
       
       Game1.graphics.IsFullScreen = false;
 
+      //TODO: explore this service!
       if (errorReporting)
       {
         //Game1.ravenClient = new RavenClient(
@@ -302,8 +299,8 @@ namespace DodoTheGame
     {
       if (fullscreen && !Game1.isFullscreen)
       {
-        Game1.isFullscreen = false;//true;
-        Game1.graphics.IsFullScreen = false;//true;
+        Game1.isFullscreen = true;
+        Game1.graphics.IsFullScreen = true;
         Game1.graphics.ApplyChanges();
         System.Diagnostics.Debug.WriteLine("[i] Is full screen? Result: " + fullscreen.ToString());
       }
@@ -391,11 +388,11 @@ namespace DodoTheGame
         {
           {
             PlayerUnlockables.PlayerUnlockable.Bike,
-            true/*false*/
+            true/*false*/ //HACK
           },
           {
             PlayerUnlockables.PlayerUnlockable.Bicycle,
-            true/*false*/
+            true/*false*/ //HACK
           }
         },
         location = new Vector2(8950f, 8000f)
@@ -443,6 +440,7 @@ namespace DodoTheGame
       System.Diagnostics.Debug.WriteLine("[i] Monogame initialization finished");
     }//
 
+    // TODO: fix this multi-color console log :)
     /*
     public static void Log(string message, BreadcrumbLevel level, string category = "global")
     {
@@ -2935,8 +2933,8 @@ namespace DodoTheGame
         base.Draw(gameTime);
       }
 
-      //RnD
-      DebugAssistant.DrawDebugPanel(this.spriteBatch, this);
+        ////DEBUG:  Draw debug panel
+        //DebugAssistant.DrawDebugPanel(this.spriteBatch, this);
 
     }//Draw
 
@@ -2949,7 +2947,7 @@ namespace DodoTheGame
     {
       Exception exceptionObject = (Exception)args.Exception;//.ExceptionObject;
       exceptionObject.Data.Add((object) "Manifest", 
-          (object) "DodoTheGame/The Dodo Archipelago RELEASE 1.0");
+          (object) "DodoTheGame/The Dodo Archipelago RELEASE 1.0.1");
             int fileLineNumber = 0;// new StackTrace(exceptionObject, true).GetFrame(0).GetFileLineNumber();
       exceptionObject.Data.Add((object) "ErrorLine",
           (object) fileLineNumber);

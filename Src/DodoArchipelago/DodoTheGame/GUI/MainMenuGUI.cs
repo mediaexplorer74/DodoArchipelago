@@ -102,7 +102,7 @@ namespace DodoTheGame.GUI
             Color.White * 1f, 1f);
       Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "Crédits", 
           new Vector2(1215f, 2f), this.selectedButton == 4 ? Color.White : Color.Black * 0.5f);
-      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "V1.0",
+      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "V1.0.1",
           new Vector2(3f, 1f), Color.Black * 0.5f);
       Recorder.RDraw(spriteBatch, this.mainlogo, new Vector2((float)
           ((double) Game1.renderSize.X / 2.0 - 430.0), 0.0f), Color.White * 1f);

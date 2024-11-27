@@ -26,7 +26,7 @@ using Windows.Storage;
 
 namespace DodoTheGame
 {
-  /*internal*/public static class DebugAssistant
+  public static class DebugAssistant
   {
     internal static bool waveEditor = false;
     public static Texture2D debugWindArrow;
@@ -36,7 +36,7 @@ namespace DodoTheGame
     internal static bool debugPanel;
     internal static List<IWorldObject> woModifiedInGameEditor;
 
-    /*private*/public static readonly List<Microsoft.Xna.Framework.Input.Keys> DebugMenuKeys
+    public static readonly List<Microsoft.Xna.Framework.Input.Keys> DebugMenuKeys
         = new List<Microsoft.Xna.Framework.Input.Keys>()
     {
         Microsoft.Xna.Framework.Input.Keys.A,
@@ -49,7 +49,7 @@ namespace DodoTheGame
         Microsoft.Xna.Framework.Input.Keys.D
     };
 
-    /*private*/public static Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu
+    public static Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu
         = new Microsoft.Xna.Framework.Input.Keys?(); 
             
  

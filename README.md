@@ -1,4 +1,4 @@
-# DodoArchipelago
+# DodoArchipelago 1.0.(1) - main branch
 ![](Images/logo.png)
 
 ## About

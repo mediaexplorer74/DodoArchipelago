@@ -64,43 +64,44 @@
 DodoTheGame/The Dodo Archipelago RELEASE 1.0.1
 (c) 2017-2020 Dodo Team
 ====================================================
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\Newtonsoft.Json.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Runtime.Serialization.Primitives.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Globalization.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Dynamic.Runtime.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Linq.Expressions.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Runtime.Serialization.Formatters.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.ComponentModel.TypeConverter.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Runtime.Numerics.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Extensions.dll'. Module was built without symbols.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Linq.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.ObjectModel.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.TypeExtensions.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Emit.Lightweight.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Emit.ILGeneration.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Primitives.dll'. Module was built without symbols.
+'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'Anonymously Hosted DynamicMethods Assembly'. 
 [i] Game initalized ok (constructor ends)
 'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\SharpDX.Direct2D1.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
 [i] Starting Monogame initialization
 'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\XAct.Core.PCL.dll'. 
+Exception thrown: 'System.InvalidOperationException' in MonoGame.Framework.dll
+[ex] Save - Texture2D.FromStream error: This image format is not supported
+[i] A save info was loaded.
 'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Resources.ResourceManager.dll'. Module was built without symbols.
-Exception thrown: 'System.IO.FileNotFoundException' in System.IO.FileSystem.dll
-[ex] Save - new FileStream path error: Could not find file 'C:\Users\Admin\AppData\Local\Packages\ME.DodoArchipelagoV101_kzejax9p0ss92\LocalState\DTG\slot1.dodomemory'.
-[!] A corrupted save was not loaded!
 Exception thrown: 'System.IO.FileNotFoundException' in System.IO.FileSystem.dll
 [ex] Save - new FileStream path error: Could not find file 'C:\Users\Admin\AppData\Local\Packages\ME.DodoArchipelagoV101_kzejax9p0ss92\LocalState\DTG\slot2.dodomemory'.
 [!] A corrupted save was not loaded!
 Exception thrown: 'System.IO.FileNotFoundException' in System.IO.FileSystem.dll
 [ex] Save - new FileStream path error: Could not find file 'C:\Users\Admin\AppData\Local\Packages\ME.DodoArchipelagoV101_kzejax9p0ss92\LocalState\DTG\slot3.dodomemory'.
 [!] A corrupted save was not loaded!
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Linq.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
 'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\SharpDX.MediaFoundation.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Extensions.dll'. Module was built without symbols.
 'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Text.Encoding.Extensions.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
 'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Text.RegularExpressions.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Globalization.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
 [i] Starting asset loading (LoadAllContent)
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\Newtonsoft.Json.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Runtime.Serialization.Primitives.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Dynamic.Runtime.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Linq.Expressions.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Runtime.Serialization.Formatters.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.ComponentModel.TypeConverter.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Runtime.Numerics.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Primitives.dll'. Module was built without symbols.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.ObjectModel.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.TypeExtensions.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Emit.Lightweight.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\System.Reflection.Emit.ILGeneration.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'Anonymously Hosted DynamicMethods Assembly'. 
 'DodoArchipelago.exe' (CoreCLR: CoreCLR_UWP_Domain): Loaded 'C:\Users\Admin\source\repos\!GameDev\DodoArchipelago-dev\Src\DodoArchipelago\bin\WindowsUniversal\x64\Debug\AppX\SharpDX.XAudio2.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
 [i] Loading all textures...
 [i] Loading background tiles...
+The thread 8112 has exited with code 0 (0x0).
 [i] Declaring sprite and presets...
 Exception thrown: 'SharpDX.SharpDXException' in SharpDX.dll
 [ex] contentManager.Load error: [cutscene/intro/lum]HRESULT: [0x80070057], Module: [General], ApiCode: [E_INVALIDARG/Invalid Arguments], Message: The parameter is incorrect.
@@ -114,9 +115,25 @@ Exception thrown: 'SharpDX.SharpDXException' in SharpDX.dll
 [i] Loading sounds...
 [i] Initializing HUDs...
 Exception thrown: 'SharpDX.SharpDXException' in SharpDX.dll
-[ex] contentManager.Load error: [ui/tuto]HRESULT: [0x80070057], Module: [General], ApiCode: [E_INVALIDARG/Invalid Arguments], Message: The parameter is incorrect.
+[ex] contentManager.Load error: [ui/tuto_en]HRESULT: [0x80070057], Module: [General], ApiCode: [E_INVALIDARG/Invalid Arguments], Message: The parameter is incorrect.
 
 [i] HUDs cleared and DodoTheGame.GUI.MainMenuGUI added.
 [i] Monogame initialization finished
-The thread 7068 has exited with code 0 (0x0).
-The thread 9584 has exited with code 0 (0x0).
+The thread 3900 has exited with code 0 (0x0).
+The thread 12144 has exited with code 0 (0x0).
+The thread 892 has exited with code 0 (0x0).
+The thread 12220 has exited with code 0 (0x0).
+The thread 8620 has exited with code 0 (0x0).
+[InteractGUI] hold=False, action1=True
+[i] HUDs cleared and DodoTheGame.GUI.LoadGUI added.
+Exception thrown: 'System.InvalidOperationException' in MonoGame.Framework.dll
+[ex] Save - Texture2D.FromStream error: This image format is not supported
+[i] A save info was loaded.
+Exception thrown: 'System.IO.FileNotFoundException' in System.IO.FileSystem.dll
+[ex] Save - new FileStream path error: Could not find file 'C:\Users\Admin\AppData\Local\Packages\ME.DodoArchipelagoV101_kzejax9p0ss92\LocalState\DTG\slot2.dodomemory'.
+[!] A corrupted save was not loaded!
+Exception thrown: 'System.IO.FileNotFoundException' in System.IO.FileSystem.dll
+[ex] Save - new FileStream path error: Could not find file 'C:\Users\Admin\AppData\Local\Packages\ME.DodoArchipelagoV101_kzejax9p0ss92\LocalState\DTG\slot3.dodomemory'.
+[!] A corrupted save was not loaded!
+Exception thrown: 'System.InvalidOperationException' in System.Private.CoreLib.ni.dll
+[ex] An IHUD.Input has failed - hud - Collection was modified; enumeration operation may not execute.

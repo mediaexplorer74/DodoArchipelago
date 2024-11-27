@@ -41,11 +41,6 @@ Here's what you can expect:
 - Original game focused (targeted) to Windows classic (desktop) , my project is UWP (Hello, Xbox, and Windows 10 Mobile!) 
 
 
-## How to create this UWP XNA game?
-Follow the Something Random youtube channel for development updates: 
-
-https://www.youtube.com/channel/UCdbQJRNyC7JdgvsxZLNhCzw
-
 ## Status of my DodoArchipelago porting
 - Main W10M device : Lumia 950; sdk 15063+ (Last)  - init state
 - Secondary W10M device : sdk 10240 (Astoria) - init state
@@ -58,8 +53,6 @@ https://www.youtube.com/channel/UCdbQJRNyC7JdgvsxZLNhCzw
 - Use WASD (or ZQSD on a french keyboard) and Space to move and select in the menus.
 - Use Left-Right-Up-Down for build/take a note etc. (BUT world generator *damaged*/not reversed by JetBrains DotPeek, so no world items such a house, etc.! holly shit, heh!!)
 
-## GameDev: How-to
-https://gamedevelopment.tutsplus.com/tutorials/make-a-neon-vector-shooter-in-xna-basic-gameplay--gamedev-9859
 
 ## ToDo
 - Fix Assets (some xnb bugs detected)

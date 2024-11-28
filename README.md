@@ -5,9 +5,9 @@
 
 It's only PoC (Proove-of-Concept). No consumer details. Devs only. 
 
-Game play is very specific ("strange random world exploration/generation"). The project is in alpha state (so, memory leaks, hangs/halts, etc.)
+Game play is very specific ("strange random world exploration/generation"). The project is in alpha state (early bird / proto -  memory leaks, hangs/halts, etc.)
 
-This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" (use WASD ad L.Control for SuperDodo activation :))))
+This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) game.  So, at now it only "walker" (use WASD ad L.Control for SuperDodo activation :))))
 
 Main goal: do more exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... However, Andromeda-like x86/x64-cpu based tablet (with keyboard) is best thing for this game, I think ;)
 

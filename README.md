@@ -3,7 +3,7 @@
 
 ## About
 
-It's only PoC (Proove-of-Concept). 
+It's only PoC (Proove-of-Concept). Game play is very specific (random world generation))). The project is in alpha state (so, memory leaks, hangs/halts, etc.)
 
 This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" via empty world with empty inventary! :))))
 
@@ -14,7 +14,7 @@ Main goal: do more exploration of special game "frameworks" such FMOD and port i
 ![](Images/shot01.png)
 ![](Images/shot02.png)
 ![](Images/shot03.png)
-![](Images/shot04.png)
+
 
 ## Words from the author(s)
 

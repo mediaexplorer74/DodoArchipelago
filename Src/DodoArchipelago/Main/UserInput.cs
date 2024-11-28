@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 using DodoTheGame.GUI;
+using GameManager;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Globalization;
@@ -26,10 +27,16 @@ namespace DodoTheGame
     private UserInputStatus wiimoteUIS;
     private UserInputStatus lastUIS;
     private string keyboardLang;
+    //private Controller Controller;
 
     public UserInput(int inputMthd)
     {
+      //Controller = new Controller(); // multi-controller init
+
+      //Controller.Update();
+
       this.inputMethod = inputMthd;
+
       this.lastUIS = new UserInputStatus();
 
       this.keyboardLang = "eng";//CultureInfo.GetCultureInfo(
@@ -43,29 +50,31 @@ namespace DodoTheGame
 
     public UserInputStatus GetInput()
     {
+      
       UserInputStatus input = new UserInputStatus();
       if (this.inputMethod != 1)
         throw new Exception("Unknown input method in class UserInput");
 
       KeyboardState state = Keyboard.GetState();
       
-      if (this.keyboardLang == "fra")
-      {
-        if (state.IsKeyDown(Keys.Z))
-          input.moveUp = 1f;
-        if (state.IsKeyDown(Keys.S))
-          input.moveDown = 1f;
-        if (state.IsKeyDown(Keys.Q))
-          input.moveLeft = 1f;
-        if (state.IsKeyDown(Keys.D))
-          input.moveRight = 1f;
-        if (state.IsKeyDown(Keys.E))
-          input.bike = UserInputStatus.InputState.Held;
-        if (state.IsKeyDown(Keys.A))
-          input.inventory = UserInputStatus.InputState.Held;
-      }
-      else
-      {
+      //if (this.keyboardLang == "fra")
+      //{
+      //  if (state.IsKeyDown(Keys.Z))
+      //    input.moveUp = 1f;
+      //  if (state.IsKeyDown(Keys.S))
+      //    input.moveDown = 1f;
+      //  if (state.IsKeyDown(Keys.Q))
+      //    input.moveLeft = 1f;
+      //  if (state.IsKeyDown(Keys.D))
+      //    input.moveRight = 1f;
+      //  if (state.IsKeyDown(Keys.E))
+       //   input.bike = UserInputStatus.InputState.Held;
+      //  if (state.IsKeyDown(Keys.A))
+      //    input.inventory = UserInputStatus.InputState.Held;
+      //}
+      //else
+      //{
+        /*
         if (state.IsKeyDown(Keys.W))
           input.moveUp = 1f;
         if (state.IsKeyDown(Keys.S))
@@ -78,23 +87,44 @@ namespace DodoTheGame
           input.bike = UserInputStatus.InputState.Held;
         if (state.IsKeyDown(Keys.Q))
           input.inventory = UserInputStatus.InputState.Held;
-      }
+        */
+        if (Game1.Controller.Is.MoveUp)
+           input.moveUp = 1f;
+        if (Game1.Controller.Is.MoveDown)
+          input.moveDown = 1f;
+        if (Game1.Controller.Is.MoveLeft)
+            input.moveLeft = 1f;
+        if (Game1.Controller.Is.MoveRight)
+          input.moveRight = 1f;
 
-      if (state.IsKeyDown(Keys.Space) || state.IsKeyDown(Keys.Enter))
+        if (state.IsKeyDown(Keys.E))
+            input.bike = UserInputStatus.InputState.Held;
+
+        if (state.IsKeyDown(Keys.Q))
+            input.inventory = UserInputStatus.InputState.Held;
+        //}
+
+      if (Game1.Controller.Is.SpaceBar)//(state.IsKeyDown(Keys.Space) || state.IsKeyDown(Keys.Enter))
         input.spacebar = UserInputStatus.InputState.Held;
 
-      if (state.IsKeyDown(Keys.Escape))
+      if (Game1.Controller.Is.Escape)//(state.IsKeyDown(Keys.Escape))
         input.escape = UserInputStatus.InputState.Held;
+
+      if (Game1.Controller.Is.Inventory)//(state.IsKeyDown(Keys.Escape))
+       input.inventory = UserInputStatus.InputState.Held;
 
       if (!GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>())
       {
-        if (state.IsKeyDown(Keys.Up))
+        if (Game1.Controller.InteractUp)//(state.IsKeyDown(Keys.Up))
           input.interactUp = UserInputStatus.InputState.Held;
-        if (state.IsKeyDown(Keys.Down))
+
+        if (Game1.Controller.InteractDown)//(state.IsKeyDown(Keys.Down))
           input.interactDown = UserInputStatus.InputState.Held;
-        if (state.IsKeyDown(Keys.Left))
+
+        if (Game1.Controller.InteractLeft)//(state.IsKeyDown(Keys.Left))
           input.interactLeft = UserInputStatus.InputState.Held;
-        if (state.IsKeyDown(Keys.Right))
+
+        if (Game1.Controller.InteractRight)//(state.IsKeyDown(Keys.Right))
           input.interactRight = UserInputStatus.InputState.Held;
       }
 

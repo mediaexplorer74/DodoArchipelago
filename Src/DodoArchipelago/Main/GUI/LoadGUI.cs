@@ -113,13 +113,18 @@ namespace DodoTheGame.GUI
     {
       if (up && this.selectedButton != 1 && this.selectedButton != 4)
         --this.selectedButton;
+
       if (down && this.selectedButton != 3 && this.selectedButton != 6)
         ++this.selectedButton;
+
       if (left && this.selectedButton != 1 && this.selectedButton != 2 && this.selectedButton != 3)
         this.selectedButton -= 3;
+
       if (right && this.selectedButton != 4 && this.selectedButton != 5 && this.selectedButton != 6)
         this.selectedButton += 3;
+
       bool flag = false;
+
       if (action1 && this.selectedButton == 1)
       {
         GUIManager.Clear();
@@ -155,6 +160,7 @@ namespace DodoTheGame.GUI
       }
       if (!flag)
         return;
+
       CutsceneManager.StartCutscene((ICutscene) new StoryIntroCutscene(),
           (GameTime) null, Game1.player, Game1.world);
     }
@@ -233,26 +239,34 @@ namespace DodoTheGame.GUI
       Recorder.RDraw(spriteBatch, this.mainbackground, new Vector2(0.0f, 0.0f), Color.White);
 
       Recorder.RDraw(spriteBatch, this.bande1, 
-          new Vector2((float) ((double) GUIManager.GUITimer / 5.0 % ((double) Game1.renderSize.X + 500.0) 
+          new Vector2((float) ((double) GUIManager.GUITimer 
+          / 5.0 % ((double) Game1.renderSize.X + 500.0) 
           - 300.0),  0.0f), Color.White * 1f);
 
       Recorder.RDraw(spriteBatch, this.bande2, 
-          new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 450.0)%((double) Game1.renderSize.X + 500.0)
+          new Vector2((float) (((double) GUIManager.GUITimer 
+          / 5.0 + 450.0)%((double) Game1.renderSize.X + 500.0)
           - 300.0), 0.0f), Color.White * 1f);
 
       Recorder.RDraw(spriteBatch, this.bande3,
-          new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 900.0)%((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
+          new Vector2((float) (((double) GUIManager.GUITimer 
+          / 5.0 + 900.0)%((double) Game1.renderSize.X + 500.0) - 300.0), 0.0f), Color.White * 1f);
+
       Recorder.RDraw(spriteBatch, this.bande2, 
-          new Vector2((float) (((double) GUIManager.GUITimer / 5.0 + 1350.0)%((double) Game1.renderSize.X 
+          new Vector2((float) (((double) GUIManager.GUITimer 
+          / 5.0 + 1350.0)%((double) Game1.renderSize.X 
           + 500.0) - 300.0), 0.0f), Color.White * 1f);
 
-      Recorder.RDraw(spriteBatch, this.img1, new Microsoft.Xna.Framework.Rectangle(int32 + 3, 155, 234, 125),
+      Recorder.RDraw(spriteBatch, this.img1, 
+          new Microsoft.Xna.Framework.Rectangle(int32 + 3, 155, 234, 125),
           Color.White);
 
-      Recorder.RDraw(spriteBatch, this.img2, new Microsoft.Xna.Framework.Rectangle(int32 + 3, 315, 234, 125),
+      Recorder.RDraw(spriteBatch, this.img2, 
+          new Microsoft.Xna.Framework.Rectangle(int32 + 3, 315, 234, 125),
           Color.White);
 
-      Recorder.RDraw(spriteBatch, this.img3, new Microsoft.Xna.Framework.Rectangle(int32 + 3, 475, 234, 125),
+      Recorder.RDraw(spriteBatch, this.img3, 
+          new Microsoft.Xna.Framework.Rectangle(int32 + 3, 475, 234, 125),
           Color.White);
 
       Recorder.RDraw(spriteBatch, texture1, new Vector2((float) int32, 152f), Color.White);
@@ -299,7 +313,8 @@ namespace DodoTheGame.GUI
     private static string FormatPlaytime(int pt)
     {
       TimeSpan timeSpan = TimeSpan.FromSeconds((double) pt);
-      return timeSpan.TotalMinutes < 60.0 ? string.Format(LocalizationManager.GetString("PlaytimeMinutes"),
+      return timeSpan.TotalMinutes < 60.0
+                ? string.Format(LocalizationManager.GetString("PlaytimeMinutes"),
           (object) timeSpan.Minutes) 
                 : string.Format(LocalizationManager.GetString("PlaytimeMinutesHours"),
                 (object) Math.Floor(timeSpan.TotalHours), (object) timeSpan.Minutes);

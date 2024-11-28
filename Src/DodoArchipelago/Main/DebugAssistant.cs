@@ -910,7 +910,7 @@ namespace DodoTheGame
 
 
     // DrawDebugPanel
-    public static void DrawDebugPanel(SpriteBatch sb, Game1 game)
+  public static void DrawDebugPanel(SpriteBatch sb, Game1 game)
   {
     if (!DebugAssistant.debugPanel)
       return;

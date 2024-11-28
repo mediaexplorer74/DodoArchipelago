@@ -33,6 +33,7 @@ using DodoTheGame.NPC;
 using DodoTheGame.Saving;
 using DodoTheGame.WorldObject;
 using GameManager;
+using FMOD.Studio;
 
 namespace DodoTheGame
 {
@@ -46,12 +47,12 @@ namespace DodoTheGame
     public static Vector2 renderSize;
     public static Vector2 renderSizeUpscaled;
     public static Vector2 windowSize;
-    public static bool isFullscreen = false;
+    public static bool isFullscreen = false; // set it *true* for W10M
 
     
     internal static World world;
 
-    //[ThreadStatic]
+    [ThreadStatic]
     public static List<INPC> NPCs;
 
     public static Tile[,] tile = new Tile[5001, 2501]; // TEMP
@@ -147,7 +148,7 @@ namespace DodoTheGame
     internal Texture2D lastFrame;
     
     // DEBUG MODE
-    private bool debugEnabled;
+    private bool debugEnabled = true;
 
     private DateTime compileDate = new DateTime();
     public Texture2D[] itemTextures;
@@ -174,9 +175,10 @@ namespace DodoTheGame
     private static Texture2D dodoteamlogo;
     private static Texture2D monogamelogo;
     private static Texture2D fmodlogo;
-    public static SoundEffect startupLogoSoundEffect;
+    
+    //public static SoundEffect startupLogoSoundEffect;
 
-    private bool startupIntroDone = false;//!
+    private bool startupIntroDone = true;//!
     
     public string playtestStoragePath;
     internal float timeSinceLastAutosave;
@@ -270,9 +272,7 @@ namespace DodoTheGame
       strArray[4] = num.ToString();
       Recorder.sessionStartcode = string.Concat(strArray);
 
-      // DEBUG: show/hide debug panel
-      this.debugEnabled = true;
-
+      
       this.userInput = new UserInput(inputType);
 
       Recorder.useHighContrast = highcontrast > 0;
@@ -281,8 +281,8 @@ namespace DodoTheGame
       Game1.graphics.PreferredBackBufferHeight = (int) Game1.windowSize.Y;
 
       //RnD
-      Game1.graphics.HardwareModeSwitch = false;
-      
+      //Game1.graphics.HardwareModeSwitch = false;
+
       Game1.graphics.IsFullScreen = false;
 
       //TODO: explore this service!
@@ -318,7 +318,7 @@ namespace DodoTheGame
       {
         Game1.isFullscreen = true;
         Game1.graphics.IsFullScreen = true;
-        Game1.graphics.ApplyChanges();
+        //Game1.graphics.ApplyChanges();
         System.Diagnostics.Debug.WriteLine("[i] Is full screen? Result: " + fullscreen.ToString());
       }
       else
@@ -327,7 +327,7 @@ namespace DodoTheGame
           return;
         Game1.isFullscreen = false;
         Game1.graphics.IsFullScreen = false;
-        Game1.graphics.ApplyChanges();
+        //Game1.graphics.ApplyChanges();
         System.Diagnostics.Debug.WriteLine("[i] Is full screen? Result: " + fullscreen.ToString());
       }
     }
@@ -337,7 +337,7 @@ namespace DodoTheGame
       Game1.windowSize = size;
       Game1.graphics.PreferredBackBufferWidth = (int) Game1.windowSize.X;
       Game1.graphics.PreferredBackBufferHeight = (int) Game1.windowSize.Y;
-      Game1.graphics.ApplyChanges();
+      //Game1.graphics.ApplyChanges();
 
       if ((double)Game1.windowSize.X / 16.0 > (double)Game1.windowSize.Y / 9.0)
       {
@@ -519,7 +519,7 @@ namespace DodoTheGame
     private void LoadAllContent(object stateInfo)
     {
       System.Diagnostics.Debug.WriteLine("[i] Starting asset loading (LoadAllContent)");
-      this.ressourceLoadingBackground720 = ContentLoadingWrapper.Load<Texture2D>("startup");
+      this.ressourceLoadingBackground720 = default;//ContentLoadingWrapper.Load<Texture2D>("startup");
       
       GameSettings gs = SaveHandler.LoadSettings();
 
@@ -543,19 +543,19 @@ namespace DodoTheGame
         MillisecondsPerFrame = 65
       };
 
-      Game1.startupLogoSoundEffect = ContentLoadingWrapper.Load<SoundEffect>("soundeffects/logo");
-      Game1.dodoteamlogo = ContentLoadingWrapper.Load<Texture2D>("dodoteam_black_small");
-      Game1.monogamelogo = ContentLoadingWrapper.Load<Texture2D>("MonogameLogo");
-      Game1.fmodlogo = ContentLoadingWrapper.Load<Texture2D>("FMODLogo");
+      //Game1.startupLogoSoundEffect = ContentLoadingWrapper.Load<SoundEffect>("soundeffects/logo");
+      //Game1.dodoteamlogo = ContentLoadingWrapper.Load<Texture2D>("dodoteam_black_small");
+      //Game1.monogamelogo = ContentLoadingWrapper.Load<Texture2D>("MonogameLogo");
+      //Game1.fmodlogo = ContentLoadingWrapper.Load<Texture2D>("FMODLogo");
       
       //TODO
-      //Sound.InitSound(new List<SoundEffect>()
-      //{
-      //  ContentLoadingWrapper.Load<SoundEffect>("wavebge"),
+      Sound.InitSound(new List<SoundEffect>()
+      {
+        ContentLoadingWrapper.Load<SoundEffect>("wavebge"),
       //  ContentLoadingWrapper.Load<SoundEffect>("soundeffects/volcano"),
       //  ContentLoadingWrapper.Load<SoundEffect>("soundeffects/cascade")
-      //}, this);
-      //Sound.InitEvents(this);
+      }, this);
+      Sound.InitEvents(this);
 
       TerrainBackground background = new TerrainBackground();
       TerrainBackground texture1 = new TerrainBackground();
@@ -1975,27 +1975,27 @@ namespace DodoTheGame
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/bb_opening"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/bb_closing"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_sable1"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_sable2"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_sable3"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_sable4"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_sable2"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_sable3"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_sable4"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_grass1"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_grass2"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_grass3"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_grass4"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_grass2"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_grass3"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_grass4"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_roche1"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_roche2"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_roche3"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_roche4"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_roche2"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_roche3"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/walking_roche4"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/aqua_pulse1"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/moto"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/fanfare1"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/bato en bois"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/braises"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/cigales"),
-        ContentLoadingWrapper.Load<SoundEffect>("bgm/StoryIntro"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/braises"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/cigales"),
+        //ContentLoadingWrapper.Load<SoundEffect>("bgm/StoryIntro"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/dolphin1"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/dolphin2"),
-        ContentLoadingWrapper.Load<SoundEffect>("soundeffects/dolphin3"),
+        //ContentLoadingWrapper.Load<SoundEffect>("soundeffects/dolphin3"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/owl"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/seagull"),
         ContentLoadingWrapper.Load<SoundEffect>("soundeffects/midnighttune"),
@@ -3003,10 +3003,10 @@ namespace DodoTheGame
         && Game1.dodoteamlogo != null 
         && Game1.monogamelogo != null
         && Game1.fmodlogo != null 
-        //&& Sound.SoundSystemInitialized 
-        //&& Sound.fmodEvents != null 
+        && Sound.SoundSystemInitialized 
+        && Sound.fmodEvents != null 
         //&& Sound.fmodEvents["event:/SFX/GameLogo"].getSampleLoadingState(out state) == RESULT.OK
-        //&& state == LOADING_STATE.LOADED
+        //&& Game1.LoadingState == LOADING_STATE.LOADED
         )
         {
           Vector2 position = new Vector2((float) Math.Round(
@@ -3041,14 +3041,14 @@ namespace DodoTheGame
             num7 = (float) (1.0 - ((double) Convert.ToSingle(this.startupIntroTimer) - 8500.0) / 700.0);
           else
             num8 = this.startupIntroTimer >= 9900 
-                            ? 1f
-                            : (float) (((double) Convert.ToSingle(
-                                this.startupIntroTimer) - 9200.0) / 700.0);
+                ? 1f
+                : (float) (((double) Convert.ToSingle(
+                    this.startupIntroTimer) - 9200.0) / 700.0);
 
           if ((double) num5 > 0.699999988079071 && !this.startupLogoEventPassed)
           {
             this.startupLogoEventPassed = true;
-            Game1.StartupLogo?.Invoke(this, EventArgs.Empty);
+            //Game1.StartupLogo?.Invoke(this, EventArgs.Empty);
           }
           this.spriteBatch.Begin(SpriteSortMode.Immediate);
 
@@ -3109,8 +3109,11 @@ namespace DodoTheGame
         base.Draw(gameTime);
       }
 
-        ////DEBUG:  Draw debug panel
-        DebugAssistant.DrawDebugPanel(this.spriteBatch, this);
+      // if DEBUG mode then Draw debug panel
+      if (this.debugEnabled)
+      {
+            DebugAssistant.DrawDebugPanel(this.spriteBatch, this);
+      }
 
     }//Draw
 

@@ -509,8 +509,12 @@ namespace DodoTheGame
 
       KeyboardState state1 = Microsoft.Xna.Framework.Input.Keyboard.GetState();
 
-      //DEBUG:  KeyboardState ks, Game1 game, GameTime gameTime
-      DebugAssistant.KeyInput(state1, game, gameTime);
+      // if DEBUG mode then Draw debug panel
+      if (this.debugEnabled)
+      {
+            //  KeyboardState ks, Game1 game, GameTime gameTime
+            DebugAssistant.KeyInput(state1, game, gameTime);
+      }
 
       TimeSpan elapsedGameTime;
       if (this.currentMovementType == Player.DodoMovement.Walk)

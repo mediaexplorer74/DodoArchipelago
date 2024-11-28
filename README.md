@@ -42,7 +42,7 @@ Here's what you can expect:
 - Game "engine":	MonoGame
 - Labels:	2D, chill, Cute, Exploration, Singleplayer
 - Languages:	English, French
-- Type of control:	Keyboard (mouse and touchpanel planned)
+- Type of control:	Keyboard / Touchpanel / "Joypad" (not tested by me, no joystick))
 - Original game focused (targeted) to Windows classic (desktop) , my project is UWP (Hello, Xbox, and Windows 10 Mobile!) 
 
 

@@ -48,13 +48,20 @@ Here's what you can expect:
 - Main W10M device : Lumia 950; sdk 15063+ (Last)  - init state
 - Secondary W10M device : sdk 10240 (Astoria) - init state
 - Game build status - ok
-- Game content - "sounds, textures: connection/incorporation" in progress
+- Sound effects partially fixed (effects ok, but no background misic at now)
 - Original kbd control still presend for desktop mode 
-- No Screen scaling mode yet.
+- No Screen scaling for non-follscreen mode.
 - Experimentation (debugging) with special "Debug panel" (blocked in *main* branch, available in *dev* branch)
-- You can change the language in the settings of the game (requires a restart).
-- Use WASD (or ZQSD on a french keyboard) and Space to move and select in the menus.
-- Use Left-Right-Up-Down for build/take a note etc. (BUT world generator *damaged*/not reversed by JetBrains DotPeek, so no world items such a house, etc.! holly shit, heh!!)
+- world generator reconstructed by me, and... game logics cardinally changed (DoDo "clone" NPC discovered and shown)))
+
+## Known problems
+- Not all sound effects work good (strange bug with *null* items at soundeffect list)
+- No background music
+- Textures (tiles) are huge (so, no W10M compatibility at now!)
+- No TouchPanel (touchscreen) support
+- Intro cutted (no multi-threading in WinSDK 10240)
+- World repairing promblem (Game "forget the world" after restarting and regenerates it...)
+- No story cutscenes 
 
 
 ## ToDo
@@ -62,6 +69,8 @@ Here's what you can expect:
 - Fix no sound problem
 - Fix some graphics and fx effects!
 - Fix another 100500 bugs :)
+- NPC?
+- Game localization(s) 
 
 ## References
 - https://rouli.itch.io/the-dodo-archipelago Original DoDo Archipelago game (x86, desktop)

@@ -4,6 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using DodoTheGame.BackgroundEffects;
 using DodoTheGame.BGM;
 using DodoTheGame.Cutscene;
@@ -11,11 +16,8 @@ using DodoTheGame.GUI;
 using DodoTheGame.WorldObject;
 using FMOD;
 using FMOD.Studio;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
+using System.Xml.Linq;
+using XAct;
 
 
 namespace DodoTheGame
@@ -24,6 +26,7 @@ namespace DodoTheGame
   {
     public static List<SoundEffect> soundEffectList;
     public static List<SoundEffectInstance> backgroundEffectList;
+
     public static List<float> backgroundEffectFactors;
     public static Dictionary<string, IBGM> BGMs = new Dictionary<string, IBGM>();
     public static float sfxVolume = 1f;
@@ -34,98 +37,104 @@ namespace DodoTheGame
     private static double timeSinceLastRandomBGMCheck;
     private static EventHandler<EventArgs> MidnightTune;
     private static bool midnightTunePlayed = false;
-    private static FMOD.Studio.System fmodSys;
+    //private static FMOD.Studio.System fmodSys;
+
     private static readonly Dictionary<string, string> fmodEventHandling = new Dictionary<string, string>()
     {
       {
         "Player.Dolphin",
-        "event:/SFX/Dolphin"
+        "soundeffects/aqua_pulse1"//"event:/SFX/Dolphin"
       },
       {
         "Player.EnteredWater",
-        "event:/SFX/EnterWater"
+        "soundeffects/splash"//"event:/SFX/EnterWater"
       },
       {
         "Player.MovedBike",
-        "event:/SFX/BikeMove"
+        "soundeffects/moto"//"event:/SFX/BikeMove"
       },
       {
         "Player.StartedBuilding",
-        "event:/SFX/Build"
+        "soundeffects/bruitagebuild5"//"event:/SFX/Build"
       },
       {
         "Player.Walked",
-        "event:/SFX/Footsteps/DodoStep"
+        "soundeffects/walking_grass1"//"event:/SFX/Footsteps/DodoStep"
       },
       {
         "InventoryGUI.Closed",
-        "event:/SFX/UI/Inventory/Close"
+        "soundeffects/inventory_opening"//"event:/SFX/UI/Inventory/Close"
       },
       {
         "InventoryGUI.Opened",
-        "event:/SFX/UI/Inventory/Open"
+        "soundeffects/inventory_closing"//"event:/SFX/UI/Inventory/Open"
       },
       {
         "InventoryGUI.MovedItemSelection",
-        "event:/SFX/UI/Inventory/Selection"
+        "soundeffects/inventory_selecting"//"event:/SFX/UI/Inventory/Selection"
       },
       {
         "EscapeGUI.Opened",
-        "event:/SFX/UI/Escape/Open"
+        "soundeffects/escapemenu_opening"//"event:/SFX/UI/Escape/Open"
       },
       {
         "EscapeGUI.Closed",
-        "event:/SFX/UI/Escape/Close"
+        "soundeffects/escapemenu_closing"//"event:/SFX/UI/Escape/Close"
       },
       {
         "EscapeGUI.MovedItemSelection",
-        "event:/SFX/UI/Escape/Selection"
+        "soundeffects/escapemenu_selecting"//"event:/SFX/UI/Escape/Selection"
       },
       {
         "SettingsGUI.MovedItemSelection",
-        "event:/SFX/UI/Settings/Selection"
+        "soundeffects/inventory_selecting"//"event:/SFX/UI/Settings/Selection"
       },
       {
         "Player.StartedHarvesting",
-        "event:/SFX/Harvest"
+        "soundeffects/harvesting"//"event:/SFX/Harvest"
       },
       {
         "Player.StartedSwimmingPulse",
-        "event:/SFX/SwimPulse"
+        "soundeffects/swimming_1"//"event:/SFX/SwimPulse"
       },
       {
         "BuildPoint.BuildBoxOpened",
-        "event:/SFX/UI/BuildBox/Open"
+        "soundeffects/bb_opening"//"event:/SFX/UI/BuildBox/Open"
       },
       {
         "BuildPoint.BuildBoxClosed",
-        "event:/SFX/UI/BuildBox/Close"
+        "soundeffects/bb_closing"//"event:/SFX/UI/BuildBox/Close"
       },
       {
         "Game1.StartupLogo",
-        "event:/SFX/GameLogo"
+        "soundeffects/midnighttune"//"event:/SFX/GameLogo"
       },
       {
         "Sound.MidnightTune",
-        "event:/BGM/MidnightTune"
+        "soundeffects/midnighttune"//"event:/BGM/MidnightTune"
       },
       {
         "EnvironmentalSoundManager.Owl",
-        "event:/SFX/Owl"
+        "soundeffects/owl"//"event:/SFX/Owl"
       },
       {
         "BirdShadowManager.Seagull",
-        "event:/SFX/Seagull"
+        "soundeffects/seagull"//"soundeffects/seagull"//"event:/SFX/Seagull"
       },
       {
         "Player.BikeAppearing",
-        "event:/SFX/BikeAppear"
+        "soundeffects/walk_to_bike"//"event:/SFX/BikeAppear"
       },
       {
         "World.Progress",
-        "event:/SFX/Progress"
+        "soundeffects/volcano"//"event:/SFX/Progress" // RnD it ))
+      },
+      {
+        "Player.CollisionWithObjectOrTerrain", // 
+        "soundeffects/collision" 
       }
     };
+
     internal static Dictionary<string, EventDescription> fmodEvents;
 
     public static bool SoundSystemInitialized { get; private set; }
@@ -145,26 +154,70 @@ namespace DodoTheGame
 
     private static void FmodCreateAndPlay(string eventName)
     {
-      EventInstance instance;
-      Sound.FMODErrCheck(Sound.fmodEvents[eventName].createInstance(out instance));
-      Sound.FMODErrCheck(instance.start());
-      Sound.FMODErrCheck(instance.release());
+           
+        string itemName = eventName;// TODO: eventName.Substring(6) for parsing "event:___"
+
+        SoundEffect fItem = default;
+
+        try
+        {
+            fItem = Sound.soundEffectList.Find(p => p.Name == itemName);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("[ex] Sound - item " + itemName + " not found : " +
+                ex.Message);
+            return;
+        }
+
+        int index = 0;
+
+        try
+        {
+            index = Sound.soundEffectList.IndexOf(fItem);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("[ex] Sound - item "+ itemName +"index not found : " + 
+                ex.Message);
+            return;
+        }
+
+        Sound.backgroundEffectList[0].Stop();
+
+        try
+        {
+            Sound.backgroundEffectList[0] = Sound.soundEffectList[index].CreateInstance();
+        }
+        catch { }
+
+        Sound.backgroundEffectList[0].Play();
+    
+
     }
+
 
     public static void ReceiveEvent(object sender, EventArgs e, string eventName)
     {
-      if (Sound.fmodEventHandling.ContainsKey(eventName))
-        Sound.FmodCreateAndPlay(Sound.fmodEventHandling[eventName]);
-      else
-        System.Diagnostics.Debug.WriteLine(
-            "[!] Sound.ReceiveEvent count not find an FMOD event for event " + eventName);
+    if (Sound.fmodEventHandling.ContainsKey(eventName))
+        {
+                Sound.FmodCreateAndPlay(Sound.fmodEventHandling[eventName]);
+
+                //System.Diagnostics.Debug.WriteLine("[!] Sound.ReceiveEvent: event " + eventName);
+            }
+        else
+        {
+            System.Diagnostics.Debug.WriteLine(
+                "[!] Sound.ReceiveEvent count not find an FMOD event for event " + eventName);
+        }
     }
 
     internal static void FMODErrCheck(RESULT res)
     {
-      if (res != RESULT.OK)
-        throw new Exception(Error.String(res));
+        if (res != RESULT.OK)
+            throw new Exception(Error.String(res));
     }
+
 
     public static void InitSound(List<SoundEffect> backgroundEffects, Game1 game)
     {
@@ -175,53 +228,108 @@ namespace DodoTheGame
         instance.IsLooped = true;
         Sound.backgroundEffectList.Add(instance);
       }
-      int num = (int) FMOD.Studio.System.create(out Sound.fmodSys);
-      Sound.FMODErrCheck(Sound.fmodSys.initialize(32, FMOD.Studio.INITFLAGS.LIVEUPDATE, FMOD.INITFLAGS.NORMAL, (IntPtr) 0));
-      Bank bank;
-      Sound.FMODErrCheck(Sound.fmodSys.loadBankFile("Content/Master.bank", LOAD_BANK_FLAGS.NORMAL, out bank));
-      Sound.FMODErrCheck(Sound.fmodSys.loadBankFile("Content/Master.strings.bank", LOAD_BANK_FLAGS.NORMAL, out Bank _));
-      Sound.fmodEvents = new Dictionary<string, EventDescription>();
-      EventDescription[] array;
-      Sound.FMODErrCheck(bank.getEventList(out array));
-      foreach (EventDescription eventDescription in array)
-      {
-        string path;
-        Sound.FMODErrCheck(eventDescription.getPath(out path));
-        Sound.fmodEvents.Add(path, eventDescription);
-        Sound.FMODErrCheck(eventDescription.loadSampleData());
-      }
+      //int num = (int) FMOD.Studio.System.create(out Sound.fmodSys);
+      //Sound.FMODErrCheck(Sound.fmodSys.initialize(32,
+      //FMOD.Studio.INITFLAGS.LIVEUPDATE, FMOD.INITFLAGS.NORMAL, (IntPtr) 0));
+      //Bank bank;
+      //Sound.FMODErrCheck(Sound.fmodSys.loadBankFile("Content/Master.bank",
+      //LOAD_BANK_FLAGS.NORMAL, out bank));
+      //Sound.FMODErrCheck(Sound.fmodSys.loadBankFile("Content/Master.strings.bank",
+      //LOAD_BANK_FLAGS.NORMAL, out Bank _));
+      //Sound.fmodEvents = new Dictionary<string, EventDescription>();
+      //EventDescription[] array;
+      //Sound.FMODErrCheck(bank.getEventList(out array));
+      //foreach (EventDescription eventDescription in array)
+      //{
+      //  string path;
+      //  Sound.FMODErrCheck(eventDescription.getPath(out path));
+      //  Sound.fmodEvents.Add(path, eventDescription);
+      //  Sound.FMODErrCheck(eventDescription.loadSampleData());
+      //}
       MediaPlayer.MediaStateChanged += new EventHandler<EventArgs>(Sound.StateSongChanged);
       Sound.SoundSystemInitialized = true;
     }
 
     public static void InitEvents(Game1 game)
     {
-      Game1.player.Walked += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.Walked"));
-      Game1.player.CollisionWithObjectOrTerrain += (EventHandler<PlayerCollisionEventArgs>) ((sender, e) => Sound.ReceiveEvent(sender, (EventArgs) e, "Player.CollisionWithObjectOrTerrain"));
-      Game1.player.Dolphin += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.Dolphin"));
-      Game1.player.EnteredWater += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.EnteredWater"));
-      Game1.player.LeftWater += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.LeftWater"));
-      Game1.player.StartedBuilding += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.StartedBuilding"));
-      Game1.player.StartedHarvesting += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.StartedHarvesting"));
-      Game1.player.StartedSwimmingPulse += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.StartedSwimmingPulse"));
-      Game1.player.MovedBike += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.MovedBike"));
-      Game1.player.BikeAppearing += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Player.BikeAppearing"));
-      GUIManager.inventoryGUI.Closed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "InventoryGUI.Closed"));
-      GUIManager.inventoryGUI.Opened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "InventoryGUI.Opened"));
-      GUIManager.inventoryGUI.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "InventoryGUI.MovedItemSelection"));
-      GUIManager.escapeGUI.Opened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EscapeGUI.Opened"));
-      GUIManager.escapeGUI.Closed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EscapeGUI.Closed"));
-      GUIManager.escapeGUI.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EscapeGUI.MovedItemSelection"));
-      GUIManager.settings.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "SettingsGUI.MovedItemSelection"));
-      GUIManager.mainmenu.Opened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "MainMenu.Opened"));
-      GUIManager.mainmenu.Closed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "MainMenu.Closed"));
-      EnvironmentalSoundManager.Owl += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "EnvironmentalSoundManager.Owl"));
-      BirdShadowManager.Seagull += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "BirdShadowManager.Seagull"));
-      GUIManager.mainmenu.MovedItemSelection += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "MainMenu.MovedItemSelection"));
-      BuildPoint.BuildBoxOpened += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxOpened"));
-      BuildPoint.BuildBoxClosed += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxClosed"));
-      Game1.StartupLogo += (EventHandler) ((sender, e) => Sound.ReceiveEvent(sender, e, "Game1.StartupLogo"));
-      Sound.MidnightTune += (EventHandler<EventArgs>) ((sender, e) => Sound.ReceiveEvent(sender, e, "Sound.MidnightTune"));
+      Game1.player.Walked += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.Walked"));
+
+      Game1.player.CollisionWithObjectOrTerrain 
+                += (EventHandler<PlayerCollisionEventArgs>) ((sender, e) 
+                => Sound.ReceiveEvent(sender, (EventArgs) e, "Player.CollisionWithObjectOrTerrain"));
+
+      Game1.player.Dolphin += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.Dolphin"));
+
+      Game1.player.EnteredWater += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.EnteredWater"));
+
+      Game1.player.LeftWater += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.LeftWater"));
+
+      Game1.player.StartedBuilding += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.StartedBuilding"));
+
+      Game1.player.StartedHarvesting += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.StartedHarvesting"));
+
+      Game1.player.StartedSwimmingPulse += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "Player.StartedSwimmingPulse"));
+
+      Game1.player.MovedBike += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.MovedBike"));
+
+      Game1.player.BikeAppearing += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Player.BikeAppearing"));
+
+      GUIManager.inventoryGUI.Closed += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "InventoryGUI.Closed"));
+
+      GUIManager.inventoryGUI.Opened += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "InventoryGUI.Opened"));
+
+      GUIManager.inventoryGUI.MovedItemSelection += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "InventoryGUI.MovedItemSelection"));
+
+      GUIManager.escapeGUI.Opened += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "EscapeGUI.Opened"));
+
+      GUIManager.escapeGUI.Closed += (EventHandler) ((sender, e)
+                => Sound.ReceiveEvent(sender, e, "EscapeGUI.Closed"));
+
+      GUIManager.escapeGUI.MovedItemSelection += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "EscapeGUI.MovedItemSelection"));
+
+      GUIManager.settings.MovedItemSelection += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "SettingsGUI.MovedItemSelection"));
+
+      GUIManager.mainmenu.Opened += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "MainMenu.Opened"));
+
+      GUIManager.mainmenu.Closed += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "MainMenu.Closed"));
+
+      EnvironmentalSoundManager.Owl += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "EnvironmentalSoundManager.Owl"));
+
+      BirdShadowManager.Seagull += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "BirdShadowManager.Seagull"));
+
+      GUIManager.mainmenu.MovedItemSelection += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "MainMenu.MovedItemSelection"));
+
+      BuildPoint.BuildBoxOpened += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxOpened"));
+
+      BuildPoint.BuildBoxClosed += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "BuildPoint.BuildBoxClosed"));
+
+      Game1.StartupLogo += (EventHandler) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Game1.StartupLogo"));
+
+      Sound.MidnightTune += (EventHandler<EventArgs>) ((sender, e) 
+                => Sound.ReceiveEvent(sender, e, "Sound.MidnightTune"));
     }
 
     private static void StateSongChanged(object sender, EventArgs e)
@@ -256,17 +364,26 @@ namespace DodoTheGame
     {
       if (!Sound.SoundSystemInitialized)
         return;
-      int num = (int) Sound.fmodSys.update();
+       int num = 1;//(int) Sound.fmodSys.update();
     }
 
     public static void Update(GameTime gametime, Game1 game)
     {
-      Sound.FMODErrCheck(Sound.fmodSys.setParameterByName("GroundStandingOn", Convert.ToSingle((int) Game1.player.StandingOnTerrainType)));
+      //Sound.FMODErrCheck(Sound.fmodSys.setParameterByName("GroundStandingOn", 
+      //    Convert.ToSingle((int) Game1.player.StandingOnTerrainType)));
+
       Vector2 vector2 = new Vector2(9000f, 8100f);
-      double num = Math.Sqrt(Math.Pow((double) Game1.player.location.X - (double) vector2.X, 2.0) + Math.Pow((double) Game1.player.location.Y - (double) vector2.Y, 2.0));
-      if (!CutsceneManager.CutsceneActive && num < 900.0 && Game1.world.Level >= 1 && DayCycle.CurrentTime > 10.0 && DayCycle.CurrentTime < 275.0)
+      double num = Math.Sqrt(Math.Pow((double) Game1.player.location.X 
+        - (double) vector2.X, 2.0) + Math.Pow((double) Game1.player.location.Y - (double) vector2.Y, 2.0));
+
+      if (!CutsceneManager.CutsceneActive && num < 900.0 && Game1.world.Level >= 1 
+                && DayCycle.CurrentTime > 10.0 && DayCycle.CurrentTime < 275.0)
       {
-        if (Sound.currentBGM == null || Sound.currentBGM == Sound.BGMs["Village"] || Sound.currentBGM.Status == BGMStatus.Stopped)
+        if 
+        (  Sound.currentBGM == null 
+            || Sound.currentBGM == Sound.BGMs["Village"] 
+            || Sound.currentBGM.Status == BGMStatus.Stopped
+        )
         {
           Sound.currentBGM = Sound.BGMs["Village"];
           Sound.currentBGM.Start();
@@ -276,14 +393,24 @@ namespace DodoTheGame
           Sound.currentBGM.RequestStop(true);
       }
       else if (num > 1700.0 || DayCycle.CurrentTime < 10.0 || DayCycle.CurrentTime > 275.0)
-        Sound.currentBGM?.RequestStop(true);
+      { 
+          Sound.currentBGM?.RequestStop(true); 
+      }
+
+
       if (!CutsceneManager.CutsceneActive)
       {
         Sound.timeSinceLastRandomBGMCheck += gametime.ElapsedGameTime.TotalMilliseconds;
         if (Sound.timeSinceLastRandomBGMCheck > 2000.0)
         {
           Sound.timeSinceLastRandomBGMCheck = 0.0;
-          if (num > 3000.0 && DayCycle.CurrentTime > 10.0 && DayCycle.CurrentTime < 275.0 && Game1.player.bgmThemeCount < 3 && (Sound.currentBGM == null || Sound.currentBGM.Status == BGMStatus.Stopped) && Game1.player.currentMovementType != Player.DodoMovement.Bicycle && Game1.rand.Next(0, 10) == 1)
+          if (num > 3000.0 && DayCycle.CurrentTime > 10.0 
+                        && DayCycle.CurrentTime < 275.0
+                        && Game1.player.bgmThemeCount < 3 
+                        && (Sound.currentBGM == null 
+                        || Sound.currentBGM.Status == BGMStatus.Stopped) 
+                        && Game1.player.currentMovementType != Player.DodoMovement.Bicycle 
+                        && Game1.rand.Next(0, 10) == 1)
           {
             ++Game1.player.bgmThemeCount;
             ++Game1.player.bgmThemeDay;
@@ -293,14 +420,23 @@ namespace DodoTheGame
             Sound.currentBGM.Start();
           }
         }
-        if (DayCycle.CurrentTime > 430.0 && DayCycle.CurrentTime < 438.0 && !Sound.midnightTunePlayed && Game1.player.currentMovementType != Player.DodoMovement.Bicycle)
+
+        if 
+        (
+            DayCycle.CurrentTime > 430.0 && DayCycle.CurrentTime < 438.0
+            && !Sound.midnightTunePlayed
+            && Game1.player.currentMovementType != Player.DodoMovement.Bicycle
+        )
         {
-          Sound.midnightTunePlayed = true;
-          Sound.MidnightTune((object) null, new EventArgs());
+            Sound.midnightTunePlayed = true;
+            Sound.MidnightTune((object)null, new EventArgs());
         }
         else if (DayCycle.CurrentTime < 430.0 || DayCycle.CurrentTime > 438.0)
-          Sound.midnightTunePlayed = false;
+        {
+            Sound.midnightTunePlayed = false;
+        }
       }
+
       Sound.currentBGM?.Update(gametime);
     }
 

@@ -21,7 +21,14 @@
     <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <LangVersion>latest</LangVersion>
-    <PackageCertificateThumbprint>33A4071FD29498EAA172D843D7EDFDE797E02EA4</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>
+    </PackageCertificateThumbprint>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -96,124 +103,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\ArrayUtil.cs" />
-    <Compile Include="Main\BackgroundEffects\BirdShadow.cs" />
-    <Compile Include="Main\BackgroundEffects\BirdShadowManager.cs" />
-    <Compile Include="Main\BackgroundEffects\Butterfly.cs" />
-    <Compile Include="Main\BackgroundEffects\ButterflyManager.cs" />
-    <Compile Include="Main\BackgroundEffects\EnvironmentalSoundManager.cs" />
-    <Compile Include="Main\BackgroundEffects\IBackgroundEffect.cs" />
-    <Compile Include="Main\BackgroundEffects\Wave.cs" />
-    <Compile Include="Main\BackgroundEffects\WindTrail.cs" />
-    <Compile Include="Main\BackgroundEffects\WindTrailManager.cs" />
-    <Compile Include="Main\BGM\BGMStatus.cs" />
-    <Compile Include="Main\BGM\IBGM.cs" />
-    <Compile Include="Main\BGM\LoopingBGM.cs" />
-    <Compile Include="Main\BGM\SimpleBGM.cs" />
-    <Compile Include="Main\BuildBox.cs" />
-    <Compile Include="Main\Cardinal.cs" />
-    <Compile Include="Main\ContentLoadingWrapper.cs" />
-    <Compile Include="Main\CubicSpline.cs" />
-    <Compile Include="Main\Cutscene\ArchipelagoArrivalCutscene.cs" />
-    <Compile Include="Main\Cutscene\CutsceneManager.cs" />
-    <Compile Include="Main\Cutscene\ICutscene.cs" />
-    <Compile Include="Main\Cutscene\RenderOverride.cs" />
-    <Compile Include="Main\Cutscene\StoryIntroCutscene.cs" />
-    <Compile Include="Main\DayCycle.cs" />
-    <Compile Include="Main\DebugAssistant.cs" />
-    <Compile Include="Main\ForegroundEffects\HarvestResults.cs" />
-    <Compile Include="Main\ForegroundEffects\IForegroundEffect.cs" />
-    <Compile Include="Main\Game1.cs" />
-    <Compile Include="Main\JavaScriptConverter.cs" />
-    <Compile Include="Main\Localization\JavaScriptSerializer.cs" />
-    <Compile Include="Main\ManagementObject.cs" />
-    <Compile Include="Main\ManagementObjectCollection.cs" />
-    <Compile Include="Main\ManagementObjectSearcher.cs" />
-    <Compile Include="Main\Properties\ApplicationSettingsBase.cs" />
-    <Compile Include="Main\Properties\SettingsBase.cs" />
-    <Compile Include="Main\GlobalEvent.cs" />
-    <Compile Include="Main\GlobalEventManager.cs" />
-    <Compile Include="Main\GUI\CreditsGUI.cs" />
-    <Compile Include="Main\GUI\EditorGUI.cs" />
-    <Compile Include="Main\GUI\EscapeGUI.cs" />
-    <Compile Include="Main\GUI\GUIManager.cs" />
-    <Compile Include="Main\GUI\IGUI.cs" />
-    <Compile Include="Main\GUI\InteractGUI.cs" />
-    <Compile Include="Main\GUI\InventoryGUI.cs" />
-    <Compile Include="Main\GUI\LoadGUI.cs" />
-    <Compile Include="Main\GUI\MainMenuGUI.cs" />
-    <Compile Include="Main\GUI\SettingsGUI.cs" />
-    <Compile Include="Main\GUI\TutorialGUI.cs" />
-    <Compile Include="Main\Hitbox\Box.cs" />
-    <Compile Include="Main\Hitbox\HorizontalLine.cs" />
-    <Compile Include="Main\Hitbox\IHitbox.cs" />
-    <Compile Include="Main\Hitbox\Points.cs" />
-    <Compile Include="Main\Hitbox\VerticalLine.cs" />
-    <Compile Include="Main\Interactions\Build.cs" />
-    <Compile Include="Main\Interactions\Harvest.cs" />
-    <Compile Include="Main\Interactions\IDodoInteraction.cs" />
-    <Compile Include="Main\Interactions\Inspect.cs" />
-    <Compile Include="Main\Interactions\TakeNotes.cs" />
-    <Compile Include="Main\Interactions\UnlockPlayerUnlockable.cs" />
-    <Compile Include="Main\Interactions\Upgrade.cs" />
-    <Compile Include="Main\Inventory.cs" />
-    <Compile Include="Main\ItemStack.cs" />
-    <Compile Include="Main\Localization\Language.cs" />
-    <Compile Include="Main\Localization\LocalizationManager.cs" />
-    <Compile Include="Main\NPC\BlueDodo.cs" />
-    <Compile Include="Main\NPC\GreenDodo.cs" />
-    <Compile Include="Main\NPC\INPC.cs" />
-    <Compile Include="Main\NPC\NPCManager.cs" />
-    <Compile Include="Main\NPC\OrangeDodo.cs" />
-    <Compile Include="Main\NPC\PinkDodo.cs" />
-    <Compile Include="Main\NPC\RedDodo.cs" />
-    <Compile Include="Main\NPC\Shibananas.cs" />
-    <Compile Include="Main\NPC\ShroomDodo.cs" />
-    <Compile Include="Main\OnlineTetheredSecurityManager.cs" />
-    <Compile Include="Main\Pathfinder.cs" />
-    <Compile Include="Main\PathfoundEventArgs.cs" />
-    <Compile Include="Main\PerformanceCounter.cs" />
-    <Compile Include="Main\Player.cs" />
-    <Compile Include="Main\PlayerUnlockables.cs" />
-    <Compile Include="Main\Preset.cs" />
-    <Compile Include="Main\PresetGenerator.cs" />
-    <Compile Include="Main\Properties\Settings.cs" />
-    <Compile Include="Main\Recorder.cs" />
-    <Compile Include="Main\Saving\GameSettings.cs" />
-    <Compile Include="Main\Saving\IDodoInteractionConverter.cs" />
-    <Compile Include="Main\Saving\INPCConverter.cs" />
-    <Compile Include="Main\Saving\ItemStackConverter.cs" />
-    <Compile Include="Main\Saving\IWorldObjectConverter.cs" />
-    <Compile Include="Main\Saving\PresetConverter.cs" />
-    <Compile Include="Main\Saving\Save.cs" />
-    <Compile Include="Main\Saving\SaveHandler.cs" />
-    <Compile Include="Main\Saving\SaveInfo.cs" />
-    <Compile Include="Main\Saving\Texture2DConverter.cs" />
-    <Compile Include="Main\Saving\Vector2Converter.cs" />
-    <Compile Include="Main\ScreenShake.cs" />
-    <Compile Include="Main\Sound.cs" />
-    <Compile Include="Main\Sprite.cs" />
-    <Compile Include="Main\SubSprite.cs" />
-    <Compile Include="Main\TerrainBackground.cs" />
-    <Compile Include="Main\TerrainBackgroundPart.cs" />
-    <Compile Include="Main\TerrainBehavior.cs" />
-    <Compile Include="Main\TerrainBehaviorMap.cs" />
-    <Compile Include="Main\TerrainType.cs" />
-    <Compile Include="Main\TextureList.cs" />
-    <Compile Include="Main\Tile.cs" />
-    <Compile Include="Main\TriDiagonalMatrixF.cs" />
-    <Compile Include="Main\UserInput.cs" />
-    <Compile Include="Main\UserInputStatus.cs" />
-    <Compile Include="Main\Wind.cs" />
-    <Compile Include="Main\World.cs" />
-    <Compile Include="Main\WorldGenerator.cs" />
-    <Compile Include="Main\WorldObject\BuildPoint.cs" />
-    <Compile Include="Main\WorldObject\Growable.cs" />
-    <Compile Include="Main\WorldObject\Hourglass.cs" />
-    <Compile Include="Main\WorldObject\IWorldObject.cs" />
-    <Compile Include="Main\WorldObject\LinkingGrowable.cs" />
-    <Compile Include="Main\WorldObject\Static.cs" />
-    <Compile Include="Main\WorldObject\Upgradable.cs" />
     <Compile Include="FMOD\ADVANCEDSETTINGS.cs" />
     <Compile Include="FMOD\ASYNCREADINFO.cs" />
     <Compile Include="FMOD\ATTRIBUTES_3D.cs" />
@@ -435,6 +324,120 @@
     <Compile Include="FMOD\TIMEUNIT.cs" />
     <Compile Include="FMOD\VECTOR.cs" />
     <Compile Include="FMOD\VERSION.cs" />
+    <Compile Include="Main\ArrayUtil.cs" />
+    <Compile Include="Main\BackgroundEffects\BirdShadow.cs" />
+    <Compile Include="Main\BackgroundEffects\BirdShadowManager.cs" />
+    <Compile Include="Main\BackgroundEffects\Butterfly.cs" />
+    <Compile Include="Main\BackgroundEffects\ButterflyManager.cs" />
+    <Compile Include="Main\BackgroundEffects\EnvironmentalSoundManager.cs" />
+    <Compile Include="Main\BackgroundEffects\IBackgroundEffect.cs" />
+    <Compile Include="Main\BackgroundEffects\Wave.cs" />
+    <Compile Include="Main\BackgroundEffects\WindTrail.cs" />
+    <Compile Include="Main\BackgroundEffects\WindTrailManager.cs" />
+    <Compile Include="Main\BGM\BGMStatus.cs" />
+    <Compile Include="Main\BGM\IBGM.cs" />
+    <Compile Include="Main\BGM\LoopingBGM.cs" />
+    <Compile Include="Main\BGM\SimpleBGM.cs" />
+    <Compile Include="Main\BuildBox.cs" />
+    <Compile Include="Main\Cardinal.cs" />
+    <Compile Include="Main\ContentLoadingWrapper.cs" />
+    <Compile Include="Main\CubicSpline.cs" />
+    <Compile Include="Main\Cutscene\ArchipelagoArrivalCutscene.cs" />
+    <Compile Include="Main\Cutscene\CutsceneManager.cs" />
+    <Compile Include="Main\Cutscene\ICutscene.cs" />
+    <Compile Include="Main\Cutscene\RenderOverride.cs" />
+    <Compile Include="Main\Cutscene\StoryIntroCutscene.cs" />
+    <Compile Include="Main\DayCycle.cs" />
+    <Compile Include="Main\DebugAssistant.cs" />
+    <Compile Include="Main\ForegroundEffects\HarvestResults.cs" />
+    <Compile Include="Main\ForegroundEffects\IForegroundEffect.cs" />
+    <Compile Include="Main\Game1.cs" />
+    <Compile Include="Main\JavaScriptConverter.cs" />
+    <Compile Include="Main\Localization\JavaScriptSerializer.cs" />
+    <Compile Include="Main\Properties\ApplicationSettingsBase.cs" />
+    <Compile Include="Main\Properties\SettingsBase.cs" />
+    <Compile Include="Main\GlobalEvent.cs" />
+    <Compile Include="Main\GlobalEventManager.cs" />
+    <Compile Include="Main\GUI\CreditsGUI.cs" />
+    <Compile Include="Main\GUI\EditorGUI.cs" />
+    <Compile Include="Main\GUI\EscapeGUI.cs" />
+    <Compile Include="Main\GUI\GUIManager.cs" />
+    <Compile Include="Main\GUI\IGUI.cs" />
+    <Compile Include="Main\GUI\InteractGUI.cs" />
+    <Compile Include="Main\GUI\InventoryGUI.cs" />
+    <Compile Include="Main\GUI\LoadGUI.cs" />
+    <Compile Include="Main\GUI\MainMenuGUI.cs" />
+    <Compile Include="Main\GUI\SettingsGUI.cs" />
+    <Compile Include="Main\GUI\TutorialGUI.cs" />
+    <Compile Include="Main\Hitbox\Box.cs" />
+    <Compile Include="Main\Hitbox\HorizontalLine.cs" />
+    <Compile Include="Main\Hitbox\IHitbox.cs" />
+    <Compile Include="Main\Hitbox\Points.cs" />
+    <Compile Include="Main\Hitbox\VerticalLine.cs" />
+    <Compile Include="Main\Interactions\Build.cs" />
+    <Compile Include="Main\Interactions\Harvest.cs" />
+    <Compile Include="Main\Interactions\IDodoInteraction.cs" />
+    <Compile Include="Main\Interactions\Inspect.cs" />
+    <Compile Include="Main\Interactions\TakeNotes.cs" />
+    <Compile Include="Main\Interactions\UnlockPlayerUnlockable.cs" />
+    <Compile Include="Main\Interactions\Upgrade.cs" />
+    <Compile Include="Main\Inventory.cs" />
+    <Compile Include="Main\ItemStack.cs" />
+    <Compile Include="Main\Localization\Language.cs" />
+    <Compile Include="Main\Localization\LocalizationManager.cs" />
+    <Compile Include="Main\NPC\BlueDodo.cs" />
+    <Compile Include="Main\NPC\GreenDodo.cs" />
+    <Compile Include="Main\NPC\INPC.cs" />
+    <Compile Include="Main\NPC\NPCManager.cs" />
+    <Compile Include="Main\NPC\OrangeDodo.cs" />
+    <Compile Include="Main\NPC\PinkDodo.cs" />
+    <Compile Include="Main\NPC\RedDodo.cs" />
+    <Compile Include="Main\NPC\Shibananas.cs" />
+    <Compile Include="Main\NPC\ShroomDodo.cs" />
+    <Compile Include="Main\Pathfinder.cs" />
+    <Compile Include="Main\PathfoundEventArgs.cs" />
+    <Compile Include="Main\PerformanceCounter.cs" />
+    <Compile Include="Main\Player.cs" />
+    <Compile Include="Main\PlayerUnlockables.cs" />
+    <Compile Include="Main\Preset.cs" />
+    <Compile Include="Main\PresetGenerator.cs" />
+    <Compile Include="Main\Properties\Settings.cs" />
+    <Compile Include="Main\Recorder.cs" />
+    <Compile Include="Main\Saving\GameSettings.cs" />
+    <Compile Include="Main\Saving\IDodoInteractionConverter.cs" />
+    <Compile Include="Main\Saving\INPCConverter.cs" />
+    <Compile Include="Main\Saving\ItemStackConverter.cs" />
+    <Compile Include="Main\Saving\IWorldObjectConverter.cs" />
+    <Compile Include="Main\Saving\PresetConverter.cs" />
+    <Compile Include="Main\Saving\Save.cs" />
+    <Compile Include="Main\Saving\SaveHandler.cs" />
+    <Compile Include="Main\Saving\SaveInfo.cs" />
+    <Compile Include="Main\Saving\Texture2DConverter.cs" />
+    <Compile Include="Main\Saving\Vector2Converter.cs" />
+    <Compile Include="Main\ScreenShake.cs" />
+    <Compile Include="Main\Sound.cs" />
+    <Compile Include="Main\Sprite.cs" />
+    <Compile Include="Main\SubSprite.cs" />
+    <Compile Include="Main\TerrainBackground.cs" />
+    <Compile Include="Main\TerrainBackgroundPart.cs" />
+    <Compile Include="Main\TerrainBehavior.cs" />
+    <Compile Include="Main\TerrainBehaviorMap.cs" />
+    <Compile Include="Main\TerrainType.cs" />
+    <Compile Include="Main\TextureList.cs" />
+    <Compile Include="Main\Tile.cs" />
+    <Compile Include="Main\TriDiagonalMatrixF.cs" />
+    <Compile Include="Main\UserInput.cs" />
+    <Compile Include="Main\UserInputStatus.cs" />
+    <Compile Include="Main\Wind.cs" />
+    <Compile Include="Main\World.cs" />
+    <Compile Include="Main\WorldGenerator.cs" />
+    <Compile Include="Main\WorldObject\BuildPoint.cs" />
+    <Compile Include="Main\WorldObject\Growable.cs" />
+    <Compile Include="Main\WorldObject\Hourglass.cs" />
+    <Compile Include="Main\WorldObject\IWorldObject.cs" />
+    <Compile Include="Main\WorldObject\LinkingGrowable.cs" />
+    <Compile Include="Main\WorldObject\Static.cs" />
+    <Compile Include="Main\WorldObject\Upgradable.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -528,9 +531,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bgm\village1_adaptive\VillageSong1-Start.ogg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\startup_music.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="settings.xml" />
@@ -793,9 +793,6 @@
     <Content Include="Content\bgm\Dodo_Day_theme_4.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bgm\StoryIntro.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\bgm\village1_adaptive\VillageSong1-EmptyLoop.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -899,9 +896,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bottle_empty.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\bruitagebuild4.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\buildnuage.xnb">
@@ -1836,9 +1830,6 @@
     <Content Include="Content\marker3.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Master.bank">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Master.strings.bank">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2172,9 +2163,6 @@
     <Content Include="Content\shrooms\tiny_shroom.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\slot0.dodomemory">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\smallitems\0.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2271,136 +2259,7 @@
     <Content Include="Content\smallitems\empty.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\soundeffects\aqua_pulse1.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\bato en bois.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\bb_closing.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\bb_opening.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\braises.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\bruitagebuild5.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\cascade.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\cigales.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\collision.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\dolphin1.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\dolphin2.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\dolphin3.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\escapemenu_closing.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\escapemenu_opening.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\escapemenu_selecting.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\fanfare1.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\harvesting.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\inventory_closing.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\inventory_opening.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\inventory_selecting.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\logo.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\midnighttune.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\moto.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\owl.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\seagull.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\splash.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\swimming_1.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\volcano.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_grass1.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_grass2.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_grass3.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_grass4.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_roche1.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_roche2.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_roche3.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_roche4.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_sable1.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_sable2.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_sable3.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walking_sable4.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\soundeffects\walk_to_bike.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\spikevolcan.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\startup.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\startup1080.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\startup_music.xnb">
@@ -2892,9 +2751,6 @@
     <Content Include="Content\watercloud2.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\wavebge.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\white.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2943,8 +2799,120 @@
     <Content Include="Content\Font.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\soundeffects\aqua_pulse1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\bb_closing.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\bb_opening.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\bruitagebuild5.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\collision.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\dolphin1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\dolphin2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\dolphin3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\escapemenu_closing.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\escapemenu_opening.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\escapemenu_selecting.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\fanfare1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\harvesting.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\inventory_closing.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\inventory_opening.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\inventory_selecting.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\moto.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\owl.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\seagull.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\splash.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\swimming_1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\volcano.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_grass1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_grass2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_grass3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_grass4.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_roche1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_roche2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_roche3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_roche4.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_sable1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_sable2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_sable3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walking_sable4.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\walk_to_bike.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\wavebge.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\soundeffects\midnighttune.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="DodoArchipelago_TemporaryKey.pfx" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

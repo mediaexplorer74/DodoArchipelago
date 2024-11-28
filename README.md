@@ -3,11 +3,11 @@
 
 ## About
 
-It's only PoC (Proove-of-Concept). Game play is very specific (random world generation))). The project is in alpha state (so, memory leaks, hangs/halts, etc.)
+It's only PoC (Proove-of-Concept). Game play is very specific ("strange random world exploration/generation"). The project is in alpha state (so, memory leaks, hangs/halts, etc.)
 
-This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" via empty world with empty inventary! :))))
+This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" (use WASD ad L.Control for SuperDodo activation :))))
 
-Main goal: do more exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... 
+Main goal: do more exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... However, Andromeda-like x86/x64-cpu based tablet (with keyboard) is best thing for this game, I think ;)
 
 
 ## Screenshot(s)
@@ -47,7 +47,7 @@ Here's what you can expect:
 ## Status of my DodoArchipelago porting
 - Main W10M device : Lumia 950; sdk 15063+ (Last)  - init state
 - Secondary W10M device : sdk 10240 (Astoria) - init state
-- Game build status - ok
+- Game build status - ok, and main game mode seems to be ok :)
 - Sound effects partially fixed (effects ok, but no background misic at now)
 - Original kbd control still presend for desktop mode 
 - No Screen scaling for non-follscreen mode.
@@ -62,6 +62,7 @@ Here's what you can expect:
 - Intro cutted (no multi-threading in WinSDK 10240)
 - World repairing promblem (Game "forget the world" after restarting and regenerates it...)
 - No story cutscenes 
+- No upgradable buildings (only "inventary" parst is ready)
 
 
 ## ToDo

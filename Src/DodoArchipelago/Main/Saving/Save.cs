@@ -16,7 +16,7 @@ using XSystem.Security.Cryptography;
 using SHA512 = XSystem.Security.Cryptography.SHA512;
 //using System.Web.Script.Serialization; // TODO: fit It and delete xact.core.pcl
 using Windows.Storage;
-
+using GameManager;
 
 namespace DodoTheGame.Saving
 {
@@ -226,7 +226,9 @@ namespace DodoTheGame.Saving
         {
           currentMovementType = default,//(Player.DodoMovement) objArray[10],
           facing = (int) objArray[11],
-          location = new Vector2(Convert.ToSingle(objArray[12], (IFormatProvider) CultureInfo.InvariantCulture), Convert.ToSingle(objArray[13], (IFormatProvider) CultureInfo.InvariantCulture)),
+          location = new Vector2(Convert.ToSingle(objArray[12], 
+          (IFormatProvider) CultureInfo.InvariantCulture), 
+          Convert.ToSingle(objArray[13], (IFormatProvider) CultureInfo.InvariantCulture)),
           inventory = inventory,
           playTime = (int) objArray[14],
           unlockedPlayerTools = new Dictionary<PlayerUnlockables.PlayerUnlockable, bool>()
@@ -243,11 +245,12 @@ namespace DodoTheGame.Saving
           bgmThemeDay = (int) objArray[18],
           bgmThemeCount = (int) objArray[19]
         };
+
         player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike] = (bool) objArray[15];
         player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] = (bool) objArray[16];
         player.TimeBar = Convert.ToSingle(objArray[20], (IFormatProvider) CultureInfo.InvariantCulture);
 
-        //
+        // ...
         World world = new World(default)
         {
           name = (string) objArray[21],

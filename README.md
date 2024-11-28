@@ -16,6 +16,8 @@ Main goal: do more exploration of special game "frameworks" such FMOD and port i
 ![](Images/shot01.png)
 ![](Images/shot02.png)
 ![](Images/shot03.png)
+![](Images/shot04.png)
+![](Images/shot05.png)
 
 
 ## Words from the author(s)
@@ -51,20 +53,21 @@ Here's what you can expect:
 - Secondary W10M device : sdk 10240 (Astoria) - init state
 - Game build status - ok, and main game mode seems to be ok :)
 - Sound effects partially fixed (effects ok, but no background misic at now)
-- Original kbd control still presend for desktop mode 
-- No Screen scaling for non-follscreen mode.
+- Multi-control support realized (keyboard+touchpanel+joystick) 
+- No Screen scaling for non-follscreen mode
 - Experimentation (debugging) with special "Debug panel" (blocked in *main* branch, available in *dev* branch)
 - world generator reconstructed by me, and... game logics cardinally changed (DoDo "clone" NPC discovered and shown)))
+- compatibility with Visual Studio 2017 IDE (for brave real WinPhone/Lumia device debug!)))
 
 ## Known problems
 - Not all sound effects work good (strange bug with *null* items at soundeffect list)
 - No background music
-- Textures (tiles) are huge (so, no W10M compatibility at now!)
-- No TouchPanel (touchscreen) support
+- Background textures (tiles) are huge (so, disable tiles for W10M compatibility)
 - Intro cutted (no multi-threading in WinSDK 10240)
 - World repairing promblem (Game "forget the world" after restarting and regenerates it...)
 - No story cutscenes 
 - No upgradable buildings (only "inventary" parst is ready)
+- Improper screen borders.
 
 
 ## ToDo
@@ -73,7 +76,8 @@ Here's what you can expect:
 - Fix some graphics and fx effects!
 - Fix another 100500 bugs :)
 - NPC?
-- Game localization(s) 
+- Game localization(s)  
+- Fix screen distortion(s) (very strange resolutions)
 
 ## References
 - https://rouli.itch.io/the-dodo-archipelago Original DoDo Archipelago game (x86, desktop)

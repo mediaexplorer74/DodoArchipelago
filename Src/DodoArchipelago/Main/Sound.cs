@@ -107,7 +107,7 @@ namespace DodoTheGame
       },
       {
         "Game1.StartupLogo",
-        "soundeffects/midnighttune"//"event:/SFX/GameLogo"
+        "soundeffects/midnighttune"//"event:/SFX/GameLogo" //"soundeffects/fanfare1"
       },
       {
         "Sound.MidnightTune",
@@ -132,7 +132,8 @@ namespace DodoTheGame
       {
         "Player.CollisionWithObjectOrTerrain", // 
         "soundeffects/collision" 
-      }
+      },
+    
     };
 
     internal static Dictionary<string, EventDescription> fmodEvents;

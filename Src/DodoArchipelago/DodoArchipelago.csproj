@@ -341,6 +341,7 @@
     <Compile Include="Main\BuildBox.cs" />
     <Compile Include="Main\Cardinal.cs" />
     <Compile Include="Main\ContentLoadingWrapper.cs" />
+    <Compile Include="Main\Controller.cs" />
     <Compile Include="Main\CubicSpline.cs" />
     <Compile Include="Main\Cutscene\ArchipelagoArrivalCutscene.cs" />
     <Compile Include="Main\Cutscene\CutsceneManager.cs" />

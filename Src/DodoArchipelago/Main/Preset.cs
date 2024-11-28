@@ -149,8 +149,10 @@ namespace DodoTheGame
     public List<IWorldObject> MakeWOs(List<Tuple<Vector2, string>> locationAndNameList)
     {
       List<IWorldObject> worldObjectList = new List<IWorldObject>();
+
       foreach (Tuple<Vector2, string> locationAndName in locationAndNameList)
         worldObjectList.Add(this.MakeWO(locationAndName.Item1, locationAndName.Item2));
+
       return worldObjectList;
     }
 

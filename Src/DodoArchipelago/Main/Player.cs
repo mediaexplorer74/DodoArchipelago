@@ -73,6 +73,7 @@ namespace DodoTheGame
 
 //----TEMP--------------------------------------------------
 #region TempPlayerFuilds
+/*
     public Vector2 position;
     public Vector2 velocity;
     public double headFrameCounter;
@@ -153,6 +154,7 @@ namespace DodoTheGame
     private static int itemGrabRange = 32;
     private static float itemGrabSpeed = 0.4f;
     private static float itemGrabSpeedMax = 4f;
+*/
 #endregion
 //----------------------------------------------------------
 
@@ -1182,6 +1184,7 @@ namespace DodoTheGame
       }
     }
 
+    /*
     public void Spawn()
     {
         this.headPosition = new Vector2();
@@ -1212,9 +1215,10 @@ namespace DodoTheGame
             }
         }
         
-        Game1.dodoScreenLocation.X = this.position.X + (float)(this.width / 2) - (float)(/*Game1.screenWidth*/1024 / 2);
-        Game1.dodoScreenLocation.Y = this.position.Y + (float)(this.height / 2) - (float)(/*Game1.screenHeight*/768 / 2);
+        Game1.dodoScreenLocation.X = this.position.X + (float)(this.width / 2) - (float)(Game1.screenWidth / 2);
+        Game1.dodoScreenLocation.Y = this.position.Y + (float)(this.height / 2) - (float)(Game1.screenHeight / 2);
     }
+    */
 
 
     public enum DodoMovement

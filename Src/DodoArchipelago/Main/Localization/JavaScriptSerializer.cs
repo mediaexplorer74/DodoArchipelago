@@ -2,6 +2,7 @@
 
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 
 namespace DodoTheGame.Localization
 {
@@ -29,7 +30,17 @@ namespace DodoTheGame.Localization
 
         internal string Serialize(object o)
         {
-            string json = JsonConvert.SerializeObject(o);
+            string json = "unrecognized";
+            try
+            {
+                json = JsonConvert.SerializeObject(o);
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine("[ex] JavaScriptSerializer - JsonConvert.SerializeObject error: " 
+                    + ex.Message);
+            }
+
             return json;
         }
     }

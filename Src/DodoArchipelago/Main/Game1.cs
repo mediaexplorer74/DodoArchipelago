@@ -398,7 +398,9 @@ namespace DodoTheGame
     {
       System.Diagnostics.Debug.WriteLine("[i] Starting Monogame initialization");
       Game1.rand = new Random();
+
       GUIManager.Setup();
+
       Game1.player = new Player()
       {
         unlockedPlayerTools = new Dictionary<PlayerUnlockables.PlayerUnlockable, bool>()
@@ -766,13 +768,13 @@ namespace DodoTheGame
 
 
       //RnD
-      /*Game1.world = new World(background)
-      {
-          name = "mainworld",
-          objects = new List<IWorldObject>(),
-          behaviorMap = new TerrainBehaviorMap(texture1),
-          background = background // !
-      };*/
+      //Game1.world = new World(background)
+      //{
+      //    name = "mainworld",
+      //    objects = new List<IWorldObject>(),
+      //    behaviorMap = new TerrainBehaviorMap(texture1),
+      //    background = background // !
+      //};
       
             
 #region NPC_deals
@@ -2088,16 +2090,17 @@ namespace DodoTheGame
             #endregion
 
 
-        //RnD
-        Game1.world = new World(background)
-        {
-            name = "mainworld",
-            objects = new List<IWorldObject>(),
-            behaviorMap = new TerrainBehaviorMap(texture1),
-            background = background // !
-        };
+            //RnD
+            Game1.world = new World(background)
+            {
+                name = "mainworld",
+                objects = new List<IWorldObject>(),
+                behaviorMap = new TerrainBehaviorMap(texture1),
+                background = background // !
+            };
+            WorldGenerator.NewWorldGen(Game1.world, this.presetList);
 
-   }//LoadAllContent
+        }//LoadAllContent
 
 
    // LoadDefaultSave
@@ -2110,10 +2113,10 @@ namespace DodoTheGame
           inventory = new ItemStack[24]
         };
 
-        //System.Diagnostics.Debug.WriteLine(
-        //    "[!] Static world generation enabled. Generating world now.");
-
-        //WorldGenerator.GenerateWorld(Game1.world, this.presetList);
+        System.Diagnostics.Debug.WriteLine(
+            "[!] Static world generation enabled. Generating world now.");
+            
+         //WorldGenerator.NewWorldGen(Game1.world, this.presetList);
 
         Game1.player.inventory.inventory[0] = new ItemStack(10, 6);
         Game1.NPCs = new List<INPC>();
@@ -2315,11 +2318,12 @@ namespace DodoTheGame
             Game1.player.Update(gameTime, Game1.world, this, userInputStatus);
             ScreenShake.Update(gameTime, Game1.player);
             NPCManager.Update(Game1.world, gameTime);
+
             foreach (IWorldObject worldObject 
-                            in Game1.world.objects.Where<IWorldObject>(
-                                (Func<IWorldObject, bool>) 
-                                (p => p.StandardSprite != null && p.StandardSprite.animated 
-                                || p is Growable)))
+                in Game1.world.objects.Where<IWorldObject>(
+                    (Func<IWorldObject, bool>) 
+                    (p => p.StandardSprite != null && p.StandardSprite.animated 
+                    || p is Growable)))
             {
               if (worldObject.StandardSprite != null 
                                 && !this.knownSprites.Contains(worldObject.StandardSprite))
@@ -2409,12 +2413,17 @@ namespace DodoTheGame
         this.GraphicsDevice.SetRenderTarget(this.renderTarget);
         this.GraphicsDevice.Clear(Color.Black);
         this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+
         this.backgroundPosition = 
-                    new Vector2(Game1.dodoCenteredScreenLocation.X - Game1.player.location.X,
-                    Game1.dodoCenteredScreenLocation.Y - Game1.player.location.Y) 
-                    + ScreenShake.CameraOffset;
+            new Vector2
+            (
+                Game1.dodoCenteredScreenLocation.X  - Game1.player.location.X,
+                Game1.dodoCenteredScreenLocation.Y  - Game1.player.location.Y
+            ) 
+            + ScreenShake.CameraOffset;
 
         Game1.dodoScreenLocation = Game1.dodoCenteredScreenLocation;
+
         if (Game1.player.currentMovementType != Player.DodoMovement.Bicycle)
           Game1.dodoScreenLocation += ScreenShake.CameraOffset;
 
@@ -2496,8 +2505,12 @@ namespace DodoTheGame
 
           Game1.world.objects.ForEach((Action<IWorldObject>) 
               (wo => wo.DrawShadow(this.spriteBatch, 
-              new Vector2(this.backgroundPosition.X + wo.Location.X,
-              this.backgroundPosition.Y + wo.Location.Y), gameTime, this)));
+              new Vector2
+              (
+                  this.backgroundPosition.X + wo.Location.X,
+                  this.backgroundPosition.Y + wo.Location.Y
+              ), 
+              gameTime, this)));
 
           this.spriteBatch.End();
           if (!CutsceneManager.IsOverrideInEffect(RenderOverride.BirdShadows))
@@ -2525,7 +2538,7 @@ namespace DodoTheGame
               case Player _:
                 return ((Player) o).CurrentFeetY;
               default:
-                throw new Exception("Unkonwn object type while sorting floor objects");
+                throw new Exception("Unknown object type while sorting floor objects");
             }
           })).ToList<object>();
 

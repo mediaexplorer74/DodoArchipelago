@@ -1687,8 +1687,10 @@ namespace DodoTheGame
       presets.Add(new Preset("cgrass", "cgrass", Preset.WOType.Static, new Sprite("cgrass", ContentLoadingWrapper.Load<Texture2D>("cgrass")), (List<Rectangle>) null, new Vector2(0.0f, 0.0f), new IDodoInteraction[4], "Plants"));
       Sprite sprite144 = new Sprite("grass1N", ContentLoadingWrapper.Load<Texture2D>("grass1N"));
       presets.Add(new Preset("Herbe", "Grass1N", Preset.WOType.Static, sprite144, (List<Rectangle>) null, new Vector2(0.0f, 0.0f), new IDodoInteraction[4], "Decor"));
+      
       Sprite sprite145 = new Sprite("spikevolcan", ContentLoadingWrapper.Load<Texture2D>("spikevolcan"));
       presets.Add(new Preset("Volcano spike", "Volcano spike", Preset.WOType.Static, sprite145, (List<Rectangle>) null, new Vector2(0.0f, 0.0f), new IDodoInteraction[4], "Decor"));
+      
       Sprite sprite146 = new Sprite("greententacle1", ContentLoadingWrapper.Load<Texture2D>("greententacle1"));
       presets.Add(new Preset("Tentacule", "greententacle1", Preset.WOType.Static, sprite146, (List<Rectangle>) null, new Vector2(0.0f, 0.0f), new IDodoInteraction[4], "Decor"));
       Sprite sprite147 = new Sprite("greententacle2", ContentLoadingWrapper.Load<Texture2D>("greententacle2"));
@@ -2563,8 +2565,12 @@ namespace DodoTheGame
       Vector2 epicenterOffset48 = new Vector2(0.0f, 0.0f);
       IDodoInteraction[] interactions48 = new IDodoInteraction[4];
       Vector2? extraReach48 = new Vector2?();
-      Preset preset42 = new Preset("Volcan", "volcan", Preset.WOType.Static, sprite217, hitbox48, epicenterOffset48, interactions48, "Other", extraReach48, extraFloorHeight: -100);
+
+      Preset preset42 = new Preset("Volcan", "volcan", Preset.WOType.Static, sprite217, hitbox48, 
+          epicenterOffset48, interactions48, "Other", extraReach48, extraFloorHeight: -100);
+
       presetList39.Add(preset42);
+
       Sprite sprite218 = new Sprite("fleur1", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_shadow"), new Vector2(1f, 209f), opacity: 0.4f)
@@ -2574,10 +2580,12 @@ namespace DodoTheGame
         Width = 145,
         MillisecondsPerFrame = 90
       };
+
       Sprite sprite219 = new Sprite("fleur1_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_cut"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_shadow"), new Vector2(1f, 209f), opacity: 0.4f)
       });
+
       presets.Add(new Preset("Fleur", "fleur geante 1", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite218,

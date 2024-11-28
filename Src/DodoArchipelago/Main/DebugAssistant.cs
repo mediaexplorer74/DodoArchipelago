@@ -50,12 +50,13 @@ namespace DodoTheGame
     };
 
     public static Microsoft.Xna.Framework.Input.Keys? debugPanelActiveMenu
-        = new Microsoft.Xna.Framework.Input.Keys?(); 
-            
- 
+        = new Microsoft.Xna.Framework.Input.Keys?();
 
+
+    // ExportStaticWorld
     private static void ExportStaticWorld(Game1 game)
     {
+      StorageFolder localFolder = ApplicationData.Current.LocalFolder;
       JavaScriptSerializer scriptSerializer = new JavaScriptSerializer();
       scriptSerializer.RegisterConverters((IEnumerable<JavaScriptConverter>) 
           new List<JavaScriptConverter>()
@@ -68,11 +69,16 @@ namespace DodoTheGame
 
       int totalSeconds = (int) DateTime.UtcNow.Subtract(
           new DateTime(1970, 1, 1)).TotalSeconds;
-      File.WriteAllText("gameedit-ser-" + totalSeconds.ToString() + ".txt", 
+
+      File.WriteAllText(localFolder.Path +"\\"+ 
+          "gameedit-ser-" + totalSeconds.ToString() + ".txt", 
           scriptSerializer.Serialize((object) DebugAssistant.woModifiedInGameEditor));
+
       List<string> stringList = new List<string>();
+
       foreach (Preset preset in game.presetList)
         stringList.Add(preset.name);
+
       string str1 = "//// World definition START" + Environment.NewLine;
       foreach (string str2 in stringList)
       {
@@ -177,9 +183,13 @@ namespace DodoTheGame
         ++num1;
       }
       string contents = str5 + Environment.NewLine + "//// World definition END";
-      File.WriteAllText("gameedit-" + totalSeconds.ToString() + ".txt", contents);
+
+      File.WriteAllText(localFolder.Path + "\\"+
+          "gameedit-" + totalSeconds.ToString() + ".txt", contents);
     }
 
+    
+    // KeyInput
     public static void KeyInput(KeyboardState ks, Game1 game, GameTime gameTime)
     {
       StorageFolder localFolder = ApplicationData.Current.LocalFolder;
@@ -452,333 +462,364 @@ namespace DodoTheGame
         }
         DebugAssistant.debugPanelActiveMenu = new Microsoft.Xna.Framework.Input.Keys?();
 
-        
-        if (DebugAssistant.debugPanel)
-        {
 
-
-          // "mousing" :)
-          MouseState state = Mouse.GetState();
-          Rectangle rectangle =
-                        new Rectangle((int) Math.Round(((double) Game1.windowSize.X 
-                        - (double) Game1.renderSizeUpscaled.X) / 2.0, 0), 
-                        (int) Math.Round(((double) Game1.windowSize.Y - (double) Game1.renderSizeUpscaled.Y) / 2.0, 0), 
-                        Convert.ToInt32(Game1.renderSizeUpscaled.X), Convert.ToInt32(Game1.renderSizeUpscaled.Y));
-          if (state.RightButton 
-                        == Microsoft.Xna.Framework.Input.ButtonState.Pressed 
-                        && DebugAssistant.previousMouseState.RightButton 
-                        == Microsoft.Xna.Framework.Input.ButtonState.Released && game.IsActive
-                        && state.X >= rectangle.X && state.X 
-                        < rectangle.Width + rectangle.X && state.Y >= rectangle.Y && state.Y < rectangle.Height + rectangle.Y)
-          {
-            Vector2 point = new Vector2(Convert.ToSingle(
-                Math.Round((double) Convert.ToSingle(state.X - rectangle.X) / (double) rectangle.Width * (double) Game1.renderSize.X)),
-                Convert.ToSingle(Math.Round((double) Convert.ToSingle(state.Y - rectangle.Y) / (double) rectangle.Height * (double) Game1.renderSize.Y)));
-            if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>() 
-                            && (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) 
-                            || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)))
-              GUIManager.editorHUD.AddPoint(point, game);
-            else if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>() 
-                            && !ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)
-                            && !ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt))
-            {
-              GUIManager.Clear();
-            }
-            else
-            {
-              GUIManager.editorHUD.SetPoint(point, game);
-              GUIManager.ClearThenSet((IGUI) GUIManager.editorHUD);
-            }
-          }
-
-          DebugAssistant.previousMouseState = state;
-
-          
-          if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>())
-          {
-            if (DebugAssistant.woModifiedInGameEditor == null)
-              DebugAssistant.woModifiedInGameEditor = new List<IWorldObject>();
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete))
-            {
-              foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
-                Game1.world.objects.Remove(worldObject);
-              GUIManager.editorHUD.woInTarget.Clear();
-            }
-            int num = 1;
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-              num = 6;
-
-
-            if (
-                (
-                 ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl) 
-                 || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl)
-                )
-                && ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) && DebugAssistant.debugKeyCooldown == 0
-               )
-            {
-              DebugAssistant.debugKeyCooldown = 40;
-
-                System.Diagnostics.Debug.WriteLine("[i] CTRL + D activated !");
-
-                //Clipboard.SetText(SaveHandler.SerializeSingleGameData(GUIManager.editorHUD.woInTarget));
-                System.Diagnostics.Debug.WriteLine( "[i] SaveHandler.SerializeSingleGameData="
-                    + SaveHandler.SerializeSingleGameData(GUIManager.editorHUD.woInTarget).ToString() );
-            }
-
-
-
-            //if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right) 
-            //      && !GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
-            if (
-                (
-                    ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)
-                    || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl)
-                )
-                && ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && DebugAssistant.debugKeyCooldown == 0
-                )
-            {
-                DebugAssistant.debugKeyCooldown = 40;
-
-                System.Diagnostics.Debug.WriteLine("[i] CTRL + W activated ! Some World experiments...");
-
-                foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
-              {
-                IWorldObject wo = worldObject;
-                if (!(wo is BuildPoint))
+                if (DebugAssistant.debugPanel)
                 {
-                  wo.Location = new Vector2(wo.Location.X + (float) num, wo.Location.Y);
-                  Vector2 explicitEpicenter1 = wo.ExplicitEpicenter;
-                  Vector2 explicitEpicenter2 = wo.ExplicitEpicenter;
-                  explicitEpicenter2.X += (float) num;
-                  wo.ExplicitEpicenter = explicitEpicenter2;
-
-                  if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
-                      (Func<IWorldObject, bool>) (p => p.ObjectId != wo.ObjectId)))
-                    DebugAssistant.woModifiedInGameEditor.Add(wo);
-                }
-              }
-            }
-
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left) 
-                            && !GUIManager.editorHUD.presetMenuOpen 
-                            && DebugAssistant.debugKeyCooldown == 0)
-            {
-              foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
-              {
-                IWorldObject wo = worldObject;
-                if (!(wo is BuildPoint))
-                {
-                  wo.Location = new Vector2(wo.Location.X - (float) num, wo.Location.Y);
-                  Vector2 explicitEpicenter3 = wo.ExplicitEpicenter;
-                  Vector2 explicitEpicenter4 = wo.ExplicitEpicenter;
-                  explicitEpicenter4.X -= (float) num;
-                  wo.ExplicitEpicenter = explicitEpicenter4;
-                  if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
-                      (Func<IWorldObject, bool>) (p => p.ObjectId != wo.ObjectId)))
-                    DebugAssistant.woModifiedInGameEditor.Add(wo);
-                }
-              }
-            }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
-            {
-              if (GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
-              {
-                DebugAssistant.debugKeyCooldown = 14;
-                --GUIManager.editorHUD.selectedPresetIndex;
-              }
-              else if (DebugAssistant.debugKeyCooldown == 0)
-              {
-                foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
-                {
-                  IWorldObject wo = worldObject;
-                  if (!(wo is BuildPoint))
-                  {
-                    wo.Location = new Vector2(wo.Location.X, wo.Location.Y - (float) num);
-                    Vector2 explicitEpicenter5 = wo.ExplicitEpicenter;
-                    Vector2 explicitEpicenter6 = wo.ExplicitEpicenter;
-                    explicitEpicenter6.Y -= (float) num;
-                    wo.ExplicitEpicenter = explicitEpicenter6;
-                    if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
-                        (Func<IWorldObject, bool>) (p => p.ObjectId != wo.ObjectId)))
-                      DebugAssistant.woModifiedInGameEditor.Add(wo);
-                  }
-                }
-              }
-            }
-
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Down))
-            {
-              if (GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
-              {
-                DebugAssistant.debugKeyCooldown = 14;
-                ++GUIManager.editorHUD.selectedPresetIndex;
-              }
-              else if (DebugAssistant.debugKeyCooldown == 0)
-              {
-                foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
-                {
-                  if (!(worldObject is BuildPoint))
-                  {
-                    worldObject.Location = new Vector2(worldObject.Location.X,
-                        worldObject.Location.Y + (float) num);
-                    Vector2 explicitEpicenter7 = worldObject.ExplicitEpicenter;
-                    Vector2 explicitEpicenter8 = worldObject.ExplicitEpicenter;
-                    explicitEpicenter8.Y += (float) num;
-                    worldObject.ExplicitEpicenter = explicitEpicenter8;
-                    if (!DebugAssistant.woModifiedInGameEditor.Contains(worldObject))
-                      DebugAssistant.woModifiedInGameEditor.Add(worldObject);
-                  }
-                }
-              }
-            }
-
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Tab) 
-                            && DebugAssistant.debugKeyCooldown == 0)
-            {
-              DebugAssistant.debugKeyCooldown = 30;
-              GUIManager.editorHUD.presetMenuOpen = !GUIManager.editorHUD.presetMenuOpen;
-            }
-            
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right)
-                            && DebugAssistant.debugKeyCooldown == 0 
-                            && GUIManager.editorHUD.presetMenuOpen)
-            {
-              DebugAssistant.debugKeyCooldown = 15;
-              int index = GUIManager.editorHUD.categoryList.FindIndex(
-                  (Predicate<string>) (p => p == GUIManager.editorHUD.selectedPresetCategory)) + 1;
-
-              if (index >= GUIManager.editorHUD.categoryList.Count)
-                index = GUIManager.editorHUD.categoryList.Count - 1;
-
-              GUIManager.editorHUD.selectedPresetCategory = GUIManager.editorHUD.categoryList[index];
-            }
-            
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left) 
-                            && DebugAssistant.debugKeyCooldown == 0 
-                            && GUIManager.editorHUD.presetMenuOpen)
-            {
-              DebugAssistant.debugKeyCooldown = 15;
-              int index = GUIManager.editorHUD.categoryList.FindIndex(
-                  (Predicate<string>) (p => p == GUIManager.editorHUD.selectedPresetCategory)) - 1;
-              if (index < 0)
-                index = 0;
-              GUIManager.editorHUD.selectedPresetCategory = GUIManager.editorHUD.categoryList[index];
-            }
-          }
-
-        // Handling Wave editor 
-#region WaveEditor
-if (DebugAssistant.waveEditor)
-          {
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad0))
-              ((Wave) Game1.waves[0]).startingPoint = Game1.player.location;
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad8))
-            {
-              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                ((Wave) Game1.waves[0]).startingPoint.Y -= 30f;
-              else
-                ((Wave) Game1.waves[0]).startingPoint.Y -= 3f;
-            }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad5))
-            {
-              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                ((Wave) Game1.waves[0]).startingPoint.Y += 30f;
-              else
-                ((Wave) Game1.waves[0]).startingPoint.Y += 3f;
-            }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad4))
-            {
-              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                ((Wave) Game1.waves[0]).startingPoint.X -= 30f;
-              else
-                ((Wave) Game1.waves[0]).startingPoint.X -= 3f;
-            }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad6))
-            {
-              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                ((Wave) Game1.waves[0]).startingPoint.X += 30f;
-              else
-                ((Wave) Game1.waves[0]).startingPoint.X += 3f;
-            }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad7))
-            {
-              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                ((Wave) Game1.waves[0]).waveAngle -= 0.05000000074505806;
-              else
-                ((Wave) Game1.waves[0]).waveAngle -= 0.0099999997764825821;
-            }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad9))
-            {
-              if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
-                ((Wave) Game1.waves[0]).waveAngle += 0.05000000074505806;
-              else
-                ((Wave) Game1.waves[0]).waveAngle += 0.0099999997764825821;
-            }
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad2) 
-                            && DebugAssistant.debugKeyCooldown == 0)
-            {
-              Wave wave = (Wave) Game1.waves[0];
-
-              File.AppendAllText("waves.txt", "new Tuple<Vector2, float>(" +
-                  "new Vector2(" + wave.startingPoint.X.ToString() + ", "
-                  + wave.startingPoint.Y.ToString() + "), "
-                  + Math.Round(wave.waveAngle * (180.0 / Math.PI), 2)
-                  .ToString((IFormatProvider) CultureInfo.InvariantCulture) + ")" 
-                  + Environment.NewLine);
-
-              DebugAssistant.debugKeyCooldown = 60;
-              Game1.waves.Add((IBackgroundEffect) 
-                  new Wave(wave.startingPoint, wave.length, wave.waveAngle, true));
-            }
-            if (((Wave) Game1.waves[0]).waveAngle > 2.0 * Math.PI)
-              ((Wave) Game1.waves[0]).waveAngle = 2.0 * Math.PI;
-            if (((Wave) Game1.waves[0]).waveAngle < 0.0)
-              ((Wave) Game1.waves[0]).waveAngle = 0.0;
-          }//
- #endregion
-
-        // F12 Handling Recorder
-        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F12)
-        && DebugAssistant.debugKeyCooldown == 0)
-        {
-            DebugAssistant.debugKeyCooldown = 60;
 
 
-#region Recorder
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
-            {
-                System.Diagnostics.Debug.WriteLine("[ii] F12 + S pressed when debug panel active. " +
-                    "Test Recorder.StartReRender >>");
+                    // "mousing" :)
+                    MouseState state = Mouse.GetState();
+                    Rectangle rectangle =
+                                  new Rectangle((int)Math.Round(((double)Game1.windowSize.X
+                                  - (double)Game1.renderSizeUpscaled.X) / 2.0, 0),
+                                  (int)Math.Round(((double)Game1.windowSize.Y - (double)Game1.renderSizeUpscaled.Y) / 2.0, 0),
+                                  Convert.ToInt32(Game1.renderSizeUpscaled.X), Convert.ToInt32(Game1.renderSizeUpscaled.Y));
+                    if (state.RightButton
+                                  == Microsoft.Xna.Framework.Input.ButtonState.Pressed
+                                  && DebugAssistant.previousMouseState.RightButton
+                                  == Microsoft.Xna.Framework.Input.ButtonState.Released && game.IsActive
+                                  && state.X >= rectangle.X && state.X
+                                  < rectangle.Width + rectangle.X && state.Y >= rectangle.Y && state.Y < rectangle.Height + rectangle.Y)
+                    {
+                        Vector2 point = new Vector2(Convert.ToSingle(
+                            Math.Round((double)Convert.ToSingle(state.X - rectangle.X) / (double)rectangle.Width * (double)Game1.renderSize.X)),
+                            Convert.ToSingle(Math.Round((double)Convert.ToSingle(state.Y - rectangle.Y) / (double)rectangle.Height * (double)Game1.renderSize.Y)));
+                        if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>()
+                                        && (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift)
+                                        || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)))
+                            GUIManager.editorHUD.AddPoint(point, game);
+                        else if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>()
+                                        && !ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightAlt)
+                                        && !ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftAlt))
+                        {
+                            GUIManager.Clear();
+                        }
+                        else
+                        {
+                            GUIManager.editorHUD.SetPoint(point, game);
+                            GUIManager.ClearThenSet((IGUI)GUIManager.editorHUD);
+                        }
+                    }
 
-                Recorder.StartReRender(localFolder.Path + "\\DTGEXP\\", game);
-            }
+                    DebugAssistant.previousMouseState = state;
 
 
-            if  (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
-            {
-                    System.Diagnostics.Debug.WriteLine("[ii] F12 + R pressed when debug panel active. " +
-                        "Test Recorder.StartRecording >>");
+                    if (GUIManager.currentHUDs.OfType<EditorGUI>().Any<EditorGUI>())
+                    {
+                        if (DebugAssistant.woModifiedInGameEditor == null)
+                            DebugAssistant.woModifiedInGameEditor = new List<IWorldObject>();
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Delete))
+                        {
+                            foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
+                                Game1.world.objects.Remove(worldObject);
+                            GUIManager.editorHUD.woInTarget.Clear();
+                        }
+                        int num = 1;
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                            num = 6;
 
-                    Recorder.StartRecording();
-            }
 
-            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T))
-            {
-                System.Diagnostics.Debug.WriteLine("[ii] F12 + T pressed. " +
-                    "Call Recorder.Terminate to stop recording session!>>");
+                        if (
+                            (
+                             ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)
+                             || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl)
+                            )
+                            && ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D) && DebugAssistant.debugKeyCooldown == 0
+                           )
+                        {
+                            DebugAssistant.debugKeyCooldown = 40;
 
-                Recorder.StartRecording();
-            }
+                            System.Diagnostics.Debug.WriteLine("[i] CTRL + D activated !");
+
+                            //Clipboard.SetText(SaveHandler.SerializeSingleGameData(GUIManager.editorHUD.woInTarget));
+                            System.Diagnostics.Debug.WriteLine("[i] SaveHandler.SerializeSingleGameData="
+                                + SaveHandler.SerializeSingleGameData(GUIManager.editorHUD.woInTarget).ToString());
+                        }
+
+
+
+                        //if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right) 
+                        //      && !GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
+                        if (
+                            (
+                                ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl)
+                                || ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightControl)
+                            )
+                            && ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.W) && DebugAssistant.debugKeyCooldown == 0
+                            )
+                        {
+                            DebugAssistant.debugKeyCooldown = 40;
+
+                            System.Diagnostics.Debug.WriteLine("[i] CTRL + W activated ! Some World experiments...");
+
+                            foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
+                            {
+                                IWorldObject wo = worldObject;
+                                if (!(wo is BuildPoint))
+                                {
+                                    wo.Location = new Vector2(wo.Location.X + (float)num, wo.Location.Y);
+                                    Vector2 explicitEpicenter1 = wo.ExplicitEpicenter;
+                                    Vector2 explicitEpicenter2 = wo.ExplicitEpicenter;
+                                    explicitEpicenter2.X += (float)num;
+                                    wo.ExplicitEpicenter = explicitEpicenter2;
+
+                                    if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
+                                        (Func<IWorldObject, bool>)(p => p.ObjectId != wo.ObjectId)))
+                                        DebugAssistant.woModifiedInGameEditor.Add(wo);
+                                }
+                            }
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left)
+                                        && !GUIManager.editorHUD.presetMenuOpen
+                                        && DebugAssistant.debugKeyCooldown == 0)
+                        {
+                            foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
+                            {
+                                IWorldObject wo = worldObject;
+                                if (!(wo is BuildPoint))
+                                {
+                                    wo.Location = new Vector2(wo.Location.X - (float)num, wo.Location.Y);
+                                    Vector2 explicitEpicenter3 = wo.ExplicitEpicenter;
+                                    Vector2 explicitEpicenter4 = wo.ExplicitEpicenter;
+                                    explicitEpicenter4.X -= (float)num;
+                                    wo.ExplicitEpicenter = explicitEpicenter4;
+                                    if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
+                                        (Func<IWorldObject, bool>)(p => p.ObjectId != wo.ObjectId)))
+                                        DebugAssistant.woModifiedInGameEditor.Add(wo);
+                                }
+                            }
+                        }
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Up))
+                        {
+                            if (GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
+                            {
+                                DebugAssistant.debugKeyCooldown = 14;
+                                --GUIManager.editorHUD.selectedPresetIndex;
+                            }
+                            else if (DebugAssistant.debugKeyCooldown == 0)
+                            {
+                                foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
+                                {
+                                    IWorldObject wo = worldObject;
+                                    if (!(wo is BuildPoint))
+                                    {
+                                        wo.Location = new Vector2(wo.Location.X, wo.Location.Y - (float)num);
+                                        Vector2 explicitEpicenter5 = wo.ExplicitEpicenter;
+                                        Vector2 explicitEpicenter6 = wo.ExplicitEpicenter;
+                                        explicitEpicenter6.Y -= (float)num;
+                                        wo.ExplicitEpicenter = explicitEpicenter6;
+                                        if (DebugAssistant.woModifiedInGameEditor.All<IWorldObject>(
+                                            (Func<IWorldObject, bool>)(p => p.ObjectId != wo.ObjectId)))
+                                            DebugAssistant.woModifiedInGameEditor.Add(wo);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Down))
+                        {
+                            if (GUIManager.editorHUD.presetMenuOpen && DebugAssistant.debugKeyCooldown == 0)
+                            {
+                                DebugAssistant.debugKeyCooldown = 14;
+                                ++GUIManager.editorHUD.selectedPresetIndex;
+                            }
+                            else if (DebugAssistant.debugKeyCooldown == 0)
+                            {
+                                foreach (IWorldObject worldObject in GUIManager.editorHUD.woInTarget)
+                                {
+                                    if (!(worldObject is BuildPoint))
+                                    {
+                                        worldObject.Location = new Vector2(worldObject.Location.X,
+                                            worldObject.Location.Y + (float)num);
+                                        Vector2 explicitEpicenter7 = worldObject.ExplicitEpicenter;
+                                        Vector2 explicitEpicenter8 = worldObject.ExplicitEpicenter;
+                                        explicitEpicenter8.Y += (float)num;
+                                        worldObject.ExplicitEpicenter = explicitEpicenter8;
+                                        if (!DebugAssistant.woModifiedInGameEditor.Contains(worldObject))
+                                            DebugAssistant.woModifiedInGameEditor.Add(worldObject);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Tab)
+                                        && DebugAssistant.debugKeyCooldown == 0)
+                        {
+                            DebugAssistant.debugKeyCooldown = 30;
+                            GUIManager.editorHUD.presetMenuOpen = !GUIManager.editorHUD.presetMenuOpen;
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right)
+                                        && DebugAssistant.debugKeyCooldown == 0
+                                        && GUIManager.editorHUD.presetMenuOpen)
+                        {
+                            DebugAssistant.debugKeyCooldown = 15;
+                            int index = GUIManager.editorHUD.categoryList.FindIndex(
+                                (Predicate<string>)(p => p == GUIManager.editorHUD.selectedPresetCategory)) + 1;
+
+                            if (index >= GUIManager.editorHUD.categoryList.Count)
+                                index = GUIManager.editorHUD.categoryList.Count - 1;
+
+                            GUIManager.editorHUD.selectedPresetCategory = GUIManager.editorHUD.categoryList[index];
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left)
+                                        && DebugAssistant.debugKeyCooldown == 0
+                                        && GUIManager.editorHUD.presetMenuOpen)
+                        {
+                            DebugAssistant.debugKeyCooldown = 15;
+                            int index = GUIManager.editorHUD.categoryList.FindIndex(
+                                (Predicate<string>)(p => p == GUIManager.editorHUD.selectedPresetCategory)) - 1;
+                            if (index < 0)
+                                index = 0;
+                            GUIManager.editorHUD.selectedPresetCategory = GUIManager.editorHUD.categoryList[index];
+                        }
+                    }
+
+                    // Handling Wave editor 
+                    #region WaveEditor
+                    if (DebugAssistant.waveEditor)
+                    {
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad0))
+                            ((Wave)Game1.waves[0]).startingPoint = Game1.player.location;
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad8))
+                        {
+                            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                                ((Wave)Game1.waves[0]).startingPoint.Y -= 30f;
+                            else
+                                ((Wave)Game1.waves[0]).startingPoint.Y -= 3f;
+                        }
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad5))
+                        {
+                            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                                ((Wave)Game1.waves[0]).startingPoint.Y += 30f;
+                            else
+                                ((Wave)Game1.waves[0]).startingPoint.Y += 3f;
+                        }
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad4))
+                        {
+                            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                                ((Wave)Game1.waves[0]).startingPoint.X -= 30f;
+                            else
+                                ((Wave)Game1.waves[0]).startingPoint.X -= 3f;
+                        }
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad6))
+                        {
+                            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                                ((Wave)Game1.waves[0]).startingPoint.X += 30f;
+                            else
+                                ((Wave)Game1.waves[0]).startingPoint.X += 3f;
+                        }
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad7))
+                        {
+                            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                                ((Wave)Game1.waves[0]).waveAngle -= 0.05000000074505806;
+                            else
+                                ((Wave)Game1.waves[0]).waveAngle -= 0.0099999997764825821;
+                        }
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad9))
+                        {
+                            if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftControl))
+                                ((Wave)Game1.waves[0]).waveAngle += 0.05000000074505806;
+                            else
+                                ((Wave)Game1.waves[0]).waveAngle += 0.0099999997764825821;
+                        }
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.NumPad2)
+                                        && DebugAssistant.debugKeyCooldown == 0)
+                        {
+                            Wave wave = (Wave)Game1.waves[0];
+
+                            File.AppendAllText("waves.txt", "new Tuple<Vector2, float>(" +
+                                "new Vector2(" + wave.startingPoint.X.ToString() + ", "
+                                + wave.startingPoint.Y.ToString() + "), "
+                                + Math.Round(wave.waveAngle * (180.0 / Math.PI), 2)
+                                .ToString((IFormatProvider)CultureInfo.InvariantCulture) + ")"
+                                + Environment.NewLine);
+
+                            DebugAssistant.debugKeyCooldown = 60;
+                            Game1.waves.Add((IBackgroundEffect)
+                                new Wave(wave.startingPoint, wave.length, wave.waveAngle, true));
+                        }
+                        if (((Wave)Game1.waves[0]).waveAngle > 2.0 * Math.PI)
+                            ((Wave)Game1.waves[0]).waveAngle = 2.0 * Math.PI;
+                        if (((Wave)Game1.waves[0]).waveAngle < 0.0)
+                            ((Wave)Game1.waves[0]).waveAngle = 0.0;
+                    }//
+                    #endregion
+
+                    // F12 Handling Recorder
+                    if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F12)
+                    && DebugAssistant.debugKeyCooldown == 0)
+                    {
+                        DebugAssistant.debugKeyCooldown = 60;
+
+
+                        #region Recorder
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.S))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[ii] F12 + S pressed when debug panel active. " +
+                                "Test Recorder.StartReRender >>");
+
+                            Recorder.StartReRender(localFolder.Path + "\\DTGEXP\\", game);
+                        }
+
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[ii] F12 + R pressed when debug panel active. " +
+                                "Test Recorder.StartRecording >>");
+
+                            Recorder.StartRecording();
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.T))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[ii] F12 + T pressed. " +
+                                "Call Recorder.Terminate to stop recording session!>>");
+
+                            Recorder.StartRecording();
+                        }
 
                         #endregion
 
 
-        }//if...Keys.F12... 
+                    }//if...Keys.F12... 
+
+ #region WorldControl
+                    // F9. Handling some World Control 
+                    if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F9) && DebugAssistant.debugKeyCooldown == 0)
+                    {
+                        DebugAssistant.debugKeyCooldown = 60;
+
+                        System.Diagnostics.Debug.WriteLine("[ii] F9 pressed  (World Control...)");
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.D)
+                            && Game1.world.Level > 0)
+                        {
+                            System.Diagnostics.Debug.WriteLine("[ii] F9+D pressed. Decrease World level.");
+                            --Game1.world.Level;
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.I)
+                           && Game1.world.Level < 3)
+                        {
+                            System.Diagnostics.Debug.WriteLine("[ii] F9+I pressed. Increase World level.");
+                            ++Game1.world.Level;
+                        }
+
+                        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.E))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[ii] F9+E pressed. Test Static World Export !");
+                            DebugAssistant.ExportStaticWorld(game);
+                        }                       
+                    }
+
+#endregion
 
 
-        // F8. Handling some World tune 
-        if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F8) && DebugAssistant.debugKeyCooldown == 0)
+                    // F8. Handling some World tune 
+                    if (ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F8) && DebugAssistant.debugKeyCooldown == 0)
         {
             DebugAssistant.debugKeyCooldown = 60;
 
@@ -868,8 +909,8 @@ if (DebugAssistant.waveEditor)
   }//KeyInput
 
 
-  // DrawDebugPanel
-  public static void DrawDebugPanel(SpriteBatch sb, Game1 game)
+    // DrawDebugPanel
+    public static void DrawDebugPanel(SpriteBatch sb, Game1 game)
   {
     if (!DebugAssistant.debugPanel)
       return;

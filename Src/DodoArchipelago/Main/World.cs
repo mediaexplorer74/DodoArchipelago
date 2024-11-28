@@ -44,7 +44,7 @@ namespace DodoTheGame
       this.background = background;
       this.objects = new List<IWorldObject>();
       //experimental
-      this.Level = 0; //!
+      this.Level = 1; //!
       this.name = "mainworld";//!
     }
 

@@ -157,22 +157,29 @@ namespace DodoTheGame
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("[alert] Sprite " +
-                    this.name + " (texture) damaged! FrameCountPerAtlasLine= ",
-                    this.FrameCountPerAtlasLine);
+                if (this.name != "volcan")
+                    System.Diagnostics.Debug.WriteLine("[alert] Sprite " +
+                        this.name + " (texture) damaged! FrameCountPerAtlasLine= ",
+                        this.FrameCountPerAtlasLine);
+                else
+                { }
             }
 
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y,
                 this.Width, this.height);
 
-            // HACK 2
-            if (texture == null)
-                texture = new Texture2D(Game1.graphics.GraphicsDevice, 100, 100);
-            else
-            {
-                //System.Diagnostics.Debug.WriteLine("[alert] Sprite " +
-                //    this.name + " damaged - texture is *null*!");
-            }
+                // HACK 2
+                if (texture == null)
+                {
+                    texture = new Texture2D(Game1.graphics.GraphicsDevice, 100, 100);
+
+                    System.Diagnostics.Debug.WriteLine("[alert] Sprite " +
+                        this.name + " texture is null. Creating fake texture...");
+                }
+                else
+                {
+                    
+                }
 
             Recorder.RDraw(spriteBatch, texture, destinationRectangle, new Rectangle?(rectangle), color,
                 Convert.ToSingle(rotation), Vector2.Zero, spriteEffects, 0.0f);
@@ -238,6 +245,7 @@ namespace DodoTheGame
       else
         this.currentElapsedMilliseconds += (int) Math.Round(gameTime.ElapsedGameTime.TotalMilliseconds) 
                     * (int) Convert.ToInt16(Math.Round(DayCycle.timeSpeed, 0));
+      
     }
 
     public void DrawSubsprite(

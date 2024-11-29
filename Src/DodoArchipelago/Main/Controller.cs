@@ -101,25 +101,25 @@ namespace GameManager
 
                 MoveLeft = TouchMoveLeft
                     || key.IsKeyDown(Keys.A)
-                    || key.IsKeyDown(Keys.Left)
+                    //|| key.IsKeyDown(Keys.Left)
                     || pad.DPad.Left == ButtonState.Pressed
                     || pad.ThumbSticks.Left.X < -0.25;
 
                 MoveRight = TouchMoveRight
                     || key.IsKeyDown(Keys.D)
-                    || key.IsKeyDown(Keys.Right)
+                    //|| key.IsKeyDown(Keys.Right)
                     || pad.DPad.Right == ButtonState.Pressed
                     || pad.ThumbSticks.Left.X > +0.25;
 
                 MoveUp = TouchMoveUp
                     || key.IsKeyDown(Keys.W)
-                    || key.IsKeyDown(Keys.Up)
+                    //|| key.IsKeyDown(Keys.Up)
                     || pad.DPad.Up == ButtonState.Pressed
                     || pad.ThumbSticks.Left.Y > +0.25;
 
                 MoveDown = TouchMoveDown
                     || key.IsKeyDown(Keys.S)
-                    || key.IsKeyDown(Keys.Down)
+                    //|| key.IsKeyDown(Keys.Down)
                     || pad.DPad.Down == ButtonState.Pressed
                     || pad.ThumbSticks.Left.Y < -0.25;
 
@@ -165,12 +165,12 @@ namespace GameManager
                     || pad.Buttons.Y == ButtonState.Pressed;
 
                 InteractLeft = DoubleTouchMoveLeft
-                    || key.IsKeyDown(Keys.E)
+                    || key.IsKeyDown(Keys.Left)
                     || pad.Buttons.X == ButtonState.Pressed
                     || pad.Buttons.Y == ButtonState.Pressed;
 
                 InteractRight = DoubleTouchMoveRight
-                    || key.IsKeyDown(Keys.E)
+                    || key.IsKeyDown(Keys.Right)
                     || pad.Buttons.X == ButtonState.Pressed
                     || pad.Buttons.Y == ButtonState.Pressed;
 

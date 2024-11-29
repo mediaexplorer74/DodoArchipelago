@@ -2911,6 +2911,9 @@
     <Content Include="Content\soundeffects\midnighttune.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\slot0.dodomemory">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="DodoArchipelago_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />

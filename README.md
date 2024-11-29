@@ -7,10 +7,11 @@ It's only PoC (Proove-of-Concept). No consumer details. Devs only.
 
 Game play is very specific ("strange random world exploration/generation"). The project is in alpha state (early bird / proto -  memory leaks, hangs/halts, etc.)
 
-This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) game.  So, at now it only "walker" (use WASD ad L.Control for SuperDodo activation :))))
+This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) game. Many original features are lost (not realized yet)). Mainly, it's only "walker" for PC/tablet devices (use WASD ad L.Control for SuperDodo activation :)))) 
 
-Main goal: do more exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... However, Andromeda-like x86/x64-cpu based tablet (with keyboard) is best thing for this game, I think ;)
+Main goal: do more exploration of special "game frameworks" such FMOD and port it to Windows 10 Mobile. 
 
+Also,  mature gamedev experience is very useful too! 
 
 ## Screenshot(s)
 ![](Images/shot01.png)
@@ -58,6 +59,9 @@ Here's what you can expect:
 - Experimentation (debugging) with special "Debug panel" (blocked in *main* branch, available in *dev* branch)
 - world generator reconstructed by me, and... game logics cardinally changed (DoDo "clone" NPC discovered and shown)))
 - compatibility with Visual Studio 2017 IDE (for brave real WinPhone/Lumia device debug!)))
+- build point No 1 added! 
+- build action (operation) unblocked :)
+- pre-gaming cutscene partially recovered (but I cutted some big textures)))
 
 ## Known problems
 - Not all sound effects work good (strange bug with *null* items at soundeffect list)
@@ -78,6 +82,8 @@ Here's what you can expect:
 - NPC?
 - Game localization(s)  
 - Fix screen distortion(s) (very strange resolutions)
+- Fix game cutscene(s)
+- unblock hidden Editor GUI (?)
 
 ## References
 - https://rouli.itch.io/the-dodo-archipelago Original DoDo Archipelago game (x86, desktop)

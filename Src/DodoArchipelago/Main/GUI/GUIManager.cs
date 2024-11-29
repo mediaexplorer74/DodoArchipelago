@@ -271,7 +271,7 @@ namespace DodoTheGame.GUI
       }
       catch (Exception ex)
       {
-       Debug.WriteLine("[ex] An IHUD.Draw has failed",  " hud");
+         Debug.WriteLine("[ex] GUIManager - An IHUD.Draw has failed (hud) : "+ ex.Message);
       }
     }
 
@@ -347,7 +347,8 @@ namespace DodoTheGame.GUI
       }
       catch (Exception ex)
       {
-      //  Debug.WriteLine("[ex] An IHUD.Input has failed - hud - " + ex.Message);
+        // Debug.WriteLine("[ex] GUIManager - IHUD.Input - foreach(currentHUDs) error: " 
+        //     + ex.Message);
       }
        
 

@@ -145,7 +145,8 @@ namespace DodoTheGame.GUI
     {
       if 
       (
-         /*1==0*/action1 
+         //1==0
+         action1 
          && this.selectedButton == 1 
          && game.WorldLoader == Game1.WorldLoaderType.dynamicSaves // dynamicSaves - what is this ? 
       )

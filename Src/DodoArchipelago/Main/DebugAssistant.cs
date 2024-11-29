@@ -76,7 +76,7 @@ namespace DodoTheGame
 
       List<string> stringList = new List<string>();
 
-      foreach (Preset preset in game.presetList)
+      foreach (Preset preset in Game1.presetList)
         stringList.Add(preset.name);
 
       string str1 = "//// World definition START" + Environment.NewLine;
@@ -115,11 +115,13 @@ namespace DodoTheGame
                 + Environment.NewLine;
 
       int num1 = 1;
-      foreach (IWorldObject worldObject in Game1.world.objects.Where<IWorldObject>(
-          (Func<IWorldObject, bool>) (p => p is BuildPoint)))
+
+      foreach (IWorldObject worldObject 
+          in Game1.world.objects.Where<IWorldObject>((Func<IWorldObject, bool>) (p => p is BuildPoint)))
       {
         string str6 = "";
         Build interaction = (Build) worldObject.Interactions[3];
+
         foreach (ItemStack itemStack in interaction.intake)
         {
           if (str6 != "")
@@ -128,6 +130,7 @@ namespace DodoTheGame
                         + itemStack.count.ToString() + ")";
         }
         string str7 = "";
+
         foreach (string tag in worldObject.Tags)
         {
           if (str7 != "")
@@ -135,6 +138,7 @@ namespace DodoTheGame
           str7 = str7 + " \"" + tag + "\"";
         }
         string str8 = "";
+
         foreach (string bpIncompatibleTag in ((BuildPoint) worldObject).bpIncompatibleTags)
         {
           if (str8 != "")
@@ -186,7 +190,8 @@ namespace DodoTheGame
 
       File.WriteAllText(localFolder.Path + "\\"+
           "gameedit-" + totalSeconds.ToString() + ".txt", contents);
-    }
+
+    }//ExportStaticWorld
 
     
     // KeyInput

@@ -11,7 +11,7 @@ using DodoTheGame.WorldObject;
 
 namespace DodoTheGame
 {
-  internal class Preset
+  /*internal*/public class Preset
   {
     public Preset.WOType type;
     public string name;

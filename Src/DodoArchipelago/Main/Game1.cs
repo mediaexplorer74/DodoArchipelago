@@ -21,8 +21,8 @@ using Windows.UI.Xaml;
 using Windows.Storage;
 
 //using System.Web.Script.Serialization;
-//using FMOD;
-//using FMOD.Studio;
+using FMOD;
+using FMOD.Studio;
 
 using DodoTheGame.BackgroundEffects;
 using DodoTheGame.BGM;
@@ -34,7 +34,7 @@ using DodoTheGame.NPC;
 using DodoTheGame.Saving;
 using DodoTheGame.WorldObject;
 using GameManager;
-using FMOD.Studio;
+
 
 namespace DodoTheGame
 {
@@ -48,11 +48,16 @@ namespace DodoTheGame
     public static Vector2 renderSize;
     public static Vector2 renderSizeUpscaled;
     public static Vector2 windowSize;
+
     public static bool isFullscreen = false;//true; // set it *true* for W10M
 
-    
-    internal static World world;
+    // DEBUG MODE switch
+    public static bool debugEnabled = true;//true for Dev mode, false for "Prod."... :)
 
+    // W10M mode switch
+    public static bool W10MEnabled = false; // set True to disable background tiles (W10M, Hello!)
+
+    internal static World world;
     public static Controller Controller;
 
     [ThreadStatic]
@@ -144,16 +149,13 @@ namespace DodoTheGame
     private RenderTarget2D renderTarget2;
     internal Texture2D lastFrame;
 
-    // DEBUG MODE switcher
-    public static bool debugEnabled = true;//true for Dev mode, false for "Prod."... :)
-
     private DateTime compileDate = new DateTime();
     public Texture2D[] itemTextures;
     public static Texture2D[] smallItemTextures;
     public Texture2D[] miniFlowersTextures;
     public static Texture2D[] staticMiniFlowersTextures;
     public List<Texture2D> allTextures = new List<Texture2D>();
-    internal List<Preset> presetList = new List<Preset>();
+        internal static List<Preset> presetList;// = new List<Preset>();
     public static Texture2D debugCursor;
     public static Texture2D redline;
     public static Texture2D debugCursor2;
@@ -408,11 +410,11 @@ namespace DodoTheGame
         {
           {
             PlayerUnlockables.PlayerUnlockable.Bike,
-            true/*false*/ //HACK
+            false //HACK bike
           },
           {
             PlayerUnlockables.PlayerUnlockable.Bicycle,
-            true/*false*/ //HACK
+            false //HACK bicycle
           }
         },
         location = new Vector2(8950f, 8000f)
@@ -442,7 +444,7 @@ namespace DodoTheGame
 
       Recorder.Player = Game1.player;
 
-  
+      // ?
       Save.serializer.RegisterConverters((IEnumerable<JavaScriptConverter>) 
           new List<JavaScriptConverter>()
       {
@@ -564,6 +566,7 @@ namespace DodoTheGame
       Game1.commonSprites = new List<Sprite>();
       Game1.waves = new List<IBackgroundEffect>();
       Game1.foregroundEffectList = new List<IForegroundEffect>();
+
       this.itemTextures = new Texture2D[18]
       {
         ContentLoadingWrapper.Load<Texture2D>("items/0"),
@@ -585,6 +588,7 @@ namespace DodoTheGame
         ContentLoadingWrapper.Load<Texture2D>("items/16"),
         ContentLoadingWrapper.Load<Texture2D>("items/17")
       };
+
       Game1.smallItemTextures = new Texture2D[18]
       {
         ContentLoadingWrapper.Load<Texture2D>("smallitems/0"),
@@ -606,6 +610,7 @@ namespace DodoTheGame
         ContentLoadingWrapper.Load<Texture2D>("smallitems/16"),
         ContentLoadingWrapper.Load<Texture2D>("smallitems/17")
       };
+
       this.miniFlowersTextures = new Texture2D[13]
       {
         ContentLoadingWrapper.Load<Texture2D>("smallitems/81"),
@@ -622,7 +627,9 @@ namespace DodoTheGame
         ContentLoadingWrapper.Load<Texture2D>("smallitems/92"),
         ContentLoadingWrapper.Load<Texture2D>("smallitems/93")
       };
+
       Game1.staticMiniFlowersTextures = this.miniFlowersTextures;
+
       Game1.wavesTextures = new Texture2D[4]
       {
         ContentLoadingWrapper.Load<Texture2D>("vague0"),
@@ -630,6 +637,7 @@ namespace DodoTheGame
         ContentLoadingWrapper.Load<Texture2D>("vague2"),
         ContentLoadingWrapper.Load<Texture2D>("vague3")
       };
+
       Game1.windSprites = new Sprite[4]
       {
         new Sprite("animated wind", ContentLoadingWrapper.Load<Texture2D>("animatedwind1"))
@@ -701,80 +709,83 @@ namespace DodoTheGame
         texture2DList.Add(texture2D);
       }
 
-      
-      System.Diagnostics.Debug.WriteLine("[i] Loading background tiles... skipped!");
-     /*
-      string[] strArray = new string[7]//[35]
-      {
-        "Z1", "Z2", "Z3", "Z4", "Z5", "Z6", "Z7",
-        //"A1", "A2", "A3", "A4", "A5", "A6", "A7",
-        //"B1", "B2", "B3", "B4", "B5", "B6", "B7",
-        //"C1", "C2", "C3", "C4", "C5", "C6", "C7",
-        //"D1", "D2", "D3", "D4", "D5", "D6", "D7"
-      };
-      string[] source = new string[4]
-      {
-        "B3",  "B4", "C3", "C4"
-      };
-      foreach (string str in strArray)
-      {
-        int y = 0;
-        if (str.StartsWith("Z"))
-          y = 0;
-        //if (str.StartsWith("A"))
-        //  y = 3000;
-        //if (str.StartsWith("B"))
-         // y = 6000;
-        //if (str.StartsWith("C"))
-        //  y = 9000;
-        //if (str.StartsWith("D"))
-        //  y = 12000;
-        int x = (Convert.ToInt32(Convert.ToString(str[1])) - 1) * 3000;
+        if (!Game1.W10MEnabled)
+        {
+            System.Diagnostics.Debug.WriteLine("[i] Loading background tiles...");
+            string[] strArray = new string[35]
+            {
+                "Z1", "Z2", "Z3", "Z4", "Z5", "Z6", "Z7",
+                "A1", "A2", "A3", "A4", "A5", "A6", "A7",
+                "B1", "B2", "B3", "B4", "B5", "B6", "B7",
+                "C1", "C2", "C3", "C4", "C5", "C6", "C7",
+                "D1", "D2", "D3", "D4", "D5", "D6", "D7"
+           };
+            string[] source = new string[4]
+           {
+                "B3",  "B4", "C3", "C4"
+           };
+            foreach (string str in strArray)
+            {
+                int y = 0;
+                if (str.StartsWith("Z"))
+                    y = 0;
+                if (str.StartsWith("A"))
+                    y = 3000;
+                if (str.StartsWith("B"))
+                    y = 6000;
+                if (str.StartsWith("C"))
+                    y = 9000;
+                if (str.StartsWith("D"))
+                    y = 12000;
 
-        TerrainBackgroundPart terrainBackgroundPart1;
+                int x = (Convert.ToInt32(Convert.ToString(str[1])) - 1) * 3000;
 
-        if (((IEnumerable<string>) source).Contains<string>(str))
-        {
-          Texture2D[] texture2DArray = new Texture2D[4]
-          {
-            ContentLoadingWrapper.Load<Texture2D>("tiles/" + str),
-            ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_1"),
-            ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_2"),
-            ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_3")
-          };
-          terrainBackgroundPart1 = new TerrainBackgroundPart(texture2DArray, 
-              new Vector2((float) x, (float) y));
-          texture2DList.AddRange((IEnumerable<Texture2D>) texture2DArray);
+                TerrainBackgroundPart terrainBackgroundPart1;
+
+                if (((IEnumerable<string>)source).Contains<string>(str))
+                {
+                    Texture2D[] texture2DArray = new Texture2D[4]
+                    {
+                    ContentLoadingWrapper.Load<Texture2D>("tiles/" + str),
+                    ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_1"),
+                    ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_2"),
+                    ContentLoadingWrapper.Load<Texture2D>("tiles/" + str + "_3")
+                    };
+                    terrainBackgroundPart1 = new TerrainBackgroundPart(texture2DArray, 
+                        new Vector2((float) x, (float) y));
+                    texture2DList.AddRange((IEnumerable<Texture2D>) texture2DArray);
+                }
+                else
+                {
+                    Texture2D texture2D = ContentLoadingWrapper.Load<Texture2D>("tiles/" + str);
+                    terrainBackgroundPart1 = new TerrainBackgroundPart(new Texture2D[1]
+                    {
+                    texture2D
+                    }, new Vector2((float) x, (float) y));
+                    texture2DList.Add(texture2D);
+                }
+                Recorder.resources = texture2DList;
+                TerrainBackgroundPart terrainBackgroundPart2 = new TerrainBackgroundPart(new Texture2D[1]
+                {
+                    ContentLoadingWrapper.Load<Texture2D>("behaviortiles/" + str)
+                }, new Vector2((float) x, (float) y));
+
+                Recorder.resources.Add(ContentLoadingWrapper.Load<Texture2D>("tiles/" + str));
+
+                background.partList.Add(terrainBackgroundPart1);
+                texture1.partList.Add(terrainBackgroundPart2);
+            }//foreach
         }
-        else
-        {
-          Texture2D texture2D = ContentLoadingWrapper.Load<Texture2D>("tiles/" + str);
-          terrainBackgroundPart1 = new TerrainBackgroundPart(new Texture2D[1]
-          {
-            texture2D
-          }, new Vector2((float) x, (float) y));
-          texture2DList.Add(texture2D);
-        }
-        Recorder.resources = texture2DList;
-        TerrainBackgroundPart terrainBackgroundPart2 = new TerrainBackgroundPart(new Texture2D[1]
-        {
-          ContentLoadingWrapper.Load<Texture2D>("behaviortiles/" + str)
-        }, new Vector2((float) x, (float) y));
-        Recorder.resources.Add(ContentLoadingWrapper.Load<Texture2D>("tiles/" + str));
-        background.partList.Add(terrainBackgroundPart1);
-        texture1.partList.Add(terrainBackgroundPart2);
-      }//foreach
-      */
 
 #region OldWorldDef
             //RnD
-            //Game1.world = new World(background)
-            //{
-            //    name = "mainworld",
-            //    objects = new List<IWorldObject>(),
-            //    behaviorMap = new TerrainBehaviorMap(texture1),
-            //    background = background // !
-            //};
+            Game1.world = new World(background)
+            {
+                name = "mainworld",
+                objects = new List<IWorldObject>(),
+                behaviorMap = new TerrainBehaviorMap(texture1),
+                background = background // !
+            };
 #endregion
 
 #region NPC_deals
@@ -814,7 +825,7 @@ namespace DodoTheGame
         loopAnimation = false
       };
 
-      this.presetList = PresetGenerator.GeneratePresets();
+      Game1.presetList = PresetGenerator.GeneratePresets();
      
       Game1.buildPointSprite = new Sprite("buildpoint1", 
           ContentLoadingWrapper.Load<Texture2D>("ui/buildpoint1"), new List<SubSprite>()
@@ -1196,6 +1207,7 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 300
       };
+
       this.BabyIdleSprite = new Sprite("npc/BabyIdle", 
           ContentLoadingWrapper.Load<Texture2D>("npc/BabyIdle"), new List<SubSprite>()
       {
@@ -1224,6 +1236,7 @@ namespace DodoTheGame
         Width = 55,
         MillisecondsPerFrame = 150
       };
+
       this.AwalkSprite = new Sprite("npc/Arun", 
           ContentLoadingWrapper.Load<Texture2D>("npc/Arun"), new List<SubSprite>()
       {
@@ -1239,6 +1252,7 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 115
       };
+
       this.AtosleepSprite = new Sprite("npc/Atosleep", 
           ContentLoadingWrapper.Load<Texture2D>("npc/Atosleep"), new List<SubSprite>()
       {
@@ -1255,6 +1269,7 @@ namespace DodoTheGame
         MillisecondsPerFrame = 90,
         loopAnimation = false
       };
+
       this.AsleepSprite = new Sprite("npc/Asleep", 
           ContentLoadingWrapper.Load<Texture2D>("npc/Asleep"), new List<SubSprite>()
       {
@@ -1271,6 +1286,7 @@ namespace DodoTheGame
         MillisecondsPerFrame = 410,
         loopAnimation = true
       };
+
       this.AwakeSprite = this.AsleepSprite;
       this.AwakeSprite.backwardAnimation = true;
       this.BidleSprite = new Sprite("npc/Bidle",
@@ -1303,6 +1319,7 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 115
       };
+
       this.BtosleepSprite = new Sprite("npc/Btosleep", 
           ContentLoadingWrapper.Load<Texture2D>("npc/Btosleep"), new List<SubSprite>()
       {
@@ -1419,8 +1436,8 @@ namespace DodoTheGame
 
       this.CwakeSprite = this.CsleepSprite;
       this.CwakeSprite.backwardAnimation = true;
-      this.DidleSprite = new Sprite("npc/Didle", 
-          ContentLoadingWrapper.Load<Texture2D>("npc/Didle"), new List<SubSprite>()
+      this.DidleSprite = new Sprite("npc/Didle", ContentLoadingWrapper.Load<Texture2D>("npc/Didle"), 
+      new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("dodo_shadow"),
         new Vector2(15f, 101f), new Vector2?(new Vector2(25f, 101f)), 0.5f)
@@ -1541,6 +1558,8 @@ namespace DodoTheGame
         height = 120,
         MillisecondsPerFrame = 100
       };
+
+
       Game1.debugCursor = ContentLoadingWrapper.Load<Texture2D>("debugcursor");
       Game1.debugCursor2 = ContentLoadingWrapper.Load<Texture2D>("debugcursor2");
 
@@ -1556,8 +1575,7 @@ namespace DodoTheGame
         ContentLoadingWrapper.Load<Texture2D>("ui/shibananas_icon")
       };
       BuildBox.separator = ContentLoadingWrapper.Load<Texture2D>("bbSeparator");
-            #endregion
-
+#endregion
 
 
 
@@ -2091,14 +2109,14 @@ namespace DodoTheGame
 
 
             //RnD
-            Game1.world = new World(background)
-            {
-                name = "mainworld",
-                objects = new List<IWorldObject>(),
-                behaviorMap = new TerrainBehaviorMap(texture1),
-                background = background // !
-            };
-            WorldGenerator.NewWorldGen(Game1.world, this.presetList);
+            //Game1.world = new World(background)
+            //{
+            //    name = "mainworld",
+            //    objects = new List<IWorldObject>(),
+            //    behaviorMap = new TerrainBehaviorMap(texture1),
+            //    background = background // !
+            //};
+            //WorldGenerator.NewWorldGen(Game1.world, this.presetList);
 
         }//LoadAllContent
 
@@ -2124,11 +2142,11 @@ namespace DodoTheGame
         //TODO
         //Sound.InitEvents(this);
       }
-      else if (SaveHandler.IsSlotRegistered(SaveHandler.LastSavedSlot))
-      {
-        System.Diagnostics.Debug.WriteLine("[i] Loading save (not default).");
-        SaveHandler.LoadGame(SaveHandler.LastSavedSlot, Game1.commonSprites, this);
-      }
+      //else if (SaveHandler.IsSlotRegistered(SaveHandler.LastSavedSlot))
+      //{
+      //  System.Diagnostics.Debug.WriteLine("[i] Loading save (not default).");
+      //  SaveHandler.LoadGame(SaveHandler.LastSavedSlot, Game1.commonSprites, this);
+      //}
       else
       {
         System.Diagnostics.Debug.WriteLine("[i] Loading save (default).");
@@ -2322,6 +2340,9 @@ namespace DodoTheGame
             ScreenShake.Update(gameTime, Game1.player);
             NPCManager.Update(Game1.world, gameTime);
 
+
+        //TEMP
+        if (world.objects !=null)
             foreach (IWorldObject worldObject 
                 in Game1.world.objects.Where<IWorldObject>(
                     (Func<IWorldObject, bool>) 
@@ -2492,6 +2513,9 @@ namespace DodoTheGame
           if (!CutsceneManager.IsOverrideInEffect(RenderOverride.LowestSubSprites))
           {
             this.spriteBatch.Begin(SpriteSortMode.Immediate);
+
+           //TEMP
+           if (Game1.world.objects != null)
             foreach (IWorldObject worldObject in Game1.world.objects)
             {
               if (worldObject.CurrentDrawSprite.groundSubsprite != null)
@@ -2507,9 +2531,12 @@ namespace DodoTheGame
             CutsceneManager.DrawOverride(RenderOverride.LowestSubSprites, this.spriteBatch,
                 gameTime, this, Vector2.Zero);
 
-          this.spriteBatch.Begin(SpriteSortMode.Immediate);
 
-          Game1.world.objects.ForEach((Action<IWorldObject>) 
+          this.spriteBatch.Begin(SpriteSortMode.Immediate);
+          
+          //TEMP
+          if (Game1.world.objects != null)
+            Game1.world.objects.ForEach((Action<IWorldObject>) 
               (wo => wo.DrawShadow(this.spriteBatch, 
               new Vector2
               (
@@ -2530,9 +2557,15 @@ namespace DodoTheGame
                 this.spriteBatch, gameTime, this, Vector2.Zero);
 
           List<object> source = new List<object>();
+
           source.Add((object) Game1.player);
-          source.AddRange((IEnumerable<object>) Game1.world.objects);
+
+         //TEMP
+         if (Game1.world.objects != null)
+                        source.AddRange((IEnumerable<object>) Game1.world.objects);
+          
           source.AddRange((IEnumerable<object>) Game1.world.NPCs);
+          
           List<object> list = source.OrderBy<object, int>((Func<object, int>) (o =>
           {
             switch (o)

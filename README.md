@@ -72,6 +72,7 @@ Here's what you can expect:
 - No story cutscenes 
 - No upgradable buildings (only "inventary" parst is ready)
 - Improper screen borders.
+- resource file slot0.dodomemory not copied to LocalState automatically when game starts (so, New Game mode will crashing...)
 
 
 ## ToDo

@@ -237,6 +237,7 @@ namespace DodoTheGame.Saving
             }
 
 
+            // Plan A: deserialize world object list in "automatic mode" 
             worldObjectList = default;
             try
             {
@@ -246,10 +247,11 @@ namespace DodoTheGame.Saving
             {
                 System.Diagnostics.Debug.WriteLine("[ex] Save.serializer.Deserialize<List<IWorldObject>> error: " + ex.Message);
 
-                //Plan B                
+                           
             }
 
-            if (worldObjectList == null)
+             // Plan B: generate world object list in "manual mode"
+             if (worldObjectList == null)
             {
                 //try
                 //{
@@ -288,7 +290,7 @@ namespace DodoTheGame.Saving
         if ((string) objArray[3] != "000024")
           throw new Exception("This save file is not supported by this build");
 
-        //RnD
+        //RnD / TODO : fix json data
         Player _player = default;
 
             float PosX = 8500;
@@ -296,12 +298,19 @@ namespace DodoTheGame.Saving
 
             try
             {
-                PosX = (float)(double)objArray[12];
-                PosY = (float)(double)objArray[13];
+                PosX = (float)Math.Floor((decimal)((Int64)objArray[12]));
+                PosY = (float)Math.Floor((decimal)((Int64)objArray[13]));
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("[ex] Save - LoadFromFile - PosX or PosY error: " + ex.Message);
+
+                    try
+                    {
+                        PosX = (float)Math.Floor((decimal)((double)objArray[12]));
+                        PosY = (float)Math.Floor((decimal)((double)objArray[13]));
+                    }
+                    catch { }
             }
 
             try

@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using Windows.Storage;
 
 namespace DodoTheGame
 {
@@ -58,12 +58,18 @@ namespace DodoTheGame
     }
 
    
-    protected override void OnLaunched(LaunchActivatedEventArgs e)
+    protected override async void OnLaunched(LaunchActivatedEventArgs e)
     {
-        //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(
-        //    ApplicationViewBoundsMode.UseCoreWindow);
+            //ApplicationView.GetForCurrentView().SetDesiredBoundsMode(
+            //    ApplicationViewBoundsMode.UseCoreWindow);
 
-        Frame rootFrame = Window.Current.Content as Frame;
+            if (await ApplicationData.Current.LocalFolder.TryGetItemAsync("slot0.dodomemory") == null)
+            {
+                StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync("Content\\slot0.dodomemory");
+                await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder);
+            }
+
+            Frame rootFrame = Window.Current.Content as Frame;
 
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active

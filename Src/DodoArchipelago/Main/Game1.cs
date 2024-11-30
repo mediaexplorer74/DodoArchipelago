@@ -41,7 +41,7 @@ namespace DodoTheGame
 
   public partial class Game1 : Game
   {
-    public const string Manifest = "DodoTheGame/The Dodo Archipelago RELEASE 1.0.1 (remake 2024)";
+    public const string Manifest = "DodoTheGame/The Dodo Archipelago RELEASE 1.0.2 (remake 2024)";
     public readonly Game1.WorldLoaderType WorldLoader;
     internal static GraphicsDeviceManager graphics;
     public SpriteBatch spriteBatch;
@@ -213,7 +213,7 @@ namespace DodoTheGame
 
         System.Diagnostics.Debug.WriteLine("====================================================");
         System.Diagnostics.Debug.WriteLine(File.ReadAllText(this.Content.RootDirectory+"\\ascii.txt"));
-        System.Diagnostics.Debug.WriteLine("DodoTheGame/The Dodo Archipelago RELEASE 1.0.1");
+        System.Diagnostics.Debug.WriteLine("DodoTheGame/The Dodo Archipelago");
         System.Diagnostics.Debug.WriteLine("(c) 2017-2020 Dodo Team");
         System.Diagnostics.Debug.WriteLine("====================================================");
         Game1.renderSize = new Vector2(1280f, 720f);
@@ -3165,7 +3165,7 @@ namespace DodoTheGame
     {
       Exception exceptionObject = (Exception)args.Exception;//.ExceptionObject;
       exceptionObject.Data.Add((object) "Manifest", 
-          (object) "DodoTheGame/The Dodo Archipelago RELEASE 1.0.1");
+          (object) "DodoTheGame/The Dodo Archipelago RELEASE 1.0.2");
             int fileLineNumber = 0;// new StackTrace(exceptionObject, true).GetFrame(0).GetFileLineNumber();
       exceptionObject.Data.Add((object) "ErrorLine",
           (object) fileLineNumber);

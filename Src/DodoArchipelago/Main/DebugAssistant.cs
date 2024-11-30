@@ -1107,7 +1107,7 @@ namespace DodoTheGame
         List<string> stringList1 = new List<string>();
         List<string> stringList2 = new List<string>();
 
-        stringList1.Add("DodoTheGame/The Dodo Archipelago RELEASE 1.0.1");
+        stringList1.Add("DodoTheGame/The Dodo Archipelago RELEASE 1.0.2");
         stringList1.Add(str1 + " ; " + Recorder.drawCallCount.ToString() 
             + " draw calls ; TPU: " + Game1.frameCounter.updateTicksAverage.ToString()
             + "(" + Game1.frameCounter.maxUpdateTicks.ToString() + ") ; TPD: "

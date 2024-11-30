@@ -57,18 +57,23 @@ namespace DodoTheGame.GUI
 
     public void GenerateThumbnails(GraphicsDevice graphics)
     {
-      this.img1 = this.saveInfo1 == null 
-                ? this.empty 
-                : (this.saveInfo1.isValid
-                        ? LoadGUI.GenerateThumbnail(this.saveInfo1.screenshot, graphics) 
-                        : this.error);
-      this.img2 = this.saveInfo2 == null 
-                ? this.empty
-                : (this.saveInfo2.isValid 
-                     ? LoadGUI.GenerateThumbnail(this.saveInfo2.screenshot, graphics) 
-                     : this.error);
-     
-            if (this.saveInfo3 != null)
+
+        if (this.saveInfo1 != null)
+            this.img1 = this.saveInfo1.isValid
+                        ? LoadGUI.GenerateThumbnail(this.saveInfo1.screenshot, graphics)
+                        : this.error;
+        else
+            this.img1 = this.empty;
+
+
+        if (this.saveInfo2 != null)
+            this.img2 = this.saveInfo2.isValid
+                        ? LoadGUI.GenerateThumbnail(this.saveInfo2.screenshot, graphics)
+                        : this.error;
+        else
+            this.img2 = this.empty;
+
+       if (this.saveInfo3 != null)
         this.img3 = this.saveInfo3.isValid
                     ? LoadGUI.GenerateThumbnail(this.saveInfo3.screenshot, graphics)
                     : this.error;
@@ -174,6 +179,7 @@ namespace DodoTheGame.GUI
       Texture2D texture4;
       Texture2D texture5;
       Texture2D texture6;
+
       switch (this.selectedButton)
       {
         case 1:
@@ -233,6 +239,7 @@ namespace DodoTheGame.GUI
           texture6 = this.emptybin;
           break;
       }
+
       int int32 = Convert.ToInt32(
           Math.Round((double) Game1.renderSize.X / 2.0 - (double) (texture1.Width / 2), 0));
 
@@ -279,7 +286,9 @@ namespace DodoTheGame.GUI
       Recorder.RDraw(spriteBatch, texture6, new Vector2((float) (int32 + texture1.Width + 10), 560f),
           Color.White);
       Recorder.RDraw(spriteBatch, this.marker1, new Vector2((float) (int32 + 240), 158f), Color.White);
-      if (this.saveInfo1.isValid)
+
+      if (this.saveInfo1 != null)
+        if (this.saveInfo1.isValid)
       {
         Recorder.RDrawString(spriteBatch, this.font16, LoadGUI.FormatPlaytime(this.saveInfo1.playTime),
             new Vector2((float) (int32 + 246), 229f), Color.White);
@@ -287,20 +296,26 @@ namespace DodoTheGame.GUI
             new Vector2((float) (int32 + 246), 249f), Color.White);
       }
       Recorder.RDraw(spriteBatch, this.marker2, new Vector2((float) (int32 + 240), 318f), Color.White);
-      if (this.saveInfo2.isValid)
+
+            if (this.saveInfo2 != null)
+                if (this.saveInfo2.isValid)
       {
         Recorder.RDrawString(spriteBatch, this.font16, LoadGUI.FormatPlaytime(this.saveInfo2.playTime),
             new Vector2((float) (int32 + 246), 389f), Color.White);
         Recorder.RDrawString(spriteBatch, this.font22, LoadGUI.FormatDatetime(this.saveInfo2.saveTime),
             new Vector2((float) (int32 + 246), 409f), Color.White);
       }
+
       Recorder.RDraw(spriteBatch, this.marker3, new Vector2((float) (int32 + 240), 478f), Color.White);
-      if (!this.saveInfo3.isValid)
-        return;
-      Recorder.RDrawString(spriteBatch, this.font16, LoadGUI.FormatPlaytime(this.saveInfo3.playTime),
-          new Vector2((float) (int32 + 246), 549f), Color.White);
-      Recorder.RDrawString(spriteBatch, this.font22, LoadGUI.FormatDatetime(this.saveInfo3.saveTime),
-          new Vector2((float) (int32 + 246), 569f), Color.White);
+
+        if (this.saveInfo3 != null)
+            if (this.saveInfo3.isValid)
+            {
+                Recorder.RDrawString(spriteBatch, this.font16, LoadGUI.FormatPlaytime(this.saveInfo3.playTime),
+          new Vector2((float)(int32 + 246), 549f), Color.White);
+                Recorder.RDrawString(spriteBatch, this.font22, LoadGUI.FormatDatetime(this.saveInfo3.saveTime),
+                    new Vector2((float)(int32 + 246), 569f), Color.White);
+            }
     }
 
     private static string FormatDatetime(DateTime dt)

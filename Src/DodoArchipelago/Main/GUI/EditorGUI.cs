@@ -245,14 +245,14 @@ namespace DodoTheGame.GUI
       if (!this.presetMenuOpen)
       {
         if (this.selectedPreset == null)
-          this.selectedPreset = game.presetList.First<Preset>();
+          this.selectedPreset = Game1.presetList.First<Preset>();
         Recorder.RDrawString(spriteBatch, Game1.arialSpriteFont, this.selectedPreset.name, 
             new Vector2(950f, 24f), Color.DodgerBlue);
       }
       else
       {
         this.categoryList = new List<string>();
-        foreach (Preset preset in game.presetList)
+        foreach (Preset preset in Game1.presetList)
         {
           if (!this.categoryList.Contains(preset.category))
             this.categoryList.Add(preset.category);
@@ -273,7 +273,7 @@ namespace DodoTheGame.GUI
         int num = 0;
         if (this.selectedPresetIndex < 0)
           this.selectedPresetIndex = 0;
-        foreach (Preset preset in game.presetList)
+        foreach (Preset preset in Game1.presetList)
         {
           if (preset.category == this.selectedPresetCategory)
           {
@@ -346,7 +346,7 @@ namespace DodoTheGame.GUI
         {
           new Tuple<Vector2, string>(this.interactPoints[0].Item2,
           "edt" + ((int) DateTime.UtcNow.Subtract(new DateTime(2017, 9, 1))
-          .TotalMilliseconds).ToString() + "-" + game.presetList[this.selectedPresetIndex].name)
+          .TotalMilliseconds).ToString() + "-" + Game1.presetList[this.selectedPresetIndex].name)
         }).First<IWorldObject>();
 
         Game1.world.objects.Add(worldObject);

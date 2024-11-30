@@ -110,14 +110,16 @@ namespace DodoTheGame
 
           if (withWOs)
           {
-            foreach (IWorldObject worldObject in iwosPresetsToIgnore != null
+            //TEMP
+            if (this.objects != null)
+              foreach (IWorldObject worldObject in iwosPresetsToIgnore != null
                             ? this.objects.Where<IWorldObject>((Func<IWorldObject, bool>)
                             (p => !((IEnumerable<string>) iwosPresetsToIgnore).Contains<string>(p.PresetMarker))) 
                             : (IEnumerable<IWorldObject>) this.objects)
-            {
-              if (worldObject.TestHorizontalLineCollision(startingPoint1, span1))
-                return new Tuple<bool, object>(true, (object) worldObject);
-            }
+              {
+                if (worldObject.TestHorizontalLineCollision(startingPoint1, span1))
+                  return new Tuple<bool, object>(true, (object) worldObject);
+              }
           }
            
                     

@@ -22,8 +22,8 @@ namespace DodoTheGame.Saving
 {
   internal class Save
   {
-    public Player player;
-    public World world;
+    public static Player player;
+    public static World world;
     public int saveSlot;
     public bool currentlySaving;
     public Texture2D lastFrame;
@@ -37,7 +37,9 @@ namespace DodoTheGame.Saving
 
     public Save()
     {
-      if (Directory.Exists(Save.saveFolder))
+     StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+     if (Directory.Exists(Save.saveFolder))
         return;
 
       try
@@ -50,10 +52,14 @@ namespace DodoTheGame.Saving
       }
     }
 
+
+    // GetSaveInfo
     public SaveInfo GetSaveInfo(GraphicsDevice graphicsDevice)
     {
-      string path = this.saveSlot != 0 ? Save.saveFolder 
-                + "slot" + this.saveSlot.ToString() + ".dodomemory" : "Content\\slot0.dodomemory";
+        StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            string path = this.saveSlot != 0
+                    ? Save.saveFolder + "slot" + this.saveSlot.ToString() + ".dodomemory"
+                        : localFolder.Path + "\\slot0.dodomemory";//"Content\\slot0.dodomemory";
       string[] strArray = new string[5];
       string str1 = "";
       string str2 = "";
@@ -143,12 +149,12 @@ namespace DodoTheGame.Saving
     {
       StorageFolder localFolder = ApplicationData.Current.LocalFolder;
            
-      if (!Directory.Exists(/*Path.GetTempPath()*/localFolder.Path + "\\dtgtemp"))
-        Directory.CreateDirectory(/*Path.GetTempPath()*/localFolder.Path + "\\dtgtemp");
+      if (!Directory.Exists(localFolder.Path + "\\dtgtemp"))
+        Directory.CreateDirectory(localFolder.Path + "\\dtgtemp");
 
-      File.WriteAllBytes(/*Path.GetTempPath()*/localFolder.Path + "\\dtgtemp\\a.png", base64dat);
+      File.WriteAllBytes(localFolder.Path + "\\dtgtemp\\a.png", base64dat);
 
-      FileStream fileStream = File.Open(/*Path.GetTempPath()*/localFolder.Path + "\\dtgtemp\\a.png", 
+      FileStream fileStream = File.Open(localFolder.Path + "\\dtgtemp\\a.png", 
           FileMode.Open);
       
       StreamReader streamReader = new StreamReader((Stream) fileStream);
@@ -169,7 +175,7 @@ namespace DodoTheGame.Saving
 
       try
       {
-            File.Delete(/*Path.GetTempPath()*/localFolder.Path + "\\dtgtemp\\a.png");
+            File.Delete(localFolder.Path + "\\dtgtemp\\a.png");
       }
       catch 
       {
@@ -178,12 +184,16 @@ namespace DodoTheGame.Saving
       return texture;
     }
 
-    // 
+    // LoadFromFile
     public void LoadFromFile(List<Sprite> commonSprites, Game1 game)
     {
+      StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
       Debug.WriteLine("[i] Loading save data...");
-      string path = this.saveSlot != 0 ? Save.saveFolder + "slot" 
-                + this.saveSlot.ToString() + ".dodomemory" : "Content\\slot0.dodomemory";
+      string path = this.saveSlot != 0
+                ? Save.saveFolder + "slot"  + this.saveSlot.ToString() + ".dodomemory" 
+                : localFolder.Path + "\\slot0.dodomemory";//"Content\\slot0.dodomemory";
+
       string str1 = "";
       string str2;
       object[] objArray;
@@ -204,15 +214,74 @@ namespace DodoTheGame.Saving
             streamReader.ReadLine()
           };
           str2 = streamReader.ReadLine();
-          objArray = Save.serializer.Deserialize<object[]>(strArray[0]);
-          inventory = Save.serializer.Deserialize<Inventory>(strArray[1]);
-          worldObjectList = Save.serializer.Deserialize<List<IWorldObject>>(strArray[2]);
-          npcList = Save.serializer.Deserialize<List<INPC>>(strArray[3]);
-          texture = Save.BytePngToTexture(Convert.FromBase64String(strArray[4]), game.GraphicsDevice);
+
+            objArray = default;
+            try
+            {
+                objArray = Save.serializer.Deserialize<object[]>(strArray[0]);
+            } 
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[ex] Save.serializer.Deserialize<object[]> error: " + ex.Message);
+            }
+
+
+            inventory = default;
+            try
+            {
+                inventory = Save.serializer.Deserialize<Inventory>(strArray[1]);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[ex] Save.serializer.Deserialize<Inventory> error: " + ex.Message);
+            }
+
+
+            // Plan A: deserialize world object list in "automatic mode" 
+            worldObjectList = default;
+            try
+            {
+                worldObjectList = Save.serializer.Deserialize<List<IWorldObject>>(strArray[2]);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[ex] Save.serializer.Deserialize<List<IWorldObject>> error: " + ex.Message);
+
+                           
+            }
+
+             // Plan B: generate world object list in "manual mode"
+             if (worldObjectList == null)
+            {
+                //try
+                //{
+                    worldObjectList = WorldGenerator.ManualFormWorldObjects(Game1.world, Game1.presetList);
+                //}
+                //catch (Exception ex)
+                //{
+                //    System.Diagnostics.Debug.WriteLine("[ex] WorldGenerator.ManualFormWorldObjects error: " + ex.Message);              
+                //}
+            }
+
+
+            npcList = default;
+            try
+            {
+                npcList = Save.serializer.Deserialize<List<INPC>>(strArray[3]);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[ex] Save.serializer.Deserialize<List<INPC>> error: " + ex.Message);
+            }
+
+
+            texture = Save.BytePngToTexture(Convert.FromBase64String(strArray[4]), game.GraphicsDevice);
+
           using (SHA512 shA512 = (SHA512) new SHA512Managed())
           {
             foreach (string str3 in strArray)
-              str1 += Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(str3 + "ourhardworkbythishashguardedpleasedontcheat")));
+              str1 += Convert.ToBase64String(shA512.ComputeHash(Encoding.UTF8.GetBytes(str3
+                  + "ourhardworkbythishashguardedpleasedontcheat")));
           }
         }
       }
@@ -221,50 +290,115 @@ namespace DodoTheGame.Saving
         if ((string) objArray[3] != "000024")
           throw new Exception("This save file is not supported by this build");
 
-        //RnD
-        Player player = new Player()
-        {
-          currentMovementType = default,//(Player.DodoMovement) objArray[10],
-          facing = (int) objArray[11],
-          location = new Vector2(Convert.ToSingle(objArray[12], 
-          (IFormatProvider) CultureInfo.InvariantCulture), 
-          Convert.ToSingle(objArray[13], (IFormatProvider) CultureInfo.InvariantCulture)),
-          inventory = inventory,
-          playTime = (int) objArray[14],
-          unlockedPlayerTools = new Dictionary<PlayerUnlockables.PlayerUnlockable, bool>()
-          {
-            {
-              PlayerUnlockables.PlayerUnlockable.Bike,
-              false
-            },
-            {
-              PlayerUnlockables.PlayerUnlockable.Bicycle,
-              false
-            }
-          },
-          bgmThemeDay = (int) objArray[18],
-          bgmThemeCount = (int) objArray[19]
-        };
+        //RnD / TODO : fix json data
+        Player _player = default;
 
-        player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike] = (bool) objArray[15];
-        player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] = (bool) objArray[16];
-        player.TimeBar = Convert.ToSingle(objArray[20], (IFormatProvider) CultureInfo.InvariantCulture);
+            float PosX = 8500;
+            float PosY = 9000;
+
+            try
+            {
+                PosX = (float)Math.Floor((decimal)((Int64)objArray[12]));
+                PosY = (float)Math.Floor((decimal)((Int64)objArray[13]));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[ex] Save - LoadFromFile - PosX or PosY error: " + ex.Message);
+
+                    try
+                    {
+                        PosX = (float)Math.Floor((decimal)((double)objArray[12]));
+                        PosY = (float)Math.Floor((decimal)((double)objArray[13]));
+                    }
+                    catch { }
+            }
+
+            try
+            {
+            _player = new Player()
+            {
+                currentMovementType = (Player.DodoMovement)(Int64)objArray[10],
+                facing = (int)(Int64)objArray[11],
+                location = new Vector2
+                (
+                    PosX, PosY
+                ),
+                inventory = inventory,
+                playTime = (int)(Int64)objArray[14],
+                unlockedPlayerTools = new Dictionary<PlayerUnlockables.PlayerUnlockable, bool>()
+                {
+                    {
+                        PlayerUnlockables.PlayerUnlockable.Bike,
+                        false
+                    },
+                    {
+                        PlayerUnlockables.PlayerUnlockable.Bicycle,
+                        false
+                    }
+                },
+                bgmThemeDay = (int)(Int64)objArray[18],
+                bgmThemeCount = (int)(Int64)objArray[19]
+            };
+        }
+        catch (Exception ex)
+        {
+                System.Diagnostics.Debug.WriteLine("[ex] Save - LoadFromFile - new Player class error: " + ex.Message);
+
+                    //**********Plan B; use Safe params **********************
+                    _player = new Player()
+                    {
+                        currentMovementType = default,//(Player.DodoMovement) objArray[10],
+                        facing = default,//(int)objArray[11],
+                        location = default,//new Vector2((float)objArray[12],(float)objArray[13]),
+                        inventory = inventory,
+                        playTime = default,//(int)objArray[14],
+                        unlockedPlayerTools = new Dictionary<PlayerUnlockables.PlayerUnlockable, bool>()
+                        {
+                            {
+                                PlayerUnlockables.PlayerUnlockable.Bike,
+                                false
+                            },
+                            {
+                                PlayerUnlockables.PlayerUnlockable.Bicycle,
+                                false
+                            }
+                        },
+                        bgmThemeDay = default,//(int)objArray[18],
+                        bgmThemeCount = default,//(int)objArray[19]
+                    };
+                    //*******************************************************
+                }
+
+        _player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike] = (bool) objArray[15];
+        _player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle] = (bool) objArray[16];
+        _player.TimeBar = Convert.ToSingle(objArray[20], (IFormatProvider) CultureInfo.InvariantCulture);
 
         // ...
-        World world = new World(default)
+        World _world = default;
+
+        try
         {
-          name = (string) objArray[21],
-          Level = (int) objArray[22],
-          objects = worldObjectList,
-          NPCs = npcList
-        };
+            _world = new World(default)
+            {
+                name = (string)objArray[21],
+                Level = (int)(Int64)objArray[22],
+                objects = worldObjectList,
+                NPCs = npcList
+            };
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine("[ex] Save - LoadFromFile - new World class error: " + ex.Message);
+        }
 
         DayCycle.dayTime = Convert.ToDouble(objArray[23], (IFormatProvider) CultureInfo.InvariantCulture);
         Wind.RawAngle = Convert.ToDouble(objArray[24], (IFormatProvider) CultureInfo.InvariantCulture);
         DayCycle.currentWindIndex = Convert.ToInt32(objArray[25]);
         this.lastFrame = texture;
-        this.player = player;
-        this.world = world;
+
+        //RnD
+        Save.player = _player;
+        Save.world = _world;
       }
       else
       {
@@ -272,11 +406,14 @@ namespace DodoTheGame.Saving
         this.saveSlot = 0;
         this.LoadFromFile(commonSprites, game);
       }
-    }
+    }//LoadFromFile
 
+
+    // SaveToFile
     public void SaveToFile(bool compressed = false, byte[] lastFramePngBytes = null)
     {
-      string saveData = this.GenerateSaveData(lastFramePngBytes);
+      StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            string saveData = this.GenerateSaveData(lastFramePngBytes);
       File.WriteAllText(Save.saveFolder + "slot" + this.saveSlot.ToString() + ".dodomemory", saveData);
     }
 
@@ -295,24 +432,27 @@ namespace DodoTheGame.Saving
         (object) (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds,
         (object) "",
         (object) "",
-        (object) this.player.currentMovementType,
-        (object) this.player.facing,
-        (object) this.player.location.X,
-        (object) this.player.location.Y,
-        (object) this.player.playTime,
-        (object) this.player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike],
-        (object) this.player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle],
-        (object) this.player.allowSuperdodo,
-        (object) this.player.bgmThemeDay,
-        (object) this.player.bgmThemeCount,
-        (object) Convert.ToString(this.player.TimeBar, (IFormatProvider) CultureInfo.InvariantCulture),
-        (object) this.world.name,
-        (object) this.world.Level,
+        (object) Save.player.currentMovementType,
+        (object) Save.player.facing,
+        (object) Save.player.location.X,
+        (object) Save.player.location.Y,
+        (object) Save.player.playTime,
+        (object) Save.player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bike],
+        (object) Save.player.unlockedPlayerTools[PlayerUnlockables.PlayerUnlockable.Bicycle],
+        (object) Save.player.allowSuperdodo,
+        (object) Save.player.bgmThemeDay,
+        (object) Save.player.bgmThemeCount,
+        (object) Convert.ToString(Save.player.TimeBar, (IFormatProvider) CultureInfo.InvariantCulture),
+        (object) Save.world.name,
+        (object) Save.world.Level,
         (object) Convert.ToString(DayCycle.CurrentTime, (IFormatProvider) CultureInfo.InvariantCulture),
         (object) Wind.RawAngle,
         (object) DayCycle.currentWindIndex
       };
-      byte[] inArray;
+
+      // screenshot
+      byte[] inArray = default;
+      
       if (lastFramePngBytes == null)
       {
         Debug.WriteLine("[i] Generating screenshot data...");
@@ -323,22 +463,26 @@ namespace DodoTheGame.Saving
       }
       else
         inArray = lastFramePngBytes;
+
       string base64String = Convert.ToBase64String(inArray);
+
       Debug.WriteLine("[i] Serializing everything...");
+      
       string[] strArray = new string[5]
       {
         Save.serializer.Serialize((object) objArray),
-        Save.serializer.Serialize((object) this.player.inventory),
-        Save.serializer.Serialize((object) this.world.objects),
-        Save.serializer.Serialize((object) this.world.NPCs),
+        Save.serializer.Serialize((object) Save.player.inventory),
+        Save.serializer.Serialize((object) Save.world.objects),
+        Save.serializer.Serialize((object) Save.world.NPCs),
         base64String
       };
-      string str1 = strArray[0] + "\n" + strArray[1] + "\n" + strArray[2] + "\n" 
+      string preambula = strArray[0] + "\n" + strArray[1] + "\n" + strArray[2] + "\n" 
                 + strArray[3] + "\n" + strArray[4];
+
       Debug.WriteLine("[i] Generating security hashes...");
-      string str2;
+      string securityhashes;
       using (SHA512 shA512 = (SHA512) new SHA512Managed())
-        str2 = Convert.ToBase64String(shA512.ComputeHash(
+          securityhashes = Convert.ToBase64String(shA512.ComputeHash(
             Encoding.UTF8.GetBytes(strArray[0] + "ourhardworkbythishashguardedpleasedontcheat"))) 
             + Convert.ToBase64String(shA512.ComputeHash(
                 Encoding.UTF8.GetBytes(strArray[1] + "ourhardworkbythishashguardedpleasedontcheat")))
@@ -351,7 +495,12 @@ namespace DodoTheGame.Saving
                     + "ourhardworkbythishashguardedpleasedontcheat")));
 
       Debug.WriteLine("[i] Save data generation done.");
-      return str1 + "\n" + str2;
-    }
+
+      return preambula + "\n" 
+             + securityhashes;
+
+    }//GenerateSaveData
+
   }
+
 }

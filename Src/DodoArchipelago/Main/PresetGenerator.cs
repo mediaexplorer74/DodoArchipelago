@@ -14,19 +14,22 @@ namespace DodoTheGame
     public static List<Preset> GeneratePresets()
     {
       List<Preset> presets = new List<Preset>();
-      Debug.WriteLine("[i] Declaring sprite and presets...");
+      Debug.WriteLine("[i] Declaring sprite(s) and preset(s)...");
+
       Sprite sprite1 = new Sprite("board1", ContentLoadingWrapper.Load<Texture2D>("board/board1"), 
           new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board1_shadow"),
         new Vector2(-4f, 128f), opacity: 0.4f)
       });
+
       Sprite sprite2 = new Sprite("board2", ContentLoadingWrapper.Load<Texture2D>("board/board2"),
           new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("board/board2_shadow"), 
         new Vector2(-5f, 140f), opacity: 0.4f)
       });
+
       Sprite sprite3 = new Sprite("board3", ContentLoadingWrapper.Load<Texture2D>("board/board3"), 
           new List<SubSprite>()
       {
@@ -39,19 +42,32 @@ namespace DodoTheGame
         MillisecondsPerFrame = 15,
         height = 337
       };
+
       List<Rectangle> hitbox1 = new List<Rectangle>();
       hitbox1.Add(new Rectangle(50, 305, 195, 40));
       Vector2 epicenterOffset1 = new Vector2(146f, 324f);
       IDodoInteraction[] interactions1 = new IDodoInteraction[4];
       Vector2? extraReach1 = new Vector2?();
       string[] tags1 = new string[1]{ "boardAnimation" };
-      Preset upgradePreset1 = new Preset("Tableau de bord 3", "Board3",
+
+      Preset upgradePreset1 = new Preset
+      (
+          "Tableau de bord 3", "Board3",
           Preset.WOType.Static, sprite3,
-          hitbox1, epicenterOffset1, interactions1, "Builds", extraReach1, tags: tags1);
+          hitbox1, 
+          epicenterOffset1, 
+          interactions1, 
+          "Builds", 
+          extraReach1, 
+          tags: tags1
+      );
+
       Sprite sprite4 = sprite2;
       List<Rectangle> hitbox2 = new List<Rectangle>();
       hitbox2.Add(new Rectangle(2, 150, 180, 30));
+
       Vector2 epicenterOffset2 = new Vector2(101f, 164f);
+
       IDodoInteraction[] interactions2 = new IDodoInteraction[4]
       {
         (IDodoInteraction) new Upgrade(upgradePreset1, new List<ItemStack>()
@@ -67,6 +83,7 @@ namespace DodoTheGame
         null,
         null
       };
+
       Vector2? extraReach2 = new Vector2?(new Vector2(50f, 30f));
       string[] tags2 = new string[2]
       {
@@ -78,12 +95,22 @@ namespace DodoTheGame
       {
         "level2builds"
       };
-      Preset upgradePreset2 = new Preset("Tableau de bord 2", "Board2", Preset.WOType.Upgradable, sprite4, hitbox2, epicenterOffset2, interactions2, "Builds", extraReach2, tags: tags2, incompatibleTags: incompatibleTags1, otherBuildsSpecialIncompatibleTags: otherBuildsSpecialIncompatibleTags1);
+      Preset upgradePreset2 = new Preset
+      (
+          "Tableau de bord 2", "Board2", 
+          Preset.WOType.Upgradable, sprite4, hitbox2, epicenterOffset2, interactions2, 
+          "Builds", extraReach2, 
+          tags: tags2, 
+          incompatibleTags: incompatibleTags1, 
+          otherBuildsSpecialIncompatibleTags: otherBuildsSpecialIncompatibleTags1
+      );
+
       List<Preset> presetList1 = presets;
       Sprite sprite5 = sprite1;
       List<Rectangle> hitbox3 = new List<Rectangle>();
       hitbox3.Add(new Rectangle(0, 115, 192, 40));
       Vector2 epicenterOffset3 = new Vector2(95f, 140f);
+
       IDodoInteraction[] interactions3 = new IDodoInteraction[4]
       {
         (IDodoInteraction) new Upgrade(upgradePreset2, new List<ItemStack>()
@@ -97,6 +124,7 @@ namespace DodoTheGame
         null,
         null
       };
+
       Vector2? extraReach3 = new Vector2?(new Vector2(50f, 20f));
       string[] tags3 = new string[2]
       {
@@ -107,28 +135,69 @@ namespace DodoTheGame
       {
         "level1builds"
       };
-      Preset preset1 = new Preset("Tableau de bord", "Tableau de bord", Preset.WOType.Upgradable, sprite5, hitbox3, epicenterOffset3,
-          interactions3, "Builds", extraReach3, tags: tags3, otherBuildsSpecialIncompatibleTags: otherBuildsSpecialIncompatibleTags2);
+
+      Preset preset1 = new Preset
+      (  
+        "Tableau de bord", 
+        "Tableau de bord", 
+        Preset.WOType.Upgradable, 
+        sprite5, 
+        hitbox3, 
+        epicenterOffset3,
+        interactions3, 
+        "Builds", 
+        extraReach3, 
+        tags: tags3, 
+        otherBuildsSpecialIncompatibleTags: otherBuildsSpecialIncompatibleTags2);
+
       presetList1.Add(preset1);
-      Sprite sprite6 = new Sprite("house4", ContentLoadingWrapper.Load<Texture2D>("house/house4"), new List<SubSprite>()
-      {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("house/house4_shadow"), new Vector2(0.0f, 212f), opacity: 0.4f)
-      });
+
+      Sprite sprite6 = new Sprite
+      (
+          "house4", 
+          ContentLoadingWrapper.Load<Texture2D>("house/house4"), 
+          new List<SubSprite>()
+          {
+            new SubSprite
+            (
+                ContentLoadingWrapper.Load<Texture2D>("house/house4_shadow"), 
+                new Vector2(0.0f, 212f), 
+                opacity: 0.4f
+            )
+          }
+      );
+
       List<Rectangle> hitbox4 = new List<Rectangle>();
       hitbox4.Add(new Rectangle(65, 216, 108, 34));
       Vector2 epicenterOffset4 = new Vector2(120f, 242f);
       IDodoInteraction[] interactions4 = new IDodoInteraction[4];
       Vector2? extraReach4 = new Vector2?();
-      Preset upgradePreset3 = new Preset("Maison", "house4", Preset.WOType.Static, sprite6, hitbox4, epicenterOffset4, 
-          interactions4, "Builds", extraReach4, new List<ItemStack>()
+
+      Preset upgradePreset3 = new Preset("Maison", "house4", Preset.WOType.Static, sprite6, hitbox4, 
+          epicenterOffset4, 
+          interactions4, "Builds", 
+          extraReach4, 
+          new List<ItemStack>()
       {
         new ItemStack(1, 5),
         new ItemStack(1, 5)
       });
-      Sprite sprite7 = new Sprite("house3", ContentLoadingWrapper.Load<Texture2D>("house/house3"), new List<SubSprite>()
-      {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("house/house3_shadow"), new Vector2(-4f, 165f), opacity: 0.4f)
-      });
+
+      Sprite sprite7 = new Sprite
+      (
+        "house3", 
+        ContentLoadingWrapper.Load<Texture2D>("house/house3"), 
+        new List<SubSprite>()
+        {
+           new SubSprite
+             (
+               ContentLoadingWrapper.Load<Texture2D>("house/house3_shadow"), 
+               new Vector2(-4f, 165f), 
+               opacity: 0.4f 
+               )
+        }
+      );
+
       List<Rectangle> hitbox5 = new List<Rectangle>();
       hitbox5.Add(new Rectangle(4, 156, 224, 40));
       Vector2 epicenterOffset5 = new Vector2(117f, 188f);
@@ -146,9 +215,22 @@ namespace DodoTheGame
         null
       };
       Vector2? extraReach5 = new Vector2?(new Vector2(55f, 10f));
-      Preset upgradePreset4 = new Preset("Maison", "house3", Preset.WOType.Upgradable, sprite7, hitbox5, epicenterOffset5, interactions5, "Builds", extraReach5);
+      Preset upgradePreset4 = new Preset
+      (
+            "Maison", 
+            "house3", 
+            Preset.WOType.Upgradable, 
+            sprite7, 
+            hitbox5, 
+            epicenterOffset5, 
+            interactions5, 
+            "Builds", 
+            extraReach5
+       );
 
-      Sprite sprite8 = new Sprite("house2", ContentLoadingWrapper.Load<Texture2D>("house/house2"), new List<SubSprite>()
+      Sprite sprite8 = 
+                new Sprite("house2", ContentLoadingWrapper.Load<Texture2D>("house/house2"), 
+          new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("house/house2_shadow"), new Vector2(-2f, 189f), opacity: 0.4f)
       });
@@ -2447,6 +2529,7 @@ namespace DodoTheGame
           new ItemStack(5, 3)
         })
       }, "Other", new Vector2?(new Vector2(30f, 20f)), 5));
+
       Sprite sprite208 = new Sprite("seashell1", ContentLoadingWrapper.Load<Texture2D>("seashell1"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("seashell1_shadow"), new Vector2(0.0f, 5f), opacity: 0.4f)
@@ -2456,6 +2539,7 @@ namespace DodoTheGame
         Width = 102,
         MillisecondsPerFrame = 80
       };
+
       Sprite sprite209 = new Sprite("seashell1 cut", ContentLoadingWrapper.Load<Texture2D>("seashell1_cut"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("seashell1_shadow"), new Vector2(0.0f, 5f), opacity: 0.4f)
@@ -2482,6 +2566,7 @@ namespace DodoTheGame
           new ItemStack(11, 2)
         })
       }, "Other", new Vector2?(new Vector2(30f, 20f)), 3));
+
       Sprite sprite210 = new Sprite("seashell2", ContentLoadingWrapper.Load<Texture2D>("seashell2"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("seashell2_shadow"), new Vector2(0.0f, 5f), opacity: 0.4f)
@@ -2491,6 +2576,7 @@ namespace DodoTheGame
         Width = 97,
         MillisecondsPerFrame = 80
       };
+
       Sprite sprite211 = new Sprite("seashell2 cut", ContentLoadingWrapper.Load<Texture2D>("seashell2_cut"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("seashell2_shadow"), new Vector2(0.0f, 5f), opacity: 0.4f)
@@ -2500,6 +2586,7 @@ namespace DodoTheGame
         Width = 97,
         MillisecondsPerFrame = 80
       };
+
       presets.Add(new Preset("Coquillage", "seashell2", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite210,
@@ -2517,22 +2604,31 @@ namespace DodoTheGame
           new ItemStack(11, 2)
         })
       }, "Other", new Vector2?(new Vector2(30f, 20f)), 3));
-      Sprite sprite212 = new Sprite("coconutbush1", ContentLoadingWrapper.Load<Texture2D>("DCbush1"), new List<SubSprite>()
+
+      Sprite sprite212 = new Sprite("coconutbush1", ContentLoadingWrapper.Load<Texture2D>("DCbush1"),
+          new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("DCbush_shadow"), new Vector2(2f, 35f), opacity: 0.4f)
       });
-      Sprite sprite213 = new Sprite("coconutbush2", ContentLoadingWrapper.Load<Texture2D>("DCbush2"), new List<SubSprite>()
+
+      Sprite sprite213 = new Sprite("coconutbush2", ContentLoadingWrapper.Load<Texture2D>("DCbush2"), 
+          new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("DCbush_shadow"), new Vector2(2f, 35f), opacity: 0.4f)
       });
-      Sprite sprite214 = new Sprite("coconutbush3", ContentLoadingWrapper.Load<Texture2D>("DCbush3"), new List<SubSprite>()
+
+      Sprite sprite214 = new Sprite("coconutbush3", ContentLoadingWrapper.Load<Texture2D>("DCbush3"),
+          new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("DCbush_shadow"), new Vector2(2f, 35f), opacity: 0.4f)
       });
-      Sprite sprite215 = new Sprite("coconutbush4", ContentLoadingWrapper.Load<Texture2D>("DCbush4"), new List<SubSprite>()
+
+      Sprite sprite215 = new Sprite("coconutbush4", ContentLoadingWrapper.Load<Texture2D>("DCbush4"), 
+          new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("DCbush_shadow"), new Vector2(2f, 35f), opacity: 0.4f)
       });
+
       presets.Add(new Preset("Buisson coco", "Double coconut bush", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite215,
@@ -2571,9 +2667,11 @@ namespace DodoTheGame
 
       presetList39.Add(preset42);
 
-      Sprite sprite218 = new Sprite("fleur1", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1"), new List<SubSprite>()
+      Sprite sprite218 = new Sprite("fleur1", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_shadow"), new Vector2(1f, 209f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_shadow"), 
+        new Vector2(1f, 209f), opacity: 0.4f)
       })
       {
         animated = true,
@@ -2581,12 +2679,16 @@ namespace DodoTheGame
         MillisecondsPerFrame = 90
       };
 
-      Sprite sprite219 = new Sprite("fleur1_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_cut"), new List<SubSprite>()
+      Sprite sprite219 = new Sprite("fleur1_cut",
+          ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_cut"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_shadow"), new Vector2(1f, 209f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur1_shadow"),
+        new Vector2(1f, 209f), opacity: 0.4f)
       });
 
-      presets.Add(new Preset("Fleur", "fleur geante 1", Preset.WOType.Growable, new List<Sprite>()
+      presets.Add(new Preset("Fleur", "fleur geante 1", Preset.WOType.Growable, 
+          new List<Sprite>()
       {
         sprite218,
         sprite219
@@ -2606,18 +2708,22 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite220 = new Sprite("fleur2", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2"), new List<SubSprite>()
+      Sprite sprite220 = new Sprite("fleur2", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2_shadow"), new Vector2(-20f, 194f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2_shadow"), 
+        new Vector2(-20f, 194f), opacity: 0.4f)
       })
       {
         animated = true,
         Width = 88,
         MillisecondsPerFrame = 90
       };
-      Sprite sprite221 = new Sprite("fleur2_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2_cut"), new List<SubSprite>()
+      Sprite sprite221 = new Sprite("fleur2_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2_cut"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2_shadow"), new Vector2(-20f, 194f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur2_shadow"), 
+        new Vector2(-20f, 194f), opacity: 0.4f)
       });
       presets.Add(new Preset("Fleur", "fleur geante 2", Preset.WOType.Growable, new List<Sprite>()
       {
@@ -2639,20 +2745,25 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite222 = new Sprite("fleur3", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3"), new List<SubSprite>()
+      Sprite sprite222 = new Sprite("fleur3", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3_shadow"), new Vector2(-2f, 193f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3_shadow"), 
+        new Vector2(-2f, 193f), opacity: 0.4f)
       })
       {
         animated = true,
         Width = 109,
         MillisecondsPerFrame = 90
       };
-      Sprite sprite223 = new Sprite("fleur3_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3_cut"), new List<SubSprite>()
+      Sprite sprite223 = new Sprite("fleur3_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3_cut"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3_shadow"), new Vector2(-2f, 193f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur3_shadow"), 
+        new Vector2(-2f, 193f), opacity: 0.4f)
       });
-      presets.Add(new Preset("Fleur", "fleur geante 3", Preset.WOType.Growable, new List<Sprite>()
+
+      presets.Add(new Preset("Fleur", "fleur geante 3",  Preset.WOType.Growable, new List<Sprite>()
       {
         sprite222,
         sprite223
@@ -2672,9 +2783,11 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite224 = new Sprite("fleur4", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4"), new List<SubSprite>()
+      Sprite sprite224 = new Sprite("fleur4", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4_shadow"), new Vector2(-4f, 224f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4_shadow"),
+        new Vector2(-4f, 224f), opacity: 0.4f)
       })
       {
         animated = true,
@@ -2682,9 +2795,12 @@ namespace DodoTheGame
         height = 249,
         MillisecondsPerFrame = 90
       };
-      Sprite sprite225 = new Sprite("fleur4_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4_cut"), new List<SubSprite>()
+
+      Sprite sprite225 = new Sprite("fleur4_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4_cut"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4_shadow"), new Vector2(-4f, 224f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur4_shadow"),
+        new Vector2(-4f, 224f), opacity: 0.4f)
       });
       presets.Add(new Preset("Fleur", "fleur geante 4", Preset.WOType.Growable, new List<Sprite>()
       {
@@ -2706,9 +2822,11 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite226 = new Sprite("fleur5", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur5"), new List<SubSprite>()
+      Sprite sprite226 = new Sprite("fleur5", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur5"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur5_shadow"), new Vector2(0.0f, 178f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur5_shadow"), 
+        new Vector2(0.0f, 178f), opacity: 0.4f)
       })
       {
         animated = true,
@@ -2719,6 +2837,7 @@ namespace DodoTheGame
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur5_shadow"), new Vector2(0.0f, 178f), opacity: 0.4f)
       });
+
       presets.Add(new Preset("Fleur", "fleur geante 5", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite226,
@@ -2739,18 +2858,22 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite228 = new Sprite("fleur6", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6"), new List<SubSprite>()
+      Sprite sprite228 = new Sprite("fleur6", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6_shadow"), new Vector2(-4f, 254f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6_shadow"), 
+        new Vector2(-4f, 254f), opacity: 0.4f)
       })
       {
         animated = true,
         Width = 114,
         MillisecondsPerFrame = 90
       };
-      Sprite sprite229 = new Sprite("fleur6_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6_cut"), new List<SubSprite>()
+      Sprite sprite229 = new Sprite("fleur6_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6_cut"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6_shadow"), new Vector2(-4f, 254f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur6_shadow"),
+        new Vector2(-4f, 254f), opacity: 0.4f)
       });
       presets.Add(new Preset("Fleur", "fleur geante 6", Preset.WOType.Growable, new List<Sprite>()
       {
@@ -2772,18 +2895,23 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite230 = new Sprite("fleur7", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7"), new List<SubSprite>()
+      Sprite sprite230 = new Sprite("fleur7", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7_shadow"), new Vector2(-5f, 214f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7_shadow"),
+        new Vector2(-5f, 214f), opacity: 0.4f)
       })
       {
         animated = true,
         Width = 145,
         MillisecondsPerFrame = 90
       };
-      Sprite sprite231 = new Sprite("fleur7_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7_cut"), new List<SubSprite>()
+      Sprite sprite231 = new Sprite("fleur7_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7_cut"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7_shadow"), new Vector2(-5f, 214f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur7_shadow"),
+        new Vector2(-5f, 214f), 
+        opacity: 0.4f)
       });
       presets.Add(new Preset("Fleur", "fleur geante 7", Preset.WOType.Growable, new List<Sprite>()
       {
@@ -2805,9 +2933,12 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite232 = new Sprite("fleur8", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur8"), new List<SubSprite>()
+
+      Sprite sprite232 = new Sprite("fleur8", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur8"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur8_shadow"), new Vector2(46f, 200f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur8_shadow"), 
+        new Vector2(46f, 200f), opacity: 0.4f)
       })
       {
         animated = true,
@@ -2815,10 +2946,12 @@ namespace DodoTheGame
         height = 251,
         MillisecondsPerFrame = 90
       };
+
       Sprite sprite233 = new Sprite("fleur8_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur8_cut"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur8_shadow"), new Vector2(46f, 200f), opacity: 0.4f)
       });
+
       presets.Add(new Preset("Fleur", "fleur geante 8", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite232,
@@ -2839,7 +2972,9 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite234 = new Sprite("fleur9", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur9"), new List<SubSprite>()
+
+      Sprite sprite234 = new Sprite("fleur9", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur9"), 
+          new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur9_shadow"), new Vector2(-8f, 20f), opacity: 0.4f)
       })
@@ -2848,9 +2983,12 @@ namespace DodoTheGame
         Width = 80,
         MillisecondsPerFrame = 110
       };
-      Sprite sprite235 = new Sprite("fleur9_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur9_cut"), new List<SubSprite>()
+
+      Sprite sprite235 = new Sprite("fleur9_cut", 
+          ContentLoadingWrapper.Load<Texture2D>("fleur/fleur9_cut"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur9_shadow"), new Vector2(-8f, 20f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur9_shadow"),
+        new Vector2(-8f, 20f), opacity: 0.4f)
       })
       {
         animated = true,
@@ -2877,9 +3015,11 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 0, 1));
-      Sprite sprite236 = new Sprite("fleur10", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10"), new List<SubSprite>()
+      Sprite sprite236 = new Sprite("fleur10", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10_shadow"), new Vector2(0.0f, 171f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10_shadow"), 
+        new Vector2(0.0f, 171f), opacity: 0.4f)
       })
       {
         animated = true,
@@ -2887,10 +3027,14 @@ namespace DodoTheGame
         height = 198,
         MillisecondsPerFrame = 105
       };
-      Sprite sprite237 = new Sprite("fleur10_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10_cut"), new List<SubSprite>()
+      Sprite sprite237 = 
+       new Sprite("fleur10_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10_cut"), 
+       new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10_shadow"), new Vector2(0.0f, 171f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur10_shadow"), 
+        new Vector2(0.0f, 171f), opacity: 0.4f)
       });
+
       presets.Add(new Preset("Fleur", "fleur geante 10", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite236,
@@ -2911,20 +3055,26 @@ namespace DodoTheGame
           new ItemStack(8, 3)
         })
       }, "Plants", new Vector2?(new Vector2(50f, 20f)), 2, 1));
-      Sprite sprite238 = new Sprite("fleur11", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11"), new List<SubSprite>()
+
+      Sprite sprite238 = new Sprite("fleur11", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11"),
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11_shadow"), new Vector2(0.0f, 220f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11_shadow"), 
+        new Vector2(0.0f, 220f), opacity: 0.4f)
       })
       {
         animated = true,
         Width = 118,
         MillisecondsPerFrame = 90
       };
-      Sprite sprite239 = new Sprite("fleur11_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11_cut"), new List<SubSprite>()
+      Sprite sprite239 = new Sprite("fleur11_cut", 
+          ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11_cut"), new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11_shadow"), new Vector2(0.0f, 210f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur11_shadow"), 
+        new Vector2(0.0f, 210f), opacity: 0.4f)
       });
-      presets.Add(new Preset("Fleur", "fleur geante 11", Preset.WOType.Growable, new List<Sprite>()
+      presets.Add(new Preset("Fleur", "fleur geante 11", Preset.WOType.Growable, 
+          new List<Sprite>()
       {
         sprite238,
         sprite239
@@ -2954,10 +3104,12 @@ namespace DodoTheGame
         height = 235,
         MillisecondsPerFrame = 150
       };
+
       Sprite sprite241 = new Sprite("fleur12_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur12_cut"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur12_shadow"), new Vector2(-3f, 219f), opacity: 0.4f)
       });
+
       presets.Add(new Preset("Fleur", "fleur geante 12", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite240,
@@ -2979,6 +3131,7 @@ namespace DodoTheGame
           new ItemStack(8, 5)
         })
       }, "Plants", new Vector2?(new Vector2(30f, 20f)), 3, 1));
+
       Sprite sprite242 = new Sprite("fleur13", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur13"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur13_shadow"), new Vector2(15f, 170f), opacity: 0.4f)
@@ -2989,10 +3142,12 @@ namespace DodoTheGame
         height = 192,
         MillisecondsPerFrame = 100
       };
+
       Sprite sprite243 = new Sprite("fleur13_cut", ContentLoadingWrapper.Load<Texture2D>("fleur/fleur13_cut"), new List<SubSprite>()
       {
         new SubSprite(ContentLoadingWrapper.Load<Texture2D>("fleur/fleur13_shadow"), new Vector2(15f, 170f), opacity: 0.4f)
       });
+
       presets.Add(new Preset("Fleur", "fleur geante 13", Preset.WOType.Growable, new List<Sprite>()
       {
         sprite242,
@@ -3013,59 +3168,88 @@ namespace DodoTheGame
           new ItemStack(8, 1)
         })
       }, "Plants", new Vector2?(new Vector2(50f, 50f)), 3, 1));
-      presets.Add(new Preset("water falling", "water falling", Preset.WOType.Static, new Sprite("waterfalling", ContentLoadingWrapper.Load<Texture2D>("bamboopipe/waterfalling"), new List<SubSprite>())
+
+      presets.Add(new Preset("water falling", "water falling", Preset.WOType.Static, 
+          new Sprite("waterfalling", ContentLoadingWrapper.Load<Texture2D>("bamboopipe/waterfalling"),
+          new List<SubSprite>())
       {
         Width = 15,
         animated = true,
         MillisecondsPerFrame = 70
-      }, new List<Rectangle>(), new Vector2(5f, 160f), new IDodoInteraction[4], "Other", buildOrUpgradeItems: new List<ItemStack>()));
-      Sprite sprite244 = new Sprite("devcat", ContentLoadingWrapper.Load<Texture2D>("devcat82"), new List<SubSprite>()
+      }, new List<Rectangle>(), new Vector2(5f, 160f), new IDodoInteraction[4], "Other", 
+      buildOrUpgradeItems: new List<ItemStack>()));
+      Sprite sprite244 = new Sprite("devcat", ContentLoadingWrapper.Load<Texture2D>("devcat82"), 
+          new List<SubSprite>()
       {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("devcat82_shadow"), new Vector2(0.0f, 105f), opacity: 0.4f)
+        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("devcat82_shadow"), 
+        new Vector2(0.0f, 105f), opacity: 0.4f)
       })
       {
         animated = true,
         Width = 93,
         MillisecondsPerFrame = 120
       };
-      Sprite sprite245 = new Sprite("cutteddevcat", ContentLoadingWrapper.Load<Texture2D>("cutteddevcat"), new List<SubSprite>()
-      {
-        new SubSprite(ContentLoadingWrapper.Load<Texture2D>("devcat82_shadow"), new Vector2(0.0f, 105f), opacity: 0.3f)
-      });
-      presets.Add(new Preset("Devcat", "Devcat", Preset.WOType.Growable, new List<Sprite>()
-      {
-        sprite244,
-        sprite245
-      }, new List<Rectangle>()
-      {
-        new Rectangle(8, 102, 87, 20)
-      }, new Vector2(57f, 113f), new IDodoInteraction[4]
-      {
-        null,
-        null,
-        null,
-        (IDodoInteraction) new Harvest(new ItemStack[18]
-        {
-          new ItemStack(0, 99),
-          new ItemStack(1, 99),
-          new ItemStack(2, 99),
-          new ItemStack(3, 99),
-          new ItemStack(4, 99),
-          new ItemStack(5, 99),
-          new ItemStack(6, 99),
-          new ItemStack(7, 99),
-          new ItemStack(8, 99),
-          new ItemStack(9, 99),
-          new ItemStack(10, 999),
-          new ItemStack(11, 99),
-          new ItemStack(12, 99),
-          new ItemStack(13, 99),
-          new ItemStack(14, 99),
-          new ItemStack(15, 99),
-          new ItemStack(16, 99),
-          new ItemStack(17, 99)
-        })
-      }, "Other", new Vector2?(new Vector2(30f, 20f))));
+
+      Sprite sprite245 = new Sprite
+      (
+          "cutteddevcat", ContentLoadingWrapper.Load<Texture2D>("cutteddevcat"), new List<SubSprite>()
+          {
+            new SubSprite
+            (ContentLoadingWrapper.Load<Texture2D>("devcat82_shadow"), 
+                new Vector2(0.0f, 105f), 
+                opacity: 0.3f)
+          }
+      );
+
+      presets.Add
+      (
+          new Preset
+          (
+              "Devcat", 
+              "Devcat", 
+              Preset.WOType.Growable, 
+              new List<Sprite>()
+              {
+                sprite244,
+                sprite245
+              }, 
+              new List<Rectangle>()
+              {
+                new Rectangle(8, 102, 87, 20)
+              }, new Vector2(57f, 113f), 
+              new IDodoInteraction[4]
+              {
+                null,
+                null,
+                null,
+                (IDodoInteraction) new Harvest(new ItemStack[18]
+                {
+                  new ItemStack(0, 99),
+                  new ItemStack(1, 99),
+                  new ItemStack(2, 99),
+                  new ItemStack(3, 99),
+                  new ItemStack(4, 99),
+                  new ItemStack(5, 99),
+                  new ItemStack(6, 99),
+                  new ItemStack(7, 99),
+                  new ItemStack(8, 99),
+                  new ItemStack(9, 99),
+                  new ItemStack(10, 999),
+                  new ItemStack(11, 99),
+                  new ItemStack(12, 99),
+                  new ItemStack(13, 99),
+                  new ItemStack(14, 99),
+                  new ItemStack(15, 99),
+                  new ItemStack(16, 99),
+                  new ItemStack(17, 99)
+               }
+           )
+         }, 
+         "Other", 
+          new Vector2?(new Vector2(30f, 20f))
+         )
+       );
+
       return presets;
     }
   }

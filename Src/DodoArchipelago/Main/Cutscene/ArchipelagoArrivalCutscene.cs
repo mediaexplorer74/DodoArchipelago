@@ -52,7 +52,9 @@ namespace DodoTheGame.Cutscene
         return new UserInputStatus();
       if ((double) player.location.X > 8820.0)
       {
-        GUIManager.ClearThenSet((IGUI) GUIManager.tuto);
+        //RnD
+        // call tutorial?
+        //GUIManager.ClearThenSet((IGUI) GUIManager.tuto);
         this.Terminated = true;
       }
       this.waitTime += Convert.ToSingle(gameTime.ElapsedGameTime.TotalMilliseconds);

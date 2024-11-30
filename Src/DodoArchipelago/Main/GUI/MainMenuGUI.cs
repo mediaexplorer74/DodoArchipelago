@@ -123,7 +123,7 @@ namespace DodoTheGame.GUI
       Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, /*"Credits"*/"Tutorial", 
           new Vector2(/*1215f*/1100f, 2f), this.selectedButton == 4 ? Color.White : Color.Black * 0.5f);
 
-      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "V1.0.1",
+      Recorder.RDrawString(spriteBatch, Game1.rouliMSpriteFont, "V1.0.2",
           new Vector2(3f, 1f), Color.Black * 0.5f);
 
       Recorder.RDraw(spriteBatch, this.mainlogo, new Vector2((float)
@@ -145,7 +145,8 @@ namespace DodoTheGame.GUI
     {
       if 
       (
-         /*1==0*/action1 
+         //1==0
+         action1 
          && this.selectedButton == 1 
          && game.WorldLoader == Game1.WorldLoaderType.dynamicSaves // dynamicSaves - what is this ? 
       )

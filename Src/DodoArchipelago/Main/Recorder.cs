@@ -97,6 +97,10 @@ namespace DodoTheGame
       Vector2 location,
       Color color)
     {
+       //!
+       if (texture == null)
+            return;
+
       if (Recorder.rerendering)
         return;
       if (Recorder.recording)

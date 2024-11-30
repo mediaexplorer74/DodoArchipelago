@@ -1,4 +1,4 @@
-# DodoArchipelago 1.0.1 - main branch
+# DodoArchipelago 1.0.2 - main branch
 ![](Images/logo.png)
 
 ## About
@@ -7,15 +7,17 @@ It's only PoC (Proove-of-Concept). Game play is very specific ("strange random w
 
 This is my *veeery quuuick* UWP "port" of [The Dodo Archipelago](https://rouli.itch.io/the-dodo-archipelago) exploration game. At now draft / early bird / proto. To be continued... So, at now it only "walker" (use WASD ad L.Control for SuperDodo activation :))))
 
-Main goal: do more was to do some exploration of special game "frameworks" such FMOD and port it to Windows 10 Mobile.... However, Andromeda-like x86/x64-cpu based tablet (with keyboard) is best thing for this game, I think ;)
+Main goal: do more was to do some exploration of special "game frameworks" such FMOD and port it to Windows 10 Mobile.... However, Andromeda-like x86/x64-cpu based tablet (with keyboard) is best thing for this game, I think ;)
 
 
 ## Screenshot(s)
-![](Images/shot01.png)
-![](Images/shot02.png)
-![](Images/shot03.png)
-![](Images/shot04.png)
-![](Images/shot05.png)
+![Win11Lite, x64](Images/shot01.png)
+![Win11Lite, x64](Images/shot02.png)
+![Lumia 950, W10M ARM](Images/shot03.png)
+![Lumia 950, W10M ARM](Images/shot04.png)
+![Lumia 950, W10M ARM](Images/shot05.png)
+![Lumia 950, W10M ARM](Images/shot06.png)
+
 
 
 ## Words from the author(s)
@@ -47,25 +49,29 @@ Here's what you can expect:
 
 
 ## Status of my DodoArchipelago porting
-- Main W10M device : Lumia 950; sdk 15063+ (Last)  - init state
-- Secondary W10M device : sdk 10240 (Astoria) - init state
+- Main W10M device : Lumia 950; sdk 15063+ - bad borders of game , core window 
+- Secondary W10M device : Lumia 640; sdk 10240 (Astoria) -  - bad borders of game , core window 
 - Game build status - ok, and main game mode seems to be ok :)
 - Sound effects partially fixed (effects ok, but no background misic at now)
 - Multi-control support realized (keyboard+touchpanel+joystick) 
-- No Screen scaling for non-follscreen mode
+- Screen scaling simms to be ok (but not 100% tested )
 - Experimentation (debugging) with special "Debug panel" (blocked in *main* branch, available in *dev* branch)
 - world generator reconstructed by me, and... game logics cardinally changed (DoDo "clone" NPC discovered and shown)))
 - compatibility with Visual Studio 2017 IDE (for brave real WinPhone/Lumia device debug!)))
+- build point No 1 added! 
+- build action (operation) unblocked :)
+- pre-gaming cutscene partially recovered (but I cutted some big textures)))
 
 ## Known problems
 - Not all sound effects work good (strange bug with *null* items at soundeffect list)
 - No background music
 - Background textures (tiles) are huge (so, disable tiles for W10M compatibility)
 - Intro cutted (no multi-threading in WinSDK 10240)
-- World repairing promblem (Game "forget the world" after restarting and regenerates it...)
+- World full repairing problem (Game "partally forget the world data" after restarting and regenerates it...)
 - No story cutscenes 
 - No upgradable buildings (only "inventary" parst is ready)
 - Improper screen borders.
+- Miracle stored "Game" at Slot 1 (needs to be deleted:)
 
 
 ## ToDo
@@ -76,12 +82,16 @@ Here's what you can expect:
 - NPC?
 - Game localization(s)  
 - Fix screen distortion(s) (very strange resolutions)
+- Fix game cutscene(s)
+- unblock hidden Editor GUI (?)
+- fix appearing of Game in Slot 1 after fist app run/start! :)
 
 ## References
 - https://rouli.itch.io/the-dodo-archipelago Original DoDo Archipelago game (x86, desktop)
 - https://rouli.itch.io DoDo Archipelago's itch.io home page
 - https://github.com/Rouli-M One of Original DoDo's programmers/devs
 - https://github.com/Rouli-M/ReturnOfTheFrogarians (Additional project to research)
+- https://learn.microsoft.com/en-us/visualstudio/get-started/csharp/tutorial-uwp?view=vs-2022 (Microsoft's UWP tutorial for beginners & "oldschoolers" like me)))
 
 ## .
 As is. No support. Learn purposes only. DIY!

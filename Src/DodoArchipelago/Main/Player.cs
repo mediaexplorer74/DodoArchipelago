@@ -1016,32 +1016,35 @@ namespace DodoTheGame
         if (tuple.Item1)
           this.location.Y += 2f;
       }
+
       if (this.currentMovementType != Player.DodoMovement.Build 
                 && this.currentMovementType != Player.DodoMovement.Harvest)
       {
-        foreach (IWorldObject parentWo in world.objects)
-        {
-          int num = this.facing == 0 ? 44 : 86;
-          this.inReachObject = (IWorldObject) null;
-          if ((double) Math.Abs(parentWo.Epicenter.X - 
-              (this.location.X + (float) num)) < 50.0 + (double) parentWo.ExtraReach.X
-              && (double) Math.Abs(parentWo.Epicenter.Y - (this.location.Y + 83f)) 
-              < 37.0 + (double) parentWo.ExtraReach.Y 
-              && (!(parentWo is BuildPoint) || (parentWo as BuildPoint).isBpVisible) 
-              && (parentWo.Interactions[0] != null 
-              && parentWo.Interactions[0].ComputeShowState(parentWo, this) 
-              || parentWo.Interactions[1] != null 
-              && parentWo.Interactions[1].ComputeShowState(parentWo, this) 
-              || parentWo.Interactions[2] != null 
-              && parentWo.Interactions[2].ComputeShowState(parentWo, this) 
-              || parentWo.Interactions[3] != null 
-              && parentWo.Interactions[3].ComputeShowState(parentWo, this) 
-              || parentWo is Hourglass))
-          {
-            this.inReachObject = parentWo;
-            break;
-          }
-        }
+        //TEMP
+        if (world.objects !=null)
+            foreach (IWorldObject parentWo in world.objects)
+            {
+              int num = this.facing == 0 ? 44 : 86;
+              this.inReachObject = (IWorldObject) null;
+              if ((double) Math.Abs(parentWo.Epicenter.X - 
+                  (this.location.X + (float) num)) < 50.0 + (double) parentWo.ExtraReach.X
+                  && (double) Math.Abs(parentWo.Epicenter.Y - (this.location.Y + 83f)) 
+                  < 37.0 + (double) parentWo.ExtraReach.Y 
+                  && (!(parentWo is BuildPoint) || (parentWo as BuildPoint).isBpVisible) 
+                  && (parentWo.Interactions[0] != null 
+                  && parentWo.Interactions[0].ComputeShowState(parentWo, this) 
+                  || parentWo.Interactions[1] != null 
+                  && parentWo.Interactions[1].ComputeShowState(parentWo, this) 
+                  || parentWo.Interactions[2] != null 
+                  && parentWo.Interactions[2].ComputeShowState(parentWo, this) 
+                  || parentWo.Interactions[3] != null 
+                  && parentWo.Interactions[3].ComputeShowState(parentWo, this) 
+                  || parentWo is Hourglass))
+              {
+                this.inReachObject = parentWo;
+                break;
+              }
+            }
       }
       float num4 = 1000f;
       foreach (Wave wave in Game1.waves.Where<IBackgroundEffect>(
